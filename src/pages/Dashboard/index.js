@@ -1,15 +1,16 @@
 import React from "react";
 import { connect } from 'react-redux';
+import {AnimationButton} from '../../components/reusable/AnimationButton';
+import './dashboard.scss';
+
+import Login from "../Login";
 
 import { registerRequest, registerSuccess } from "../../store/actions/auth";
 
 const Dashboard = (props) => {
     return (
         <div>
-            <p>Welcome to Dashboard</p>
-            <button onClick={() => props.registerRequest()}>Request</button>
-            <button onClick={() => props.registerSuccess()}>Success</button>
-            <h1>{props.loading === false ? 'False' : 'True'}</h1>
+            Welcome to dashboard
         </div>
     )
 };
