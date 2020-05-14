@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAAA,yBAA0B;EACxB,KAAK,EAAE,IAAI;EACX,MAAM,EAAE,KAAK;EACb,OAAO,EAAE,eAAe;EACxB,eAAe,EAAE,MAAM;EACvB,WAAW,EAAE,MAAM",
+"sources": ["loadingScreen.scss"],
+"names": [],
+"file": "loadingScreen.css"
+}
