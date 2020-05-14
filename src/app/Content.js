@@ -2,9 +2,10 @@ import React from "react";
 import { Switch, Route, useLocation } from "react-router-dom";
 
 import Dashboard from '../pages/Dashboard';
+import Login from "../pages/Login";
 import NoRoute from '../pages/NoRoute';
 
-const Content = () => {
+const Content = ({isSignIned}) => {
     const location = useLocation();
     return (
         <Switch location={location} key={location.pathname}>

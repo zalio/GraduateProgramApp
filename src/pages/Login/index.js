@@ -14,7 +14,7 @@ const Login = () => {
     const [domain, setDomain] = useState({value: 10, children: 'std.iyte.edu.tr'});
     const [password, setPassword] = useState('');
 
-    const loginHandler = () => console.log(email, domain, password);
+    const loginHandler = () => localStorage.setItem('userData', 'token');
 
     return (
         <div id='login-page-general'>
