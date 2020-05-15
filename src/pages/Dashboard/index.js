@@ -10,7 +10,7 @@ import { registerRequest, registerSuccess } from "../../store/actions/auth";
 const Dashboard = (props) => {
     return (
         <div>
-            Welcome to dashboard
+            Welcome to Ege
         </div>
     )
 };
