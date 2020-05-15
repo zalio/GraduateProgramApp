@@ -3,6 +3,7 @@ import './assets/styles/App.scss';
 import Content from "./Content.js";
 import LoadingScreen from "../components/reusable/LoadingScreen";
 import Login from "../pages/Login";
+import Register from "../pages/Register";
 
 const App = () => {
     const [isLoading, setIsLoading] = useState(true);
@@ -20,14 +21,14 @@ const App = () => {
 
     const renderItem = () => {
         if (isLoading) return <LoadingScreen/>;
-        else if (!userData) return <Login/>;
+        else if (!userData) return <Register/>;
         return <Content isSignIned={userData !== null} />;
     }
-  return (
-    <div className="App">
-        {renderItem()}
-    </div>
-  );
+    return (
+        <div className="App">
+            {renderItem()}
+        </div>
+    );
 };
 
 export default App;

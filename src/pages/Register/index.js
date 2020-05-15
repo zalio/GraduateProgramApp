@@ -4,6 +4,7 @@ import FormGroup from "@material-ui/core/FormGroup";
 import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 import MenuItem from "@material-ui/core/MenuItem";
+import './register.scss';
 
 
 import {AnimationButton} from '../../components/reusable/AnimationButton';
@@ -15,11 +16,12 @@ const Register = () => {
     const [domain, setDomain] = useState({value: 10, children: 'std.iyte.edu.tr'});
     const [role, setRole] = useState({value: 1, children: 'Student'});
     const [password, setPassword] = useState('');
+    const [rePassword, setRePassword] = useState('');
 
     const registerHandler = () => console.log("Kayıt olundu.");
 
     return (
-        <div id={'register-page-general'}>
+        <div id='register-page-general'>
             <div className={'register-container'}>
                 <FormControl noValidate autoComplete={"off"}>
                     <FormGroup row={false}>
@@ -71,11 +73,11 @@ const Register = () => {
                             <TextField
                                 type='password'
                                 error={false}
-                                id='password'
+                                id='repassword'
                                 label="Password again"
                                 variant="standard"
-                                value={password}
-                                onChange={e => setPassword(e.target.value)}
+                                value={rePassword}
+                                onChange={e => setRePassword(e.target.value)}
                             />
                         </div>
                         <div id="select-container">
