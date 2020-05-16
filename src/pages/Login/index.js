@@ -6,6 +6,7 @@ import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
 import Button from "@material-ui/core/Button";
 import {connect} from "react-redux";
+import { GoogleLogin } from 'react-google-login';
 import './login.scss';
 import iyteLogo from '../../app/assets/images/iyte-logo.gif';
 
@@ -16,6 +17,10 @@ const Login = (props) => {
     const [password, setPassword] = useState('');
 
     const loginHandler = () => console.log('jgd');
+    const responseGoogle = response => {
+        //setEmail(response.profileObj.email);
+        console.log(response.profileObj.name+" "+response.profileObj.email);
+    }
 
     return (
         <>
@@ -57,11 +62,23 @@ const Login = (props) => {
                                         <Link id="login-link" className={props.mode}>Forgot Password</Link>
                                     </div>
                                     <div id="login-button-container-upper" className={props.mode}>
-                                        <Button id='login-login-button' className={props.mode} variant="contained" onClick={loginHandler}><b>SIGN IN</b></Button>
+                                        <Button
+                                            id='login-login-button'
+                                            className={props.mode}
+                                            variant="contained"
+                                            onClick={loginHandler}>
+                                            <b>SIGN IN</b>
+                                        </Button>
                                     </div>
                                     <div id="login-button-container-bottom" className={props.mode}>
                                         <Button id='login-register-button' className={props.mode} onClick={loginHandler}><b>SIGN UP</b></Button>
-                                        <Button id='login-google-button' className={props.mode} onClick={loginHandler}><b>SIGN IN WITH GOOGLE</b></Button>
+                                        <GoogleLogin
+                                            clientId="404982957478-12rkn75au31bnb8q7len0vdindftgumd.apps.googleusercontent.com"
+                                            buttonText="SIGN IN WITH GOOGLE"
+                                            onSuccess={responseGoogle}
+                                            onFailure={responseGoogle}
+                                            cookiePolicy={'single_host_origin'}
+                                        />
                                     </div>
                                 </FormGroup>
                             </FormControl>
