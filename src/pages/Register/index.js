@@ -2,12 +2,18 @@ import React, {useState, useEffect} from 'react';
 import FormControl from '@material-ui/core/FormControl';
 import FormGroup from "@material-ui/core/FormGroup";
 import TextField from '@material-ui/core/TextField';
+import GoogleLogin from 'react-google-login';
 import './register.scss';
 
 
 import {AnimationButton} from '../../components/reusable/AnimationButton';
 
 const Register = () => {
+
+    const responseGoogle = response => {
+        //setEmail(response.profileObj.email);
+        console.log(response.profileObj.name+" "+response.profileObj.email);
+    }
 
     const [email, setEmail] = useState('');
 
@@ -61,6 +67,13 @@ const Register = () => {
                             onClick={registerHandler}
                             />
                         </div>
+                        <GoogleLogin
+                            clientId="404982957478-12rkn75au31bnb8q7len0vdindftgumd.apps.googleusercontent.com"
+                            buttonText="Login"
+                            onSuccess={responseGoogle}
+                            onFailure={responseGoogle}
+                            cookiePolicy={'single_host_origin'}
+                        />
 
                     </FormGroup>
                 </FormControl>
