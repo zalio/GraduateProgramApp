@@ -1,65 +1,82 @@
 import React, { useState, useEffect } from 'react';
+import Container from '@material-ui/core/Container';
 import FormControl from '@material-ui/core/FormControl';
 import FormGroup from "@material-ui/core/FormGroup";
 import TextField from '@material-ui/core/TextField';
-import Select from '@material-ui/core/Select';
-import MenuItem from "@material-ui/core/MenuItem";
+import Link from '@material-ui/core/Link';
+import Button from "@material-ui/core/Button";
+import {connect} from "react-redux";
 import './login.scss';
+import iyteLogo from '../../app/assets/images/iyte-logo.gif';
 
-import {AnimationButton} from '../../components/reusable/AnimationButton';
 
-const Login = () => {
+const Login = (props) => {
 
     const [email, setEmail] = useState('');
-    const [domain, setDomain] = useState({value: 10, children: 'std.iyte.edu.tr'});
     const [password, setPassword] = useState('');
 
-    const loginHandler = () => localStorage.setItem('userData', 'token');
+    const loginHandler = () => console.log('jgd');
 
     return (
-        <div id='login-page-general'>
-            <div className='login-container'>
-                <FormControl noValidate autoComplete="off">
-                    <FormGroup row={false}>
-                        <div id="email-container">
-                            <TextField
-                                error={false}
-                                id="email"
-                                label="Your e-mail"
-                                variant="outlined"
-                                value={email}
-                                onChange={e => setEmail(e.target.value)}
-                            />
+        <>
+            <div id="login-page" className={props.mode}>
+                <div id="login-page-upper-logo" className={props.mode}>
+                    <img src={iyteLogo} alt=""/>
+                </div>
+                <Container>
+                    <div id="login-page-upper" className={props.mode}>
+                        <h1 id="login-page-header-text" className={props.mode}>Graduate Program Application</h1>
+                    </div>
+                    <div id='login-page-general' className={props.mode}>
+                        <div id='login-container' className={props.mode}>
+                            <h1 className={props.mode}>SIGN IN!</h1>
+                            <FormControl noValidate autoComplete="off">
+                                <FormGroup row={false}>
+                                    <div id="login-email-container">
+                                        <TextField
+                                            error={false}
+                                            id="login-email"
+                                            label="Your e-mail"
+                                            value={email}
+                                            className={props.mode}
+                                            onChange={e => setEmail(e.target.value)}
+                                        />
+                                    </div>
+                                    <div id='login-password-container'>
+                                        <TextField
+                                            type='password'
+                                            error={false}
+                                            id='login-password'
+                                            label="Password"
+                                            value={password}
+                                            className={props.mode}
+                                            onChange={e => setPassword(e.target.value)}
+                                        />
+                                    </div>
+                                    <div id="login-link-container" className={props.mode}>
+                                        <Link id="login-link" className={props.mode}>Forgot Password</Link>
+                                    </div>
+                                    <div id="login-button-container-upper" className={props.mode}>
+                                        <Button id='login-login-button' className={props.mode} variant="contained" onClick={loginHandler}><b>SIGN IN</b></Button>
+                                    </div>
+                                    <div id="login-button-container-bottom" className={props.mode}>
+                                        <Button id='login-register-button' className={props.mode} onClick={loginHandler}><b>SIGN UP</b></Button>
+                                        <Button id='login-google-button' className={props.mode} onClick={loginHandler}><b>SIGN IN WITH GOOGLE</b></Button>
+                                    </div>
+                                </FormGroup>
+                            </FormControl>
                         </div>
-                        <div id="select-container">
-                            <Select
-                                labelId="demo-simple-select-label"
-                                id="select"
-                                onChange={(e,v) => setDomain(v.props)}
-                            >
-                                <MenuItem value={10}>std.iyte.edu.tr</MenuItem>
-                                <MenuItem value={20}>iyte.edu.tr</MenuItem>
-                            </Select>
-                        </div>
-                        <div id='password-container'>
-                            <TextField
-                                type='password'
-                                error={false}
-                                id='password'
-                                label="Password"
-                                variant="outlined"
-                                value={password}
-                                onChange={e => setPassword(e.target.value)}
-                            />
-                        </div>
-                        <div id="button-container">
-                            <AnimationButton id='loginButton' title='Giriş Yap!' onClick={loginHandler} />
-                        </div>
-                    </FormGroup>
-                </FormControl>
+                    </div>
+                </Container>
             </div>
-        </div>
+        </>
     )
 };
 
-export default Login;
+const mapStateToProps = ({applicationReducer}) => {
+    const {mode} = applicationReducer;
+    return {
+        mode,
+    };
+};
+export default connect(mapStateToProps)(Login);

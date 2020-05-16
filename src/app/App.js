@@ -3,9 +3,12 @@ import "./assets/styles/App.scss";
 import Content from "./Content.js";
 import LoadingScreen from "../components/reusable/LoadingScreen";
 import Login from "../pages/Login";
-import Register from "../pages/Register";
+import Button from "@material-ui/core/Button";
+import {connect} from "react-redux";
 
-const App = () => {
+import {themeChanger} from "../store/actions/application";
+
+const App = (props) => {
   const [isLoading, setIsLoading] = useState(true);
   const [userData, setUserData] = useState(null);
 
@@ -19,12 +22,32 @@ const App = () => {
     }
   }, []);
 
+  const themeButton = () =>
+      <Button
+          id="theme-button"
+          variant="contained"
+          onClick={() =>
+              props.themeChanger()}>
+        OPEN {props.mode === 'light' ? 'DARK' : 'LIGHT'} MODE
+      </Button>;
+
   const renderItem = () => {
     if (isLoading) return <LoadingScreen />;
-    else if (!userData) return <Register />;
-    return <Content isSignIned={userData !== null} />;
+    else if (!userData) return <div>{themeButton()}<Login /></div>;
+    return <div>{themeButton()}<Content isSignIned={userData !== null} /></div>;
   };
   return <div className="App">{renderItem()}</div>;
 };
 
-export default App;
+const mapStateToProps = ({applicationReducer}) => {
+  const {mode} = applicationReducer;
+  return {
+    mode,
+  };
+};
+
+const mapDispatchToProps = {
+  themeChanger,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
