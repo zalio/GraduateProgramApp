@@ -5,7 +5,7 @@ import LoadingScreen from "../components/reusable/LoadingScreen";
 import Login from "../pages/Login";
 import Button from "@material-ui/core/Button";
 import {connect} from "react-redux";
-import ForgotPassWord from '../pages/ForgotPassword';
+import Register from '../pages/Register';
 
 
 import {themeChanger} from "../store/actions/application";
@@ -35,7 +35,7 @@ const App = (props) => {
 
   const renderItem = () => {
     if (isLoading) return <LoadingScreen />;
-    else if (!userData) return <div>{themeButton()}<ForgotPassWord /></div>;
+    else if (!userData) return <div>{themeButton()}<Login /></div>;
     return <div>{themeButton()}<Content isSignIned={userData !== null} /></div>;
   };
   return <div className="App">{renderItem()}</div>;
