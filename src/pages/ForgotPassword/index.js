@@ -9,6 +9,7 @@ import { connect } from "react-redux";
 import iyteLogo from "../../app/assets/images/iyte-logo.gif";
 import Link from "@material-ui/core/Link";
 import { GoogleLogin } from "react-google-login";
+import Login from "../Login";
 
 const ForgotPassword = (props) => {
   const [email, setEmail] = useState("");
@@ -50,6 +51,7 @@ const ForgotPassword = (props) => {
                       className={props.mode}
                       variant="contained"
                       onClick={forgotPasswordHandler}
+                      href={"../login"}
                     >
                       <b>SIGN IN</b>
                     </Button>

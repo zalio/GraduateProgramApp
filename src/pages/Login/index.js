@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import Container from "@material-ui/core/Container";
 import FormControl from "@material-ui/core/FormControl";
 import FormGroup from "@material-ui/core/FormGroup";
@@ -10,11 +11,17 @@ import { GoogleLogin } from "react-google-login";
 import "./login.scss";
 import iyteLogo from "../../app/assets/images/iyte-logo.gif";
 
+import { loginSuccess } from "../../store/actions/auth";
+
 const Login = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  const loginHandler = () => console.log("jgd");
+  const history = useHistory();
+  const loginHandler = () => {
+    localStorage.setItem("userData", "token");
+    props.loginSuccess("token");
+    history.push("/dashboard");
+  };
   const responseGoogle = (response) => {
     //setEmail(response.profileObj.email);
     console.log(response.profileObj.name + " " + response.profileObj.email);
@@ -59,7 +66,11 @@ const Login = (props) => {
                     />
                   </div>
                   <div id="login-link-container" className={props.mode}>
-                    <Link id="login-link" className={props.mode}>
+                    <Link
+                      id="login-link"
+                      onClick={() => history.push("/forgot-password")}
+                      className={props.mode}
+                    >
                       Forgot Password
                     </Link>
                   </div>
@@ -80,7 +91,7 @@ const Login = (props) => {
                     <Button
                       id="login-register-button"
                       className={props.mode}
-                      onClick={loginHandler}
+                      onClick={() => history.push("/register")}
                     >
                       <b>SIGN UP</b>
                     </Button>
@@ -108,4 +119,7 @@ const mapStateToProps = ({ applicationReducer }) => {
     mode,
   };
 };
-export default connect(mapStateToProps)(Login);
+const mapDispatchToProps = {
+  loginSuccess,
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
