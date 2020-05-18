@@ -17,12 +17,11 @@ export const loginRequest = () => {
     });
   };
 };
-export const loginSuccess = (email, token, uid) => {
+export const loginSuccess = (token) => {
   return (dispatch) => {
-    const userData = { email, token, uid };
     dispatch({
       type: LOGIN_SUCCESS,
-      payload: userData,
+      payload: token,
     });
   };
 };

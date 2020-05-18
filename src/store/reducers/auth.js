@@ -12,6 +12,7 @@ import {
 
 const INITIAL_STATE = {
   loading: false,
+  userData: null,
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -21,9 +22,7 @@ export default (state = INITIAL_STATE, action) => {
     case LOGIN_SUCCESS:
       return {
         ...state,
-        email: action.payload.email,
-        token: action.payload.token,
-        uid: action.payload.uid,
+        userData: action.payload,
         loading: false,
       };
     case LOGIN_FAIL:
