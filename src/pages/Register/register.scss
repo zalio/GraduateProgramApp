@@ -1,28 +1,107 @@
-.register-container {
-  width: 500px;
+#register-page {
+  height: 100vh;
+  padding-top: 80px;
+  background-color: #24292E;
 }
 
-#department-container,#email-container, #select-role-container,#select-domain-container, #password-container {
+#register-page-general {
   width: 100%;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  height: 60vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 20vh;
+  left: 0;
+}
+
+#register-container {
+  width: 350px;
+  padding: 30px;
+  border-radius: 10px;
+  .MuiFormControl-root {
+    width: 100%;
+  }
+
+
+  #name-surname-container{
+    display: flex;
+    flex-direction: row;
+  }
+
+  #register-name-container{
+    width: 50%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  #register-surname-container{
+    width: 50%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 20px;
+  }
+
+
+
+  #register-email-container, #register-password-container, #register-repassword-container {
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  #register-email, #register-password, #register-name, #register-surname, #register-repassword {
+    border: none;
+    &:hover {
+      background-image: none !important;
+    }
+  }
+
+
 }
 
 #registerButton {
   height: 40px;
-  background-color: #814BF6;
-  color: white;
-  width: 100px;
+  margin-top: 25px;
+  background-color: rgba(0,175,0,.8);
+  width: 120px;
+  border-radius: 30px;
+  &:hover {
+    background-color: rgba(0,175,0,0.4);
+  }
 }
 
 #button-container {
-  display: flex !important;
-  justify-content: center;
-  align-items: center;
+  display: flex;
+  justify-content: space-evenly;
 }
 
-.MuiFormControl-root, .MuiTextField-root {
-  width: 100%;
+#register-page.dark {
+  background-color: #282c34;
+}
+#register-page.light {
+  background-color: white;
 }
 
-/*# sourceMappingURL=register.css.map */
+#register-container.dark{
+  border: 2px solid white;
+
+  #register-email, #register-password, #register-repassword, #register-name, #register-surname {
+    color: white;
+  }
+}
+#register-container.light{
+  border: 2px solid black;
+  background-color: white;
+}
+
+#registerButton.light{
+  border: 2px solid black;
+}
+
+#registerButton.dark{
+  color: white;
+  border: 2px solid white;
+}
+
+
