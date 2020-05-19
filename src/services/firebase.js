@@ -19,20 +19,13 @@ export const firestore = firebase.firestore();
 
 const provider = new firebase.auth.GoogleAuthProvider();
 
-export const signInWithGoogle = async () => {
-  const result = await auth.signInWithPopup(provider);
-  return result;
-};
+export const signInWithGoogle = () => auth.signInWithPopup(provider);
 
-export const signInWithEmailAndPassword = async (email, password) => {
-  const result = await auth.signInWithEmailAndPassword(email, password);
-  return result;
-};
+export const signInWithEmailAndPassword = (email, password) =>
+  auth.signInWithEmailAndPassword(email, password);
 
-export const signUpWithEmailAndPassword = async (email, password) => {
-  const result = await auth.createUserWithEmailAndPassword(email, password);
-  return result;
-};
+export const signUpWithEmailAndPassword = async (email, password) =>
+  auth.createUserWithEmailAndPassword(email, password);
 
 export const forgotPasswordWithEmail = async (email) => {
   try {
