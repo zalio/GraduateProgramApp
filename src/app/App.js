@@ -21,7 +21,7 @@ const App = (props) => {
       props.loginSuccess(userFromLS);
       setIsLoading(false);
     }
-  });
+  }, [props.userData]);
 
   const themeButton = () => (
     <Button id="theme-button" variant="contained" onClick={() => props.themeChanger()}>
