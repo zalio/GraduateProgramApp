@@ -4,6 +4,24 @@
   background-color: #24292E;
 }
 
+#upper-logo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200px;
+  height: 200px;
+  background-color: white;
+  border-bottom-right-radius: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  img {
+    max-width: 125px;
+    margin-right: 40px;
+    margin-bottom: 40px;
+  }
+}
+
 #register-page-upper {
     margin-top: 0;
     font-size: 50px;

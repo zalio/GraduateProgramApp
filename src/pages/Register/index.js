@@ -64,16 +64,16 @@ const Register = ({ mode, registerRequest, registerSuccess, registerFail }) => {
       <div id="upper-logo" className={mode}>
         <img src={iyteLogo} alt="" />
       </div>
-      <div id="login-page-upper" className={mode}>
+      <div id="register-page-upper" className={mode}>
         <Link
           id="register-page-header-link"
           onClick={() => history.push("/")}
           className={mode}
         >
-          <h1 id="login-page-header-text">Graduate Program Application</h1>
+          Graduate Program Application
         </Link>
       </div>
-      <div id={"login-page-general"} className={mode}>
+      <div id={"register-page-general"} className={mode}>
         <div id={"register-container"} className={mode}>
           <h1 className={mode}>REGISTER</h1>
           <FormControl noValidate autoComplete={"off"}>
