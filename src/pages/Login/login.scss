@@ -1,3 +1,4 @@
+
 #login-page {
   height: 100vh;
   padding-top: 80px;
@@ -22,13 +23,6 @@
   }
 }
 
-#login-page-upper {
-  h1{
-    margin-top: 0;
-    font-size: 50px;
-  }
-}
-
 #login-page-general {
   width: 100%;
   height: 60vh;
@@ -38,6 +32,7 @@
   position: absolute;
   top: 20vh;
   left: 0;
+  margin-top: 30px;
 }
 #login-container {
   width: 350px;
@@ -168,4 +163,46 @@ h1.light {
 }
 #login-register-button.dark{
   color: white;
+}
+
+@media only screen and (max-width: 569px) {
+  h1 {
+    margin-top: 50px;
+  }
+  #login-page-general {
+    margin-top: 90px;
+  }
+  #upper-logo {
+    width: 125px;
+    height: 125px;
+    img {
+      max-width: 75px;
+    }
+  }
+}
+
+@media only screen and (min-width: 570px) and (max-width: 1001px) {
+  h1 {
+    margin-top: 30px;
+    font-size: 40px;
+  }
+  #upper-logo {
+    width: 125px;
+    height: 125px;
+    img {
+      max-width: 75px;
+    }
+  }
+  #login-page-general {
+    margin-top: 70px;
+  }
+}
+
+@media only screen and (min-width: 1002px) {
+  #login-page-upper {
+    h1{
+      margin-top: 0;
+      font-size: 50px;
+    }
+  }
 }
