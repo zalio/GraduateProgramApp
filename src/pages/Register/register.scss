@@ -4,6 +4,31 @@
   background-color: #24292E;
 }
 
+#upper-logo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200px;
+  height: 200px;
+  background-color: white;
+  border-bottom-right-radius: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  img {
+    max-width: 125px;
+    margin-right: 40px;
+    margin-bottom: 40px;
+  }
+}
+
+#register-page-upper {
+    margin-top: 0;
+    font-size: 50px;
+    font-weight: bold;
+
+}
+
 #register-page-general {
   width: 100%;
   height: 60vh;
@@ -83,16 +108,30 @@
   background-color: white;
 }
 
+
 #register-container.dark{
   border: 2px solid white;
-
-  #register-email, #register-password, #register-repassword, #register-name, #register-surname {
+  #register-email-label, #register-password-label, #register-repassword-label, #register-name-label, #register-surname-label {
+    color: white;
+  }
+  #register-email, #register-password, #register-repassword, #register-name, #register-surname{
     color: white;
   }
 }
 #register-container.light{
   border: 2px solid black;
+  #register-email, #register-password, #register-repassword, #register-name, #register-surname {
+    color: black;
+  }
   background-color: white;
+}
+
+#register-page-header-link.dark {
+  color: white;
+}
+
+#register-page-header-link.light {
+  color: black;
 }
 
 #registerButton.light{

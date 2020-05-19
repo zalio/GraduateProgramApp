@@ -4,6 +4,8 @@ import FormControl from "@material-ui/core/FormControl";
 import FormGroup from "@material-ui/core/FormGroup";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import Link from "@material-ui/core/Link";
+import iyteLogo from "../../app/assets/images/iyte-logo.gif";
 import "./register.scss";
 import { connect } from "react-redux";
 
@@ -13,6 +15,7 @@ import {
   registerSuccess,
   registerFail,
 } from "../../store/actions/auth";
+import Container from "@material-ui/core/Container";
 
 const Register = ({ mode, registerRequest, registerSuccess, registerFail }) => {
   const history = useHistory();
@@ -60,8 +63,21 @@ const Register = ({ mode, registerRequest, registerSuccess, registerFail }) => {
 
   return (
     <div id="register-page" className={mode}>
+      <div id="upper-logo" className={mode}>
+        <img src={iyteLogo} alt="" />
+      </div>
+      <div id="register-page-upper" className={mode}>
+        <Link
+          id="register-page-header-link"
+          onClick={() => history.push("/")}
+          className={mode}
+        >
+          Graduate Program Application
+        </Link>
+      </div>
       <div id={"register-page-general"} className={mode}>
         <div id={"register-container"} className={mode}>
+          <h1 className={mode}>REGISTER</h1>
           <FormControl noValidate autoComplete={"off"}>
             <FormGroup row={false}>
               <div id={"name-surname-container"} className={mode}>
@@ -96,9 +112,9 @@ const Register = ({ mode, registerRequest, registerSuccess, registerFail }) => {
               </div>
               <div id="register-password-container" className={mode}>
                 <TextField
-                  type="register-password"
+                  type="password"
                   error={false}
-                  id="password"
+                  id="register-password"
                   label="Password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -121,7 +137,7 @@ const Register = ({ mode, registerRequest, registerSuccess, registerFail }) => {
                   variant="contained"
                   onClick={registerHandler}
                 >
-                  <b>Kayıt ol</b>
+                  <b>Register</b>
                 </Button>
               </div>
             </FormGroup>
