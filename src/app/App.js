@@ -24,7 +24,11 @@ const App = (props) => {
   }, [props.userData]);
 
   const themeButton = () => (
-    <Button id="theme-button" variant="contained" onClick={() => props.themeChanger()}>
+    <Button
+      id="theme-button"
+      variant="contained"
+      onClick={() => props.themeChanger()}
+    >
       OPEN {props.mode === "light" ? "DARK" : "LIGHT"} MODE
     </Button>
   );

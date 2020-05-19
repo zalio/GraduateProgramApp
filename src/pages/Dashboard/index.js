@@ -3,7 +3,11 @@ import { connect } from "react-redux";
 import { Button } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 
-import { registerRequest, registerSuccess, clearUserData } from "../../store/actions/auth";
+import {
+  registerRequest,
+  registerSuccess,
+  clearUserData,
+} from "../../store/actions/auth";
 import { SESSION_STORAGE_KEY } from "../Login";
 
 import "./dashboard.scss";

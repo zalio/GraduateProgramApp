@@ -9,6 +9,7 @@ import "./forgotPassword.scss";
 import { connect } from "react-redux";
 import iyteLogo from "../../app/assets/images/iyte-logo.gif";
 import { forgotPasswordWithEmail } from "../../services/firebase";
+import Link from "@material-ui/core/Link";
 
 const ForgotPassword = (props) => {
   const [email, setEmail] = useState("");
@@ -31,14 +32,18 @@ const ForgotPassword = (props) => {
           <img src={iyteLogo} alt="" />
         </div>
         <Container>
-          <div id="forgot-password-upper" className={props.mode}>
-            <h1 id="forgot-password-header-text" className={props.mode}>
+          <div id="forgot-password-page-upper" className={props.mode}>
+            <Link
+              id="forgot-password-page-header-link"
+              onClick={() => history.push("/")}
+              className={props.mode}
+            >
               Graduate Program Application
-            </h1>
+            </Link>
           </div>
           <div id="login-page-general" className={props.mode}>
             <div id="forgot-password-container" className={props.mode}>
-              <h1 className={props.mode}>RENEW PASSWORD!</h1>
+              <h1 className={props.mode}>UPDATE PASSWORD</h1>
               <FormControl noValidate autoComplete="off">
                 <FormGroup row={false}>
                   <div id="forgot-password-email-container">
