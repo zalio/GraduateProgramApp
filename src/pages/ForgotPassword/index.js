@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import Container from "@material-ui/core/Container";
 import FormControl from "@material-ui/core/FormControl";
 import Button from "@material-ui/core/Button";
@@ -7,13 +8,21 @@ import TextField from "@material-ui/core/TextField";
 import "./forgotPassword.scss";
 import { connect } from "react-redux";
 import iyteLogo from "../../app/assets/images/iyte-logo.gif";
-import Link from "@material-ui/core/Link";
-import { GoogleLogin } from "react-google-login";
-import Login from "../Login";
+import { forgotPasswordWithEmail } from "../../services/firebase";
 
 const ForgotPassword = (props) => {
   const [email, setEmail] = useState("");
-  const forgotPasswordHandler = () => console.log("Link gönderildi.");
+
+  const history = useHistory();
+
+  const forgotPasswordHandler = async () => {
+    const result = await forgotPasswordWithEmail(email);
+    if (!result) alert("Please enter valid email!");
+    else {
+      alert("Password reset email has been sent to your email!");
+      history.push("/");
+    }
+  };
 
   return (
     <>
@@ -51,9 +60,8 @@ const ForgotPassword = (props) => {
                       className={props.mode}
                       variant="contained"
                       onClick={forgotPasswordHandler}
-                      href={"../login"}
                     >
-                      <b>SIGN IN</b>
+                      <b>SEND EMAIL</b>
                     </Button>
                   </div>
                 </FormGroup>

@@ -7,41 +7,68 @@ import TextField from "@material-ui/core/TextField";
 import Link from "@material-ui/core/Link";
 import Button from "@material-ui/core/Button";
 import { connect } from "react-redux";
-import { GoogleLogin } from "react-google-login";
 import "./login.scss";
 import iyteLogo from "../../app/assets/images/iyte-logo.gif";
+import googleLogo from "../../app/assets/images/google-logo.png";
 
-import { loginSuccess } from "../../store/actions/auth";
+import {
+  loginRequest,
+  loginSuccess,
+  loginFail,
+} from "../../store/actions/auth";
+import {
+  signInWithEmailAndPassword,
+  signInWithGoogle,
+} from "../../services/firebase";
 
-const Login = (props) => {
+const Login = ({ mode, loginRequest, loginSuccess, loginFail }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   const history = useHistory();
-  const loginHandler = () => {
-    localStorage.setItem("userData", "token");
-    props.loginSuccess("token");
-    history.push("/dashboard");
+
+  const loginHandler = async () => {
+    if (email === "" || password === "") {
+      alert("Please enter all fields!");
+      return;
+    }
+    try {
+      const response = await signInWithEmailAndPassword(email, password);
+      console.log(response);
+      if (response.operationType === "signIn") {
+        localStorage.setItem("userData", response.user.refreshToken);
+        loginSuccess(response.user.refreshToken);
+        history.push("/dashboard");
+      }
+    } catch (e) {
+      alert(e.message);
+    }
   };
-  const responseGoogle = (response) => {
-    //setEmail(response.profileObj.email);
-    console.log(response.profileObj.name + " " + response.profileObj.email);
+
+  const googleHandler = async () => {
+    const response = await signInWithGoogle();
+    if (response.operationType === "signIn") {
+      localStorage.setItem("userData", response.user.refreshToken);
+      loginSuccess(response.user.refreshToken);
+      history.push("/dashboard");
+    }
   };
 
   return (
     <>
-      <div id="login-page" className={props.mode}>
-        <div id="upper-logo" className={props.mode}>
+      <div id="login-page" className={mode}>
+        <div id="upper-logo" className={mode}>
           <img src={iyteLogo} alt="" />
         </div>
         <Container>
-          <div id="login-page-upper" className={props.mode}>
-            <h1 id="login-page-header-text" className={props.mode}>
+          <div id="login-page-upper" className={mode}>
+            <h1 id="login-page-header-text" className={mode}>
               Graduate Program Application
             </h1>
           </div>
-          <div id="login-page-general" className={props.mode}>
-            <div id="login-container" className={props.mode}>
-              <h1 className={props.mode}>SIGN IN!</h1>
+          <div id="login-page-general" className={mode}>
+            <div id="login-container" className={mode}>
+              <h1 className={mode}>SIGN IN</h1>
               <FormControl noValidate autoComplete="off">
                 <FormGroup row={false}>
                   <div id="login-email-container">
@@ -50,7 +77,7 @@ const Login = (props) => {
                       id="login-email"
                       label="Your e-mail"
                       value={email}
-                      className={props.mode}
+                      className={mode}
                       onChange={(e) => setEmail(e.target.value)}
                     />
                   </div>
@@ -61,47 +88,45 @@ const Login = (props) => {
                       id="login-password"
                       label="Password"
                       value={password}
-                      className={props.mode}
+                      className={mode}
                       onChange={(e) => setPassword(e.target.value)}
                     />
                   </div>
-                  <div id="login-link-container" className={props.mode}>
+                  <div id="login-link-container" className={mode}>
                     <Link
                       id="login-link"
                       onClick={() => history.push("/forgot-password")}
-                      className={props.mode}
+                      className={mode}
                     >
                       Forgot Password
                     </Link>
                   </div>
-                  <div id="login-button-container-upper" className={props.mode}>
+                  <div id="login-button-container-upper" className={mode}>
                     <Button
                       id="login-login-button"
-                      className={props.mode}
+                      className={mode}
                       variant="contained"
                       onClick={loginHandler}
                     >
                       <b>SIGN IN</b>
                     </Button>
                   </div>
-                  <div
-                    id="login-button-container-bottom"
-                    className={props.mode}
-                  >
+                  <div id="login-button-container-bottom" className={mode}>
                     <Button
                       id="login-register-button"
-                      className={props.mode}
+                      className={mode}
                       onClick={() => history.push("/register")}
                     >
                       <b>SIGN UP</b>
                     </Button>
-                    <GoogleLogin
-                      clientId="404982957478-12rkn75au31bnb8q7len0vdindftgumd.apps.googleusercontent.com"
-                      buttonText="SIGN IN WITH GOOGLE"
-                      onSuccess={responseGoogle}
-                      onFailure={responseGoogle}
-                      cookiePolicy={"single_host_origin"}
-                    />
+                    <Button id="google-login-button" onClick={googleHandler}>
+                      <img
+                        id="google-login-button-img"
+                        src={googleLogo}
+                        alt=""
+                      />
+                      SIGN IN WITH GOOGLE
+                    </Button>
                   </div>
                 </FormGroup>
               </FormControl>
@@ -120,6 +145,8 @@ const mapStateToProps = ({ applicationReducer }) => {
   };
 };
 const mapDispatchToProps = {
+  loginRequest,
   loginSuccess,
+  loginFail,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

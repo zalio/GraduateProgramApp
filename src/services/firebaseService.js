@@ -6,8 +6,14 @@ export const signUp = (userEmail, userPassword) => {
       "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBHnx4_Yq1KCPu33_IZ1-yCAIqvpoh-H8Y",
       { email: userEmail, password: userPassword, returnSecureToken: true }
     )
-    .then((res) => console.log(res))
-    .catch((err) => console.log(err));
+    .then((res) => {
+      console.log(res);
+      return res;
+    })
+    .catch((err) => {
+      console.log(err);
+      return err;
+    });
 };
 
 export const signIn = (userEmail, userPassword) => {

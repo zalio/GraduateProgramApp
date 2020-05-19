@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import FormControl from "@material-ui/core/FormControl";
 import FormGroup from "@material-ui/core/FormGroup";
 import TextField from "@material-ui/core/TextField";
@@ -6,23 +7,65 @@ import Button from "@material-ui/core/Button";
 import "./register.scss";
 import { connect } from "react-redux";
 
-const Register = (props) => {
+import { signUpWithEmailAndPassword } from "../../services/firebase";
+import {
+  registerRequest,
+  registerSuccess,
+  registerFail,
+} from "../../store/actions/auth";
+
+const Register = ({ mode, registerRequest, registerSuccess, registerFail }) => {
+  const history = useHistory();
+
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
   const [password, setPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
 
-  const registerHandler = () => console.log("Kayıt olundu.");
+  const registerHandler = async () => {
+    if (
+      email === "" ||
+      name === "" ||
+      surname === "" ||
+      password === "" ||
+      rePassword === ""
+    ) {
+      alert("Please enter all fields!");
+      return;
+    }
+    if (password.length < 6) {
+      alert("Password must be bigger than or equal to 6!");
+      return;
+    }
+    if (password !== rePassword) {
+      alert("Passwords do not match!");
+      return;
+    }
+    registerRequest();
+    try {
+      const response = await signUpWithEmailAndPassword(email, password);
+      console.log(response);
+      if (response.operationType === "signIn") {
+        registerSuccess();
+        alert("You have been signed up !");
+        history.push("/");
+      }
+    } catch (e) {
+      console.log(e);
+      alert(e.message);
+      registerFail();
+    }
+  };
 
   return (
-    <div id="register-page" className={props.mode}>
-      <div id={"register-page-general"} className={props.mode}>
-        <div id={"register-container"} className={props.mode}>
+    <div id="register-page" className={mode}>
+      <div id={"register-page-general"} className={mode}>
+        <div id={"register-container"} className={mode}>
           <FormControl noValidate autoComplete={"off"}>
             <FormGroup row={false}>
-              <div id={"name-surname-container"} className={props.mode}>
-                <div id={"register-name-container"} className={props.mode}>
+              <div id={"name-surname-container"} className={mode}>
+                <div id={"register-name-container"} className={mode}>
                   <TextField
                     error={false}
                     id={"register-name"}
@@ -31,7 +74,7 @@ const Register = (props) => {
                     onChange={(e) => setName(e.target.value)}
                   />
                 </div>
-                <div id={"register-surname-container"} className={props.mode}>
+                <div id={"register-surname-container"} className={mode}>
                   <TextField
                     error={false}
                     id={"register-surname"}
@@ -42,7 +85,7 @@ const Register = (props) => {
                 </div>
               </div>
 
-              <div id={"register-email-container"} className={props.mode}>
+              <div id={"register-email-container"} className={mode}>
                 <TextField
                   error={false}
                   id={"register-email"}
@@ -51,7 +94,7 @@ const Register = (props) => {
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
-              <div id="register-password-container" className={props.mode}>
+              <div id="register-password-container" className={mode}>
                 <TextField
                   type="register-password"
                   error={false}
@@ -61,7 +104,7 @@ const Register = (props) => {
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
-              <div id="register-repassword-container" className={props.mode}>
+              <div id="register-repassword-container" className={mode}>
                 <TextField
                   type="password"
                   error={false}
@@ -71,10 +114,10 @@ const Register = (props) => {
                   onChange={(e) => setRePassword(e.target.value)}
                 />
               </div>
-              <div id={"button-container"} className={props.mode}>
+              <div id={"button-container"} className={mode}>
                 <Button
                   id={"registerButton"}
-                  className={props.mode}
+                  className={mode}
                   variant="contained"
                   onClick={registerHandler}
                 >
@@ -95,4 +138,8 @@ const mapStateToProps = ({ applicationReducer }) => {
     mode,
   };
 };
-export default connect(mapStateToProps)(Register);
+export default connect(mapStateToProps, {
+  registerRequest,
+  registerSuccess,
+  registerFail,
+})(Register);
