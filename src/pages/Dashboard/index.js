@@ -1,14 +1,37 @@
 import React from "react";
 import { connect } from "react-redux";
-import { AnimationButton } from "../../components/reusable/AnimationButton";
+import { Button } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
+
+import { registerRequest, registerSuccess, clearUserData } from "../../store/actions/auth";
+import { SESSION_STORAGE_KEY } from "../Login";
+
 import "./dashboard.scss";
 
-import Login from "../Login";
+const Dashboard = ({ clearUserData }) => {
+  const history = useHistory();
 
-import { registerRequest, registerSuccess } from "../../store/actions/auth";
+  const onExitPress = async () => {
+    localStorage.removeItem(SESSION_STORAGE_KEY);
+    clearUserData();
+    history.push("/");
+  };
 
-const Dashboard = (props) => {
-  return <div>Welcome to dashboard</div>;
+  return (
+    <>
+      <div>Welcome to dashboard</div>
+      <Button
+        style={{
+          marginTop: 50,
+          backgroundColor: "red",
+        }}
+        variant="contained"
+        onClick={onExitPress}
+      >
+        <b style={{ color: "#FFFFFF" }}> EXIT</b>
+      </Button>
+    </>
+  );
 };
 
 const mapStateToProps = ({ authReducer }) => {
@@ -19,6 +42,7 @@ const mapStateToProps = ({ authReducer }) => {
 const mapDispatchToProps = {
   registerRequest,
   registerSuccess,
+  clearUserData,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

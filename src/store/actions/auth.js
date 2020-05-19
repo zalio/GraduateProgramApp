@@ -8,6 +8,7 @@ import {
   FORGOT_PASSWORD_REQUEST,
   FORGOT_PASSWORD_SUCCESS,
   FORGOT_PASSWORD_FAIL,
+  CLEAR_USER_DATA,
 } from "../types";
 
 export const loginRequest = () => {
@@ -71,6 +72,14 @@ export const forgotPasswordFail = () => {
   return (dispatch) => {
     dispatch({
       type: FORGOT_PASSWORD_FAIL,
+    });
+  };
+};
+
+export const clearUserData = () => {
+  return (dispatch) => {
+    dispatch({
+      type: CLEAR_USER_DATA,
     });
   };
 };

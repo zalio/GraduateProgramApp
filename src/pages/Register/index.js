@@ -10,11 +10,7 @@ import "./register.scss";
 import { connect } from "react-redux";
 
 import { signUpWithEmailAndPassword } from "../../services/firebase";
-import {
-  registerRequest,
-  registerSuccess,
-  registerFail,
-} from "../../store/actions/auth";
+import { registerRequest, registerSuccess, registerFail } from "../../store/actions/auth";
 import Container from "@material-ui/core/Container";
 
 const Register = ({ mode, registerRequest, registerSuccess, registerFail }) => {
@@ -27,13 +23,7 @@ const Register = ({ mode, registerRequest, registerSuccess, registerFail }) => {
   const [rePassword, setRePassword] = useState("");
 
   const registerHandler = async () => {
-    if (
-      email === "" ||
-      name === "" ||
-      surname === "" ||
-      password === "" ||
-      rePassword === ""
-    ) {
+    if (email === "" || name === "" || surname === "" || password === "" || rePassword === "") {
       alert("Please enter all fields!");
       return;
     }
@@ -48,14 +38,12 @@ const Register = ({ mode, registerRequest, registerSuccess, registerFail }) => {
     registerRequest();
     try {
       const response = await signUpWithEmailAndPassword(email, password);
-      console.log(response);
       if (response.operationType === "signIn") {
         registerSuccess();
         alert("You have been signed up !");
         history.push("/");
       }
     } catch (e) {
-      console.log(e);
       alert(e.message);
       registerFail();
     }
@@ -67,11 +55,7 @@ const Register = ({ mode, registerRequest, registerSuccess, registerFail }) => {
         <img src={iyteLogo} alt="" />
       </div>
       <div id="register-page-upper" className={mode}>
-        <Link
-          id="register-page-header-link"
-          onClick={() => history.push("/")}
-          className={mode}
-        >
+        <Link id="register-page-header-link" onClick={() => history.push("/")} className={mode}>
           Graduate Program Application
         </Link>
       </div>

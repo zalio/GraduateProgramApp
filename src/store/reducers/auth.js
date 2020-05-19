@@ -8,6 +8,7 @@ import {
   FORGOT_PASSWORD_REQUEST,
   FORGOT_PASSWORD_SUCCESS,
   FORGOT_PASSWORD_FAIL,
+  CLEAR_USER_DATA,
 } from "../types";
 
 const INITIAL_STATE = {
@@ -39,6 +40,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, loading: false };
     case FORGOT_PASSWORD_FAIL:
       return { ...state, loading: false };
+    case CLEAR_USER_DATA:
+      return { ...state, userData: null };
     default:
       return state;
   }

@@ -6,13 +6,14 @@ import Button from "@material-ui/core/Button";
 import { connect } from "react-redux";
 import { themeChanger } from "../store/actions/application";
 import { loginRequest, loginSuccess, loginFail } from "../store/actions/auth";
+import { SESSION_STORAGE_KEY } from "../pages/Login";
 
 const App = (props) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     props.loginRequest();
-    const userFromLS = localStorage.getItem("userData");
+    const userFromLS = localStorage.getItem(SESSION_STORAGE_KEY);
     if (userFromLS === null) {
       setIsLoading(false);
       props.loginFail();
@@ -20,15 +21,10 @@ const App = (props) => {
       props.loginSuccess(userFromLS);
       setIsLoading(false);
     }
-    console.log("useEffect", props.userData);
-  }, [props.userData]);
+  });
 
   const themeButton = () => (
-    <Button
-      id="theme-button"
-      variant="contained"
-      onClick={() => props.themeChanger()}
-    >
+    <Button id="theme-button" variant="contained" onClick={() => props.themeChanger()}>
       OPEN {props.mode === "light" ? "DARK" : "LIGHT"} MODE
     </Button>
   );
