@@ -40,7 +40,7 @@ const Register = ({ mode, registerRequest, registerSuccess, registerFail }) => {
     registerRequest();
     try {
       const response = await signUpWithEmailAndPassword(email, password);
-      const uid = response.user.uid;
+      const { uid } = response.user;
       const userDataToSave = { uid, email, name, surname };
 
       if (response.operationType === "signIn") {

@@ -9,8 +9,9 @@ import "./header.scss";
 import { SESSION_STORAGE_KEY } from "../../pages/Login";
 import { clearUserData } from "../../store/actions/auth";
 
-const Header = ({ themeButton, clearUserData, loading, mode }) => {
+const Header = ({ themeButton, clearUserData, loading, mode, userData }) => {
   const history = useHistory();
+  const { name } = userData;
 
   const onExitPress = async () => {
     clearUserData();
@@ -21,16 +22,11 @@ const Header = ({ themeButton, clearUserData, loading, mode }) => {
     <AppBar id="header-bar" position="static" className={mode}>
       <Toolbar>
         <div>
-          <Typography variant="h6">Hoşgeldin</Typography>
+          <Typography variant="h6">{`Hoşgeldin ${name}`}</Typography>
         </div>
         <div>
           {themeButton()}
-          <Button
-            id="exit-button"
-            className={mode}
-            variant="contained"
-            onClick={onExitPress}
-          >
+          <Button id="exit-button" className={mode} variant="contained" onClick={onExitPress}>
             <b>EXIT</b>
           </Button>
         </div>
@@ -40,11 +36,12 @@ const Header = ({ themeButton, clearUserData, loading, mode }) => {
 };
 
 const mapStateToProps = ({ authReducer, applicationReducer }) => {
-  const { loading } = authReducer;
+  const { loading, userData } = authReducer;
   const { mode } = applicationReducer;
   return {
     loading,
     mode,
+    userData,
   };
 };
 

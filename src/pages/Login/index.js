@@ -13,7 +13,7 @@ import googleLogo from "../../app/assets/images/google-logo.png";
 
 import { loginRequest, loginSuccess, loginFail } from "../../store/actions/auth";
 import { signInWithEmailAndPassword, signInWithGoogle } from "../../services/firebase/auth";
-import { getUser } from "../../services/firebase/user";
+import { getUser, saveUser } from "../../services/firebase/user";
 
 export const SESSION_STORAGE_KEY = "@SESSION";
 
@@ -45,8 +45,22 @@ const Login = ({ mode, loginRequest, loginSuccess, loginFail }) => {
   const googleHandler = async () => {
     const response = await signInWithGoogle();
     if (response.operationType === "signIn") {
-      localStorage.setItem(SESSION_STORAGE_KEY, response.user.refreshToken);
-      loginSuccess(response.user.refreshToken);
+      localStorage.setItem(SESSION_STORAGE_KEY, response.user.uid);
+
+      const userData = await getUser(response.user.uid);
+      if (!userData) {
+        const { additionalUserInfo, user } = response;
+        const { uid } = user;
+        const { profile } = additionalUserInfo;
+        const { email, given_name: name, family_name: surname } = profile;
+        const userDataToSave = { uid, email, name, surname };
+
+        await saveUser(userDataToSave);
+        loginSuccess(userDataToSave);
+      } else {
+        loginSuccess(userData);
+      }
+
       history.push("/dashboard");
     }
   };

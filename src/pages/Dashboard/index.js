@@ -9,9 +9,9 @@ import "./dashboard.scss";
 import { saveUser } from "../../services/firebase/user";
 
 const Dashboard = ({ mode, userData }) => {
-  const newUserData = { ...userData, name: "Ridvan" };
-  // use await when you use real place
-  saveUser(newUserData);
+  // const newUserData = { ...userData, name: "Ridvan" };
+  // // use await when you use real place
+  // saveUser(newUserData);
 
   return (
     <>
