@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from "react";
+import Brightness5Icon from "@material-ui/icons/Brightness5";
+import Brightness7Icon from "@material-ui/icons/Brightness7";
+import { connect } from "react-redux";
+
 import "./assets/styles/App.scss";
 import Content from "./Content.js";
 import LoadingScreen from "../components/reusable/LoadingScreen";
 import Button from "@material-ui/core/Button";
-import { connect } from "react-redux";
 import { themeChanger } from "../store/actions/application";
 import { loginRequest, loginSuccess, loginFail } from "../store/actions/auth";
 import { SESSION_STORAGE_KEY } from "../pages/Login";
 import Header from "../components/reusable/Header";
-import Brightness5Icon from "@material-ui/icons/Brightness5";
-import Brightness7Icon from "@material-ui/icons/Brightness7";
+
+import { getUser } from "../services/firebase/user";
 
 const App = (props) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -21,10 +24,15 @@ const App = (props) => {
       setIsLoading(false);
       props.loginFail();
     } else {
-      props.loginSuccess(userFromLS);
+      saveUserDataToRedux(userFromLS);
       setIsLoading(false);
     }
-  }, [props.userData]);
+  }, []);
+
+  const saveUserDataToRedux = async (userFromLS) => {
+    const userData = await getUser(userFromLS);
+    props.loginSuccess(userData);
+  };
 
   const themeButton = () => (
     <Button
@@ -41,11 +49,7 @@ const App = (props) => {
     if (isLoading) return <LoadingScreen />;
     return (
       <div>
-        {props.userData === null ? (
-          themeButton()
-        ) : (
-          <Header themeButton={themeButton} />
-        )}
+        {props.userData === null ? themeButton() : <Header themeButton={themeButton} />}
         <Content isSignIned={props.userData !== null} />
       </div>
     );

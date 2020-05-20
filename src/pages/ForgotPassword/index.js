@@ -8,7 +8,8 @@ import TextField from "@material-ui/core/TextField";
 import "./forgotPassword.scss";
 import { connect } from "react-redux";
 import iyteLogo from "../../app/assets/images/iyte-logo.gif";
-import { forgotPasswordWithEmail } from "../../services/firebase";
+import { forgotPasswordWithEmail } from "../../services/firebase/auth";
+
 import Link from "@material-ui/core/Link";
 
 const ForgotPassword = (props) => {
@@ -56,10 +57,7 @@ const ForgotPassword = (props) => {
                       onChange={(e) => setEmail(e.target.value)}
                     />
                   </div>
-                  <div
-                    id="forgot-password-button-container-upper"
-                    className={props.mode}
-                  >
+                  <div id="forgot-password-button-container-upper" className={props.mode}>
                     <Button
                       id="forgot-password-send-button"
                       className={props.mode}

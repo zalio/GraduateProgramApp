@@ -31,7 +31,7 @@ export default (state = INITIAL_STATE, action) => {
     case REGISTER_REQUEST:
       return { ...state, loading: true };
     case REGISTER_SUCCESS:
-      return { ...state, loading: false };
+      return { ...state, loading: false, userData: action.payload };
     case REGISTER_FAIL:
       return { ...state, loading: false };
     case FORGOT_PASSWORD_REQUEST:

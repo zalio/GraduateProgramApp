@@ -1,21 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { connect } from "react-redux";
+import Link from "@material-ui/core/Link";
 import { useHistory } from "react-router-dom";
-import FormControl from "@material-ui/core/FormControl";
+import Button from "@material-ui/core/Button";
 import FormGroup from "@material-ui/core/FormGroup";
 import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
-import Link from "@material-ui/core/Link";
-import iyteLogo from "../../app/assets/images/iyte-logo.gif";
-import "./register.scss";
-import { connect } from "react-redux";
+import FormControl from "@material-ui/core/FormControl";
 
-import { signUpWithEmailAndPassword } from "../../services/firebase";
-import {
-  registerRequest,
-  registerSuccess,
-  registerFail,
-} from "../../store/actions/auth";
-import Container from "@material-ui/core/Container";
+import iyteLogo from "../../app/assets/images/iyte-logo.gif";
+import { signUpWithEmailAndPassword } from "../../services/firebase/auth";
+import { saveUser } from "../../services/firebase/user";
+import { registerRequest, registerSuccess, registerFail } from "../../store/actions/auth";
+
+import "./register.scss";
+import { SESSION_STORAGE_KEY } from "../Login";
 
 const Register = ({ mode, registerRequest, registerSuccess, registerFail }) => {
   const history = useHistory();
@@ -27,13 +25,7 @@ const Register = ({ mode, registerRequest, registerSuccess, registerFail }) => {
   const [rePassword, setRePassword] = useState("");
 
   const registerHandler = async () => {
-    if (
-      email === "" ||
-      name === "" ||
-      surname === "" ||
-      password === "" ||
-      rePassword === ""
-    ) {
+    if (email === "" || name === "" || surname === "" || password === "" || rePassword === "") {
       alert("Please enter all fields!");
       return;
     }
@@ -48,8 +40,13 @@ const Register = ({ mode, registerRequest, registerSuccess, registerFail }) => {
     registerRequest();
     try {
       const response = await signUpWithEmailAndPassword(email, password);
+      const uid = response.user.uid;
+      const userDataToSave = { uid, email, name, surname };
+
       if (response.operationType === "signIn") {
-        registerSuccess();
+        registerSuccess(userDataToSave);
+        await saveUser(userDataToSave);
+        localStorage.setItem(SESSION_STORAGE_KEY, uid);
         alert("You have been signed up !");
         history.push("/");
       }
@@ -65,11 +62,7 @@ const Register = ({ mode, registerRequest, registerSuccess, registerFail }) => {
         <img src={iyteLogo} alt="" />
       </div>
       <div id="login-page-upper" className={mode}>
-        <Link
-          id="register-page-header-link"
-          onClick={() => history.push("/")}
-          className={mode}
-        >
+        <Link id="register-page-header-link" onClick={() => history.push("/")} className={mode}>
           <h1 id="login-page-header-text">Graduate Program Application</h1>
         </Link>
       </div>

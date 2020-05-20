@@ -40,10 +40,11 @@ export const registerRequest = () => {
     });
   };
 };
-export const registerSuccess = () => {
+export const registerSuccess = (userData) => {
   return (dispatch) => {
     dispatch({
       type: REGISTER_SUCCESS,
+      payload: userData,
     });
   };
 };
