@@ -1,0 +1,37 @@
+.MuiCard-root {
+  padding: 5px;
+  background: none !important;
+  border: 2px solid white;
+  margin: 10px;
+}
+.MuiCard-root:hover {
+  background: rgba(0,0,0,.09) !important;
+}
+.MuiCard-root.light {
+  border: 2px solid black;
+}
+.MuiCardContent-root.light {
+  color: black;
+}
+.MuiCardContent-root {
+  padding: 0;
+  color: white;
+  overflow: hidden;
+}
+.MuiCardContent-root.small {
+  max-height: 40px;
+}
+.MuiCardActions-root {
+  justify-content: center;
+}
+#card-button {
+  background: none;
+  width: 100%;
+  color: white;
+  &:hover {
+    background-color: rgba(0,0,0,.2);
+  }
+}
+#card-button.light {
+  color: black;
+}

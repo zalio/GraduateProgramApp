@@ -3,6 +3,12 @@
   display: flex;
   justify-content: space-between;
 }
+#theme-button-signed-in {
+  min-width: 36px;
+  border-radius: 20px;
+  padding: 10px;
+}
+
 #theme-button-signed-in, #exit-button {
   margin-left: 20px;
 }
@@ -13,11 +19,13 @@
 }
 
 #header-bar {
+  position: fixed;
   box-shadow: none;
-  background-color: #2076D2;
+  background-color: #D5D5D5;
+  color: #282c34;
 }
 
 #header-bar.light {
-  background-color: #D5D5D5;
-  color: #282c34;
+  color: white;
+  background-color: #2076D2;
 }

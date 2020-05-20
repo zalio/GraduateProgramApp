@@ -1,0 +1,21 @@
+#dashboard {
+  height: 100vh;
+  padding-top: 100px;
+}
+#dashboard.dark {
+  background-color: #282c34;
+  color: white;
+}
+
+@media only screen and (max-width: 778px) {
+  .MuiGrid-container {
+    display: flex;
+    flex-direction: column;
+  }
+  .MuiGrid-item, .MuiGrid-grid-xs-6 {
+    max-width: 100% !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
