@@ -7,14 +7,14 @@ import TextField from "@material-ui/core/TextField";
 import Link from "@material-ui/core/Link";
 import Button from "@material-ui/core/Button";
 import { connect } from "react-redux";
-import "./login.scss";
+import { CircularProgress } from "@material-ui/core";
+
 import iyteLogo from "../../app/assets/images/iyte-logo.gif";
 import googleLogo from "../../app/assets/images/google-logo.png";
-
 import { loginRequest, loginSuccess, loginFail } from "../../store/actions/auth";
 import { signInWithEmailAndPassword, signInWithGoogle } from "../../services/firebase/auth";
 import { getUser, saveUser } from "../../services/firebase/user";
-import { CircularProgress } from "@material-ui/core";
+import "./login.scss";
 
 export const SESSION_STORAGE_KEY = "@SESSION";
 
