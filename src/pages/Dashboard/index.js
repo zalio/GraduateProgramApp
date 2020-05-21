@@ -1,14 +1,40 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 
 import ApplicantMainPage from "../ApplicantMainPage";
 import "./dashboard.scss";
 import { saveUser } from "../../services/firebase/user";
+import {
+  makeAnnouncement,
+  getAllAnnouncements,
+  getSpesificDepartmentAnnouncements,
+} from "../../services/firebase/announcements";
 
 const Dashboard = ({ mode, userData }) => {
-  // const newUserData = { ...userData, name: "Ridvan" };
-  // // use await when you use real place
-  // saveUser(newUserData);
+  useEffect(() => {
+    // const newUserData = { ...userData, name: "Ridvan" };
+    //  use await when you use real place
+    // saveUser(newUserData);
+    // makeAnnouncement({
+    //   content: "Announcement Content",
+    //   department: "MBG",
+    //   createdAt: Date.now(),
+    //   expiryDate: Date.now(),
+    //   ownerUid: userData.uid,
+    // });
+    // getAllAnnouncementss();
+    // getSpesificDepartmentAnnouncementss();
+  }, []);
+
+  const getAllAnnouncementss = async () => {
+    const allAnnouncements = await getAllAnnouncements();
+    console.log("allAnnouncements: ", allAnnouncements);
+  };
+
+  const getSpesificDepartmentAnnouncementss = async () => {
+    const spesDep = await getSpesificDepartmentAnnouncements("MBG");
+    console.log("spes dep: ", spesDep);
+  };
 
   return (
     <>
