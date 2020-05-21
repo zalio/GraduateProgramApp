@@ -11,8 +11,15 @@ import "./login.scss";
 import iyteLogo from "../../app/assets/images/iyte-logo.gif";
 import googleLogo from "../../app/assets/images/google-logo.png";
 
-import { loginRequest, loginSuccess, loginFail } from "../../store/actions/auth";
-import { signInWithEmailAndPassword, signInWithGoogle } from "../../services/firebase/auth";
+import {
+  loginRequest,
+  loginSuccess,
+  loginFail,
+} from "../../store/actions/auth";
+import {
+  signInWithEmailAndPassword,
+  signInWithGoogle,
+} from "../../services/firebase/auth";
 import { getUser, saveUser } from "../../services/firebase/user";
 
 export const SESSION_STORAGE_KEY = "@SESSION";
@@ -131,7 +138,11 @@ const Login = ({ mode, loginRequest, loginSuccess, loginFail }) => {
                       <b>SIGN UP</b>
                     </Button>
                     <Button id="google-login-button" onClick={googleHandler}>
-                      <img id="google-login-button-img" src={googleLogo} alt="" />
+                      <img
+                        id="google-login-button-img"
+                        src={googleLogo}
+                        alt=""
+                      />
                       SIGN IN WITH GOOGLE
                     </Button>
                   </div>
