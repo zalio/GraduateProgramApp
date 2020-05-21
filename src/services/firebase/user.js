@@ -1,4 +1,4 @@
-import firebase from ".";
+import firebase from "./index";
 
 const database = firebase.database();
 const USERS_PATH = "users";

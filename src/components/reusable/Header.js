@@ -26,7 +26,20 @@ const Header = ({ themeButton, clearUserData, loading, mode, userData }) => {
         </div>
         <div>
           {themeButton()}
-          <Button id="exit-button" className={mode} variant="contained" onClick={onExitPress}>
+          <Button
+            id="exit-button"
+            className={mode}
+            variant="contained"
+            onClick={() => history.push("/edit-profile")}
+          >
+            <b>EDIT PROFILE</b>
+          </Button>
+          <Button
+            id="exit-button"
+            className={mode}
+            variant="contained"
+            onClick={onExitPress}
+          >
             <b>EXIT</b>
           </Button>
         </div>

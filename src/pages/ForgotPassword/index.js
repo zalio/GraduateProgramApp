@@ -57,7 +57,10 @@ const ForgotPassword = (props) => {
                       onChange={(e) => setEmail(e.target.value)}
                     />
                   </div>
-                  <div id="forgot-password-button-container-upper" className={props.mode}>
+                  <div
+                    id="forgot-password-button-container-upper"
+                    className={props.mode}
+                  >
                     <Button
                       id="forgot-password-send-button"
                       className={props.mode}

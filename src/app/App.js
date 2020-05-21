@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Brightness5Icon from "@material-ui/icons/Brightness5";
-import Brightness7Icon from "@material-ui/icons/Brightness7";
 import { connect } from "react-redux";
 
 import "./assets/styles/App.scss";
@@ -13,9 +11,17 @@ import { SESSION_STORAGE_KEY } from "../pages/Login";
 import Header from "../components/reusable/Header";
 
 import { getUser } from "../services/firebase/user";
+import dayModeIcon from "./assets/images/day-moon.png";
+import nightModeIcon from "./assets/images/night-moon.png";
 
 const App = (props) => {
   const [isLoading, setIsLoading] = useState(true);
+
+  const saveUserDataToRedux = async (userFromLS) => {
+    const userData = await getUser(userFromLS);
+    props.loginSuccess(userData);
+    setIsLoading(false);
+  };
 
   useEffect(() => {
     props.loginRequest();
@@ -25,14 +31,8 @@ const App = (props) => {
       props.loginFail();
     } else {
       saveUserDataToRedux(userFromLS);
-      setIsLoading(false);
     }
   }, []);
-
-  const saveUserDataToRedux = async (userFromLS) => {
-    const userData = await getUser(userFromLS);
-    props.loginSuccess(userData);
-  };
 
   const themeButton = () => (
     <Button
@@ -41,7 +41,12 @@ const App = (props) => {
       onClick={() => props.themeChanger()}
       className={props.mode}
     >
-      {props.mode === "light" ? <Brightness5Icon /> : <Brightness7Icon />}
+      <img
+        id="theme-button-img"
+        className={props.mode}
+        src={props.mode === "light" ? dayModeIcon : nightModeIcon}
+        alt=""
+      />
     </Button>
   );
 
@@ -49,12 +54,16 @@ const App = (props) => {
     if (isLoading) return <LoadingScreen />;
     return (
       <div>
-        {props.userData === null ? themeButton() : <Header themeButton={themeButton} />}
+        {props.userData === null ? (
+          themeButton()
+        ) : (
+          <Header themeButton={themeButton} />
+        )}
         <Content isSignIned={props.userData !== null} />
       </div>
     );
   };
-  return <div className="App">{renderItem()}</div>;
+  return <div className={"App" + ` ${props.mode}`}>{renderItem()}</div>;
 };
 
 const mapStateToProps = ({ authReducer, applicationReducer }) => {

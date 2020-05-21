@@ -35,3 +35,18 @@
 #card-button.light {
   color: black;
 }
+#card-upper-text-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.MuiDivider-root {
+  margin-top: 2px !important;
+  margin-bottom: 2px !important;
+}
+.MuiDivider-root.dark {
+  background-color: white;
+}
+.MuiDivider-root.light {
+  background-color: black;
+}
