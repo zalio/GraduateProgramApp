@@ -30,6 +30,14 @@ const Header = ({ themeButton, clearUserData, loading, mode, userData }) => {
             id="exit-button"
             className={mode}
             variant="contained"
+            onClick={() => history.push("/edit-profile")}
+          >
+            <b>EDIT PROFILE</b>
+          </Button>
+          <Button
+            id="exit-button"
+            className={mode}
+            variant="contained"
             onClick={onExitPress}
           >
             <b>EXIT</b>

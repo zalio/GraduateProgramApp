@@ -31,6 +31,7 @@ const Login = ({ mode, loginRequest, loginSuccess, loginFail }) => {
   const history = useHistory();
 
   const loginHandler = async () => {
+    loginRequest();
     if (email === "" || password === "") {
       alert("Please enter all fields!");
       return;
@@ -40,12 +41,12 @@ const Login = ({ mode, loginRequest, loginSuccess, loginFail }) => {
       if (response.operationType === "signIn") {
         localStorage.setItem(SESSION_STORAGE_KEY, response.user.uid);
         const userData = await getUser(response.user.uid);
-
         loginSuccess(userData);
         history.push("/dashboard");
       }
     } catch (e) {
       alert(e.message);
+      loginFail();
     }
   };
 

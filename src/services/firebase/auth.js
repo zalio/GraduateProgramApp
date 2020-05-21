@@ -1,4 +1,4 @@
-import firebase from ".";
+import firebase from "./index";
 
 const auth = firebase.auth();
 const provider = new firebase.auth.GoogleAuthProvider();

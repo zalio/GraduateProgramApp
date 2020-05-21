@@ -17,6 +17,12 @@ import nightModeIcon from "./assets/images/night-moon.png";
 const App = (props) => {
   const [isLoading, setIsLoading] = useState(true);
 
+  const saveUserDataToRedux = async (userFromLS) => {
+    const userData = await getUser(userFromLS);
+    props.loginSuccess(userData);
+    setIsLoading(false);
+  };
+
   useEffect(() => {
     props.loginRequest();
     const userFromLS = localStorage.getItem(SESSION_STORAGE_KEY);
@@ -25,14 +31,8 @@ const App = (props) => {
       props.loginFail();
     } else {
       saveUserDataToRedux(userFromLS);
-      setIsLoading(false);
     }
   }, []);
-
-  const saveUserDataToRedux = async (userFromLS) => {
-    const userData = await getUser(userFromLS);
-    props.loginSuccess(userData);
-  };
 
   const themeButton = () => (
     <Button

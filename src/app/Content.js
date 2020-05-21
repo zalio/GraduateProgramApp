@@ -5,6 +5,9 @@ import Dashboard from "../pages/Dashboard";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import ForgotPassword from "../pages/ForgotPassword";
+import EditProfile from "../pages/EditProfile";
+import Announcements from "../pages/Announcements";
+import Notifications from "../pages/Notifications";
 import NoRoute from "../pages/NoRoute";
 
 const Content = ({ isSignIned }) => {
@@ -27,6 +30,21 @@ const Content = ({ isSignIned }) => {
         exact
         path="/forgot-password"
         component={isSignIned ? Dashboard : ForgotPassword}
+      />
+      <Route
+        exact
+        path="/edit-profile"
+        component={isSignIned ? EditProfile : Login}
+      />
+      <Route
+        exact
+        path="/announcements"
+        component={isSignIned ? Announcements : Login}
+      />
+      <Route
+        exact
+        path="/notifications"
+        component={isSignIned ? Notifications : Login}
       />
       <Route component={NoRoute} />
     </Switch>
