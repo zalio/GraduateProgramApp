@@ -11,6 +11,9 @@ import { CircularProgress } from "@material-ui/core";
 
 import iyteLogo from "../../app/assets/images/iyte-logo.gif";
 import googleLogo from "../../app/assets/images/google-logo.png";
+import progLogo from "../../app/assets/images/proglogo.png";
+import progLogoLight from "../../app/assets/images/proglogo-light.png";
+
 import {
   loginRequest,
   loginSuccess,
@@ -84,7 +87,7 @@ const Login = ({ mode, loginRequest, loginSuccess, loginFail, loading }) => {
         <Container>
           <div id="login-page-upper" className={mode}>
             <h1 id="login-page-header-text" className={mode}>
-              Graduate Program Application
+              <img src={mode === "dark" ? progLogo : progLogoLight} alt="" />
             </h1>
           </div>
           <div id="login-page-general" className={mode}>

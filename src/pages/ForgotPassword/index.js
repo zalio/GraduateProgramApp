@@ -11,8 +11,10 @@ import iyteLogo from "../../app/assets/images/iyte-logo.gif";
 import { forgotPasswordWithEmail } from "../../services/firebase/auth";
 
 import Link from "@material-ui/core/Link";
+import progLogo from "../../app/assets/images/proglogo.png";
+import progLogoLight from "../../app/assets/images/proglogo-light.png";
 
-const ForgotPassword = (props) => {
+const ForgotPassword = ({ mode }) => {
   const [email, setEmail] = useState("");
 
   const history = useHistory();
@@ -28,23 +30,23 @@ const ForgotPassword = (props) => {
 
   return (
     <>
-      <div id="forgot-password-page" className={props.mode}>
-        <div id="upper-logo" className={props.mode}>
+      <div id="forgot-password-page" className={mode}>
+        <div id="upper-logo" className={mode}>
           <img src={iyteLogo} alt="" />
         </div>
         <Container>
-          <div id="forgot-password-page-upper" className={props.mode}>
+          <div id="forgot-password-page-upper" className={mode}>
             <Link
               id="forgot-password-page-header-link"
               onClick={() => history.push("/")}
-              className={props.mode}
+              className={mode}
             >
-              Graduate Program Application
+              <img src={mode === "dark" ? progLogo : progLogoLight} alt="" />
             </Link>
           </div>
-          <div id="login-page-general" className={props.mode}>
-            <div id="forgot-password-container" className={props.mode}>
-              <h1 className={props.mode}>UPDATE PASSWORD</h1>
+          <div id="login-page-general" className={mode}>
+            <div id="forgot-password-container" className={mode}>
+              <h1 className={mode}>UPDATE PASSWORD</h1>
               <FormControl noValidate autoComplete="off">
                 <FormGroup row={false}>
                   <div id="forgot-password-email-container">
@@ -53,17 +55,17 @@ const ForgotPassword = (props) => {
                       id="forgot-password-email"
                       label="Your e-mail"
                       value={email}
-                      className={props.mode}
+                      className={mode}
                       onChange={(e) => setEmail(e.target.value)}
                     />
                   </div>
                   <div
                     id="forgot-password-button-container-upper"
-                    className={props.mode}
+                    className={mode}
                   >
                     <Button
                       id="forgot-password-send-button"
-                      className={props.mode}
+                      className={mode}
                       variant="contained"
                       onClick={forgotPasswordHandler}
                     >

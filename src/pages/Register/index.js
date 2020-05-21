@@ -18,6 +18,8 @@ import {
 
 import "./register.scss";
 import { SESSION_STORAGE_KEY } from "../Login";
+import progLogo from "../../app/assets/images/proglogo.png";
+import progLogoLight from "../../app/assets/images/proglogo-light.png";
 
 const Register = ({ mode, registerRequest, registerSuccess, registerFail }) => {
   const history = useHistory();
@@ -77,7 +79,9 @@ const Register = ({ mode, registerRequest, registerSuccess, registerFail }) => {
           onClick={() => history.push("/")}
           className={mode}
         >
-          <h1 id="login-page-header-text">Graduate Program Application</h1>
+          <h1 id="login-page-header-text">
+            <img src={mode === "dark" ? progLogo : progLogoLight} alt="" />
+          </h1>
         </Link>
       </div>
       <div id={"login-page-general"} className={mode}>
