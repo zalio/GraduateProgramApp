@@ -12,8 +12,9 @@ import {
 
 const Dashboard = ({ mode, userData }) => {
   useEffect(() => {
-    // const newUserData = { ...userData, name: "Ridvan" };
-    //  use await when you use real place
+    // // const newUserData = { ...userData, name: "Ridvan" };
+    // const newUserData = { ...userData, department: "Computer Engineer" };
+    // //  use await when you use real place
     // saveUser(newUserData);
     // makeAnnouncement({
     //   content: "Announcement Content",
