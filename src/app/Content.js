@@ -8,6 +8,7 @@ import ForgotPassword from "../pages/ForgotPassword";
 import EditProfile from "../pages/EditProfile";
 import Announcements from "../pages/Announcements";
 import Notifications from "../pages/Notifications";
+import Apply from "../pages/Apply";
 import NoRoute from "../pages/NoRoute";
 
 const Content = ({ isSignIned }) => {
@@ -46,6 +47,7 @@ const Content = ({ isSignIned }) => {
         path="/notifications"
         component={isSignIned ? Notifications : Login}
       />
+      <Route exact path="/apply" component={isSignIned ? Apply : Login} />
       <Route component={NoRoute} />
     </Switch>
   );
