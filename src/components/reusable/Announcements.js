@@ -12,7 +12,12 @@ const Announcements = ({ mode }) => {
       <Button
         id="apply-button"
         className={mode}
-        onClick={() => alert("Applied!")}
+        onClick={() =>
+          history.push({
+            pathname: "apply",
+            state: { id: 2 },
+          })
+        }
       >
         Apply!
       </Button>

@@ -1,0 +1,40 @@
+#apply-page {
+  padding-top: 110px;
+  padding-bottom: 110px;
+}
+#apply-page-upper-text.dark {
+  color: white;
+}
+#file-uploader {
+  display: flex;
+  justify-content: center;
+}
+#file-upload-container {
+  width: 400px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin: 20px;
+  border-top-right-radius: 25px;
+  border-bottom-right-radius: 25px;
+}
+#file-upload-container.dark {
+  color: white;
+  background-color: rgba(255,255,255, .2);
+}
+#file-upload-container.light {
+  background-color: rgba(0,0,0, .2);
+}
+#file-upload-placeholder {
+  width: 350px;
+}
+#file-upload-button {
+  border-radius: 100px;
+  width: 50px !important;
+  height: 50px !important;
+  min-width: 0;
+  &:hover {
+    background-color: rgba(255,255,255,.5);
+  }
+}
