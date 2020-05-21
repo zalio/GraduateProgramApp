@@ -11,20 +11,14 @@ import "./login.scss";
 import iyteLogo from "../../app/assets/images/iyte-logo.gif";
 import googleLogo from "../../app/assets/images/google-logo.png";
 
-import {
-  loginRequest,
-  loginSuccess,
-  loginFail,
-} from "../../store/actions/auth";
-import {
-  signInWithEmailAndPassword,
-  signInWithGoogle,
-} from "../../services/firebase/auth";
+import { loginRequest, loginSuccess, loginFail } from "../../store/actions/auth";
+import { signInWithEmailAndPassword, signInWithGoogle } from "../../services/firebase/auth";
 import { getUser, saveUser } from "../../services/firebase/user";
+import { CircularProgress } from "@material-ui/core";
 
 export const SESSION_STORAGE_KEY = "@SESSION";
 
-const Login = ({ mode, loginRequest, loginSuccess, loginFail }) => {
+const Login = ({ mode, loginRequest, loginSuccess, loginFail, loading }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -34,6 +28,7 @@ const Login = ({ mode, loginRequest, loginSuccess, loginFail }) => {
     loginRequest();
     if (email === "" || password === "") {
       alert("Please enter all fields!");
+      loginFail();
       return;
     }
     try {
@@ -61,7 +56,7 @@ const Login = ({ mode, loginRequest, loginSuccess, loginFail }) => {
         const { uid } = user;
         const { profile } = additionalUserInfo;
         const { email, given_name: name, family_name: surname } = profile;
-        const userDataToSave = { uid, email, name, surname };
+        const userDataToSave = { uid, email, name, surname, type: "applicant" };
 
         await saveUser(userDataToSave);
         loginSuccess(userDataToSave);
@@ -121,14 +116,18 @@ const Login = ({ mode, loginRequest, loginSuccess, loginFail }) => {
                     </Link>
                   </div>
                   <div id="login-button-container-upper" className={mode}>
-                    <Button
-                      id="login-login-button"
-                      className={mode}
-                      variant="contained"
-                      onClick={loginHandler}
-                    >
-                      <b>SIGN IN</b>
-                    </Button>
+                    {loading ? (
+                      <CircularProgress />
+                    ) : (
+                      <Button
+                        id="login-login-button"
+                        className={mode}
+                        variant="contained"
+                        onClick={loginHandler}
+                      >
+                        <b>SIGN IN</b>
+                      </Button>
+                    )}
                   </div>
                   <div id="login-button-container-bottom" className={mode}>
                     <Button
@@ -139,11 +138,7 @@ const Login = ({ mode, loginRequest, loginSuccess, loginFail }) => {
                       <b>SIGN UP</b>
                     </Button>
                     <Button id="google-login-button" onClick={googleHandler}>
-                      <img
-                        id="google-login-button-img"
-                        src={googleLogo}
-                        alt=""
-                      />
+                      <img id="google-login-button-img" src={googleLogo} alt="" />
                       SIGN IN WITH GOOGLE
                     </Button>
                   </div>
@@ -157,10 +152,11 @@ const Login = ({ mode, loginRequest, loginSuccess, loginFail }) => {
   );
 };
 
-const mapStateToProps = ({ applicationReducer }) => {
+const mapStateToProps = ({ applicationReducer, authReducer }) => {
   const { mode } = applicationReducer;
   return {
     mode,
+    loading: authReducer.loading,
   };
 };
 const mapDispatchToProps = {

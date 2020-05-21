@@ -10,11 +10,7 @@ import FormControl from "@material-ui/core/FormControl";
 import iyteLogo from "../../app/assets/images/iyte-logo.gif";
 import { signUpWithEmailAndPassword } from "../../services/firebase/auth";
 import { saveUser } from "../../services/firebase/user";
-import {
-  registerRequest,
-  registerSuccess,
-  registerFail,
-} from "../../store/actions/auth";
+import { registerRequest, registerSuccess, registerFail } from "../../store/actions/auth";
 
 import "./register.scss";
 import { SESSION_STORAGE_KEY } from "../Login";
@@ -29,13 +25,7 @@ const Register = ({ mode, registerRequest, registerSuccess, registerFail }) => {
   const [rePassword, setRePassword] = useState("");
 
   const registerHandler = async () => {
-    if (
-      email === "" ||
-      name === "" ||
-      surname === "" ||
-      password === "" ||
-      rePassword === ""
-    ) {
+    if (email === "" || name === "" || surname === "" || password === "" || rePassword === "") {
       alert("Please enter all fields!");
       return;
     }
@@ -51,7 +41,7 @@ const Register = ({ mode, registerRequest, registerSuccess, registerFail }) => {
     try {
       const response = await signUpWithEmailAndPassword(email, password);
       const { uid } = response.user;
-      const userDataToSave = { uid, email, name, surname };
+      const userDataToSave = { uid, email, name, surname, type: "applicant" };
 
       if (response.operationType === "signIn") {
         registerSuccess(userDataToSave);
@@ -72,11 +62,7 @@ const Register = ({ mode, registerRequest, registerSuccess, registerFail }) => {
         <img src={iyteLogo} alt="" />
       </div>
       <div id="login-page-upper" className={mode}>
-        <Link
-          id="register-page-header-link"
-          onClick={() => history.push("/")}
-          className={mode}
-        >
+        <Link id="register-page-header-link" onClick={() => history.push("/")} className={mode}>
           <h1 id="login-page-header-text">Graduate Program Application</h1>
         </Link>
       </div>
