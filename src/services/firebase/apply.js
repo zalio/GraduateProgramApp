@@ -7,19 +7,19 @@ const APPLICATIONS_REF = "applications";
 
 export const apply = async (applyData) => {
   try {
-    const { fileData } = applyData;
+    const { fileData, applicationId, applicantId } = applyData;
     const fileDataKeys = Object.keys(fileData);
 
     const dataToSaveDb = {
-      applicationId: applyData.applicationId,
-      applicantId: applyData.applicantId,
+      applicationId,
+      applicantId,
     };
 
     for (let index = 0; index < fileDataKeys.length; index++) {
       const applyDataKey = fileDataKeys[index];
       const fileDataValue = fileData[applyDataKey];
       if (fileDataValue) {
-        const path = `${applyData.applicationId}_${applyDataKey}`;
+        const path = `${applicationId}_${applyDataKey}`;
         await storage.ref(path).put(fileDataValue);
 
         const downloadUrl = await storage.ref(path).getDownloadURL();
