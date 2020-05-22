@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import CustomCard from "../../components/reusable/CustomCard";
 import Container from "@material-ui/core/Container";
 import "./makeAnnouncement.scss";
 import TextField from "@material-ui/core/TextField";
@@ -9,6 +8,8 @@ import Button from "@material-ui/core/Button";
 
 const MakeAnnouncement = ({ mode }) => {
   const [announceFile, setAnnounceFile] = useState(null);
+  const [text, setText] = useState();
+
   return (
     <div id="make-announcement-page" className={mode}>
       <Container id="make-announcement-page-container" className={mode}>
@@ -27,7 +28,7 @@ const MakeAnnouncement = ({ mode }) => {
         />
         <FileUpload
           type="announceFile"
-          changeField={announceFile}
+          changeField={setAnnounceFile}
           placeholder="Upload File (Optional)"
           mode={mode}
         />

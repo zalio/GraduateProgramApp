@@ -1,0 +1,29 @@
+#make-announcement-page-container.dark{
+
+  #login-email-label {
+    color: white;
+  }
+  #login-email {
+    color: white;
+  }
+  #outlined-multiline-static {
+    color: white !important;
+  }
+}
+#make-announcement-page-container {
+  .MuiFormControl-root {
+    width: 35%;
+    margin-bottom: 20px;
+  }
+}
+
+#outlined-multiline-static.dark {
+  color: white !important;
+  .MuiInputBase-input, .MuiInputBase-root {
+    color: white !important;
+  }
+  .MuiOutlinedInput-input, .MuiOutlinedInput-inputMultiline {
+    color: white !important;
+  }
+
+}
