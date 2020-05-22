@@ -9,7 +9,10 @@ import EditProfile from "../pages/EditProfile";
 import Announcements from "../pages/Announcements";
 import Notifications from "../pages/Notifications";
 import Apply from "../pages/Apply";
+import MakeAnnouncement from "../pages/MakeAnnouncement";
+import SendNotification from "../pages/SendNotification";
 import NoRoute from "../pages/NoRoute";
+import { Send } from "@material-ui/icons";
 
 const Content = ({ isSignIned }) => {
   const location = useLocation();
@@ -48,6 +51,16 @@ const Content = ({ isSignIned }) => {
         component={isSignIned ? Notifications : Login}
       />
       <Route exact path="/apply" component={isSignIned ? Apply : Login} />
+      <Route
+        exact
+        path="/make-announcement"
+        component={isSignIned ? MakeAnnouncement : Login}
+      />
+      <Route
+        exact
+        path="/send-notification"
+        component={isSignIned ? SendNotification : Login}
+      />
       <Route component={NoRoute} />
     </Switch>
   );

@@ -1,0 +1,29 @@
+#make-announcement-page {
+  padding-top: 110px;
+  padding-bottom: 110px;
+  height: 100vh;
+}
+#outlined-multiline-static {
+  width: 500px;
+}
+#outlined-multiline-static.dark {
+  .MuiInputBase-input, .MuiInputBase-root {
+    color: white !important;
+  }
+  .MuiOutlinedInput-input, .MuiOutlinedInput-inputMultiline {
+    color: white !important;
+  }
+
+}
+
+#make-announcement-page-container.dark {
+  color: white;
+  .MuiFormLabel-root{
+    color:white !important;
+  }
+}
+
+.MuiFormControl-root, .MuiTextField-root {
+  color: white !important;
+  border-color: white !important;
+}

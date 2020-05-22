@@ -29,3 +29,14 @@
   color: white;
   background-color: #2076D2;
 }
+#header-bottom-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+#header-logo {
+  max-width: 140px;
+}
+#header-logo-link:hover {
+  cursor: pointer;
+}
