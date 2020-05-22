@@ -8,6 +8,9 @@ import Typography from "@material-ui/core/Typography";
 import "./header.scss";
 import { SESSION_STORAGE_KEY } from "../../pages/Login";
 import { clearUserData } from "../../store/actions/auth";
+import Link from "@material-ui/core/Link";
+import progLogo from "../../app/assets/images/proglogo.png";
+import progLogoLight from "../../app/assets/images/proglogo-light.png";
 
 const Header = ({ themeButton, clearUserData, loading, mode, userData }) => {
   const history = useHistory();
@@ -21,11 +24,40 @@ const Header = ({ themeButton, clearUserData, loading, mode, userData }) => {
   return (
     <AppBar id="header-bar" position="static" className={mode}>
       <Toolbar>
-        <div>
-          <Typography variant="h6">{`Hoşgeldin ${name}`}</Typography>
+        <div id="header-upper-container" className={mode}>
+          <Link
+            id="header-logo-link"
+            onClick={() => history.push("/")}
+            className={mode}
+          >
+            <img
+              id="header-logo"
+              src={mode === "light" ? progLogo : progLogoLight}
+              alt=""
+            />
+          </Link>
         </div>
-        <div>
+        <div id="header-bottom-container">
+          <div>
+            <Typography variant="h6">{`Hoşgeldin ${name}`}</Typography>
+          </div>
           {themeButton()}
+          <Button
+            id="exit-button"
+            className={mode}
+            variant="contained"
+            onClick={() => history.push("/make-announcement")}
+          >
+            <b>MAKE ANNOUNCEMENT</b>
+          </Button>
+          <Button
+            id="exit-button"
+            className={mode}
+            variant="contained"
+            onClick={() => history.push("/send-notification")}
+          >
+            <b>SEND NOTIFICATION</b>
+          </Button>
           <Button
             id="exit-button"
             className={mode}
