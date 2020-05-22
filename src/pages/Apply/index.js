@@ -5,6 +5,7 @@ import FileUpload from "../../components/reusable/FileUpload";
 import Container from "@material-ui/core/Container";
 import "./apply.scss";
 import Button from "@material-ui/core/Button";
+import { apply } from "../../services/firebase/apply";
 
 const Apply = ({ mode, userData }) => {
   const location = useLocation();
@@ -17,19 +18,22 @@ const Apply = ({ mode, userData }) => {
   const [reference, setReference] = useState(null);
   const [purpose, setPurpose] = useState(null);
 
-  const applyHandler = () => {
+  const applyHandler = async () => {
     const applyData = {
       applicationId: location.state.id,
       applicantId: userData.uid,
-      applicantPhoto: photo,
-      transcript: transcript,
-      masterTranscript: masterTranscript,
-      alesResult: ales,
-      englishExamResult: englishExam,
-      reference: reference,
-      purpose: purpose,
+      fileData: {
+        applicantPhoto: photo,
+        transcript: transcript,
+        masterTranscript: masterTranscript,
+        alesResult: ales,
+        englishExamResult: englishExam,
+        reference: reference,
+        purpose: purpose,
+      },
     };
-    console.log(applyData);
+
+    await apply(applyData);
   };
 
   return (
@@ -38,19 +42,13 @@ const Apply = ({ mode, userData }) => {
         <div id="apply-page-upper-text" className={mode}>
           Apply The Program!
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet
-            consequuntur deserunt dicta ducimus eos exercitationem id incidunt
-            laborum magni modi molestias necessitatibus obcaecati perferendis
-            provident sed sint, tempora temporibus vitae.
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet consequuntur deserunt
+            dicta ducimus eos exercitationem id incidunt laborum magni modi molestias necessitatibus
+            obcaecati perferendis provident sed sint, tempora temporibus vitae.
           </p>
         </div>
         <div id="apply-page-insider">
-          <FileUpload
-            type="photo"
-            changeField={setPhoto}
-            placeholder="Upload Photo"
-            mode={mode}
-          />
+          <FileUpload type="photo" changeField={setPhoto} placeholder="Upload Photo" mode={mode} />
           <FileUpload
             type="transcript"
             changeField={setTranscript}
@@ -63,12 +61,7 @@ const Apply = ({ mode, userData }) => {
             placeholder="Master Transcript"
             mode={mode}
           />
-          <FileUpload
-            type="ales"
-            changeField={setAles}
-            mode={mode}
-            placeholder="ALES Result"
-          />
+          <FileUpload type="ales" changeField={setAles} mode={mode} placeholder="ALES Result" />
           <FileUpload
             type="englishExam"
             changeField={setEnglishExam}
@@ -89,11 +82,7 @@ const Apply = ({ mode, userData }) => {
           />
         </div>
         <div id="apply-button-container">
-          <Button
-            id="apply-button"
-            className={mode}
-            onClick={() => applyHandler()}
-          >
+          <Button id="apply-button" className={mode} onClick={() => applyHandler()}>
             APPLY
           </Button>
         </div>
