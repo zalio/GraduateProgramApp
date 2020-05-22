@@ -25,6 +25,17 @@ const Dashboard = ({ mode, userData }) => {
     // });
     // getAllAnnouncementss();
     // getSpesificDepartmentAnnouncementss();
+    // example request of apply
+    // apply({
+    //   applicantId: 1,
+    //   applicantPhoto: "photonun path i",
+    //   transcript: "pathi",
+    //   masterTranscript: "pathi",
+    //   alesResult: "pathi",
+    //   englishExamResult: "pathi",
+    //   reference: "pathi",
+    //   purpose: "pathi",
+    // });
   }, []);
 
   const getAllAnnouncementss = async () => {
