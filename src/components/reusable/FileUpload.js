@@ -10,6 +10,7 @@ const FileUpload = ({ mode, type, changeField, placeholder }) => {
   const onFileChange = (event) => {
     // Update the state
     setStateVar({ selectedFile: event.target.files[0] });
+    changeField(event.target.files[0]);
   };
 
   // On file upload (click the upload button)
