@@ -6,7 +6,7 @@ import Container from "@material-ui/core/Container";
 import "./apply.scss";
 import Button from "@material-ui/core/Button";
 
-const Apply = ({ mode }) => {
+const Apply = ({ mode, userData }) => {
   const location = useLocation();
 
   const [photo, setPhoto] = useState(null);
@@ -17,7 +17,21 @@ const Apply = ({ mode }) => {
   const [reference, setReference] = useState(null);
   const [purpose, setPurpose] = useState(null);
 
-  console.log(location.state.id);
+  const applyHandler = () => {
+    const applyData = {
+      applicationId: location.state.id,
+      applicantId: userData.uid,
+      applicantPhoto: photo,
+      transcript: transcript,
+      masterTranscript: masterTranscript,
+      alesResult: ales,
+      englishExamResult: englishExam,
+      reference: reference,
+      purpose: purpose,
+    };
+    console.log(applyData);
+  };
+
   return (
     <div id="apply-page">
       <Container id="apply-page-container">
@@ -75,7 +89,11 @@ const Apply = ({ mode }) => {
           />
         </div>
         <div id="apply-button-container">
-          <Button id="apply-button" className={mode}>
+          <Button
+            id="apply-button"
+            className={mode}
+            onClick={() => applyHandler()}
+          >
             APPLY
           </Button>
         </div>
@@ -84,10 +102,12 @@ const Apply = ({ mode }) => {
   );
 };
 
-const mapStateToProps = ({ applicationReducer }) => {
+const mapStateToProps = ({ applicationReducer, authReducer }) => {
   const { mode } = applicationReducer;
+  const { userData } = authReducer;
   return {
     mode,
+    userData,
   };
 };
 
