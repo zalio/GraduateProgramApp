@@ -1,0 +1,130 @@
+#edit-page {
+  height: 100vh;
+  padding-top: 80px;
+  background-color: #24292E;
+}
+
+#edit-page-general {
+  width: 100%;
+  height: 20vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 50vh;
+  left: 0;
+}
+
+#edit-container {
+  width: 700px;
+  padding: 30px;
+  border-radius: 10px;
+  .MuiFormControl-root {
+    width: 100%;
+  }
+
+  #identity-container, #edit-name-surname-container, #email-container, #password-container,#birth-container, #gender-container, #phone-container,#address-container,#photo-container{
+    display: flex;
+    flex-direction: row;
+
+  }
+
+  #identity-label,#name-surname-label,#password-label,#birth-label,#gender-label,#phone-label,#address-label,#photo-label{
+    width: 30%;
+
+  }
+  #email-label{
+    width: 32%;
+  }
+
+  #identity-text-container,#name-text-container,#surname-text-container,#email-text-container,#password-text-container,#phone-text-container,#address-text-container{
+    width: 30%;
+    margin-left: 15px;
+  }
+
+  #edit-identity, #edit-name, #edit-surname, #edit-email, #edit-password,#edit-phone{
+    border: none;
+    &:hover {
+      background-image: none !important;
+    }
+    height: 0.01vh;
+  }
+
+  #edit-adress{
+    border: none;
+    &:hover {
+      background-image: none !important;
+    }
+    height: 1vh;
+  }
+
+  #icon-button-file{
+      display: none,
+
+  }
+  #icon-button{
+    margin-top: 5px;
+  }
+
+  #select-container{
+    width: 15%;
+    margin-left: 15px;
+  }
+
+  #radiogroup-container{
+    margin-top: 10px;
+  }
+
+}
+
+#editButton {
+  height: 40px;
+  margin-top: 25px;
+  background-color: rgba(0,175,0,.8);
+  width: 20%;
+  border-radius: 5px;
+  &:hover {
+    background-color: rgba(0,175,0,0.4);
+  }
+  position: absolute;
+  right: 0;
+}
+
+#button-container {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: flex-end;
+}
+
+#edit-page.dark {
+  background-color: #282c34;
+}
+#edit-page.light {
+  background-color: white;
+}
+
+
+#edit-container.dark{
+  border: 2px solid white;
+
+}
+#edit-container.light{
+  border: 2px solid black;
+  background-color: white;
+}
+h3.dark {
+  color: white;
+}
+h3.light {
+  color: black;
+}
+#editButton.light{
+  border: 2px solid black;
+}
+
+#editButton.dark{
+  color: white;
+  border: 2px solid white;
+}
+
+
