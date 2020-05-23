@@ -9,7 +9,7 @@ const ApplicantMainPage = ({ mode }) => {
   return (
     <>
       <div id="dashboard" className={mode}>
-        <Container>
+        <Container className={mode}>
           <Grid container spacing={3}>
             <Grid item xs={7}>
               <Announcements />

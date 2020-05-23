@@ -41,7 +41,11 @@ const ForgotPassword = ({ mode }) => {
               onClick={() => history.push("/")}
               className={mode}
             >
-              <img src={mode === "dark" ? progLogo : progLogoLight} alt="" />
+              <img
+                id="login-page-logo"
+                src={mode === "dark" ? progLogo : progLogoLight}
+                alt=""
+              />
             </Link>
           </div>
           <div id="login-page-general" className={mode}>

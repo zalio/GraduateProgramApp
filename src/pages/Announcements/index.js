@@ -7,7 +7,7 @@ import "./announcements.scss";
 const Announcements = ({ mode }) => {
   return (
     <div id="cards-page">
-      <Container>
+      <Container className={mode}>
         <div id="cards-page-upper-text" className={mode}>
           <h1>
             <b>Announcements</b>
