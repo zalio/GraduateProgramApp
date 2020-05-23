@@ -40,3 +40,14 @@
 #header-logo-link:hover {
   cursor: pointer;
 }
+#header-user-name {
+  font-weight: bold;
+  font-style: italic;
+}
+.active-page.dark {
+  background-color: rgba(0,255,255, 0.3) !important;
+}
+
+.active-page.light {
+  background-color: rgba(255,255,255, 0.3) !important;
+}

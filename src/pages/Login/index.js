@@ -87,7 +87,11 @@ const Login = ({ mode, loginRequest, loginSuccess, loginFail, loading }) => {
         <Container>
           <div id="login-page-upper" className={mode}>
             <h1 id="login-page-header-text" className={mode}>
-              <img src={mode === "dark" ? progLogo : progLogoLight} alt="" />
+              <img
+                id="login-page-logo"
+                src={mode === "dark" ? progLogo : progLogoLight}
+                alt=""
+              />
             </h1>
           </div>
           <div id="login-page-general" className={mode}>

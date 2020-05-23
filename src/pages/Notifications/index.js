@@ -6,7 +6,7 @@ import Container from "@material-ui/core/Container";
 const Notifications = ({ mode }) => {
   return (
     <div id="cards-page">
-      <Container>
+      <Container className={mode}>
         <div id="cards-page-upper-text" className={mode}>
           <h1>
             <b>Notifications</b>

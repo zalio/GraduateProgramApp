@@ -38,17 +38,23 @@ const Apply = ({ mode, userData }) => {
 
   return (
     <div id="apply-page">
-      <Container id="apply-page-container">
+      <Container id="apply-page-container" className={mode}>
         <div id="apply-page-upper-text" className={mode}>
           Apply The Program!
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet consequuntur deserunt
-            dicta ducimus eos exercitationem id incidunt laborum magni modi molestias necessitatibus
-            obcaecati perferendis provident sed sint, tempora temporibus vitae.
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet
+            consequuntur deserunt dicta ducimus eos exercitationem id incidunt
+            laborum magni modi molestias necessitatibus obcaecati perferendis
+            provident sed sint, tempora temporibus vitae.
           </p>
         </div>
         <div id="apply-page-insider">
-          <FileUpload type="photo" changeField={setPhoto} placeholder="Upload Photo" mode={mode} />
+          <FileUpload
+            type="photo"
+            changeField={setPhoto}
+            placeholder="Upload Photo"
+            mode={mode}
+          />
           <FileUpload
             type="transcript"
             changeField={setTranscript}
@@ -61,7 +67,12 @@ const Apply = ({ mode, userData }) => {
             placeholder="Master Transcript"
             mode={mode}
           />
-          <FileUpload type="ales" changeField={setAles} mode={mode} placeholder="ALES Result" />
+          <FileUpload
+            type="ales"
+            changeField={setAles}
+            mode={mode}
+            placeholder="ALES Result"
+          />
           <FileUpload
             type="englishExam"
             changeField={setEnglishExam}
@@ -82,7 +93,11 @@ const Apply = ({ mode, userData }) => {
           />
         </div>
         <div id="apply-button-container">
-          <Button id="apply-button" className={mode} onClick={() => applyHandler()}>
+          <Button
+            id="apply-button"
+            className={mode}
+            onClick={() => applyHandler()}
+          >
             APPLY
           </Button>
         </div>

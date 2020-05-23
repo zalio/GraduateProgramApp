@@ -32,7 +32,7 @@
   position: absolute;
   top: 20vh;
   left: 0;
-  margin-top: 30px;
+  margin-top: 80px;
 }
 #login-container {
   width: 350px;
@@ -70,6 +70,12 @@
   }
 }
 
+#login-page-logo {
+  width: 600px;
+  &:hover {
+    cursor: pointer;
+  }
+}
 #login-button-container-upper {
   display: flex;
   justify-content: space-evenly;

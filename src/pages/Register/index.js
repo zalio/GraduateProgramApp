@@ -80,7 +80,11 @@ const Register = ({ mode, registerRequest, registerSuccess, registerFail }) => {
           className={mode}
         >
           <h1 id="login-page-header-text">
-            <img src={mode === "dark" ? progLogo : progLogoLight} alt="" />
+            <img
+              id="login-page-logo"
+              src={mode === "dark" ? progLogo : progLogoLight}
+              alt=""
+            />
           </h1>
         </Link>
       </div>
