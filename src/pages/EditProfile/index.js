@@ -1,7 +1,254 @@
-import React from "react";
+import React, { useState } from "react";
+import FormControl from "@material-ui/core/FormControl";
+import FormGroup from "@material-ui/core/FormGroup/FormGroup";
+import TextField from "@material-ui/core/TextField/TextField";
+import RadioGroup from "@material-ui/core/RadioGroup/RadioGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel/FormControlLabel";
+import Radio from "@material-ui/core/Radio/Radio";
+import Button from "@material-ui/core/Button";
+import IconButton from "@material-ui/core/IconButton";
+import LinkIcon from "@material-ui/icons/Link";
+import PhotoCamera from "@material-ui/icons/PhotoCamera";
+import "date-fns";
+import Grid from "@material-ui/core/Grid";
+import DateFnsUtils from "@date-io/date-fns";
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+} from "@material-ui/pickers";
+import { forgotPasswordWithEmail } from "../../services/firebase/auth";
+import "./editProfile.scss";
+import { connect } from "react-redux";
 
-const EditProfile = () => {
-  return <div>Edit Profile</div>;
+const EditProfile = ({ mode }) => {
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [surname, setSurname] = useState("");
+  const [identity, setIdentity] = useState("");
+  const [gender, setGender] = useState("");
+  const [selectedDate, setSelectedDate] = React.useState(
+    new Date("2014-08-18T21:11:54")
+  );
+
+  const dateChangeHandler = (date) => {
+    setSelectedDate(date);
+  };
+
+  const sendPasswordHandler = async () => {
+    const result = await forgotPasswordWithEmail(email);
+    if (!result) alert("Please enter valid email!");
+    else {
+      alert("Password reset email has been sent to your email!");
+    }
+  };
+
+  return (
+    <div id="edit-page" className={mode}>
+      <div id={"edit-page-general"} className={mode}>
+        <div id={"edit-container"} className={mode}>
+          <h1 className={mode}>EDIT PROFILE</h1>
+          <FormControl noValidate autoComplete={"off"}>
+            <FormGroup row={false}>
+              <div id={"identity-container"} className={mode}>
+                <div id={"identity-label"}>
+                  <h3 className={mode}>Identity/Passport No:</h3>
+                </div>
+                <div id={"identity-text-container"} className={mode}>
+                  <TextField
+                    error={false}
+                    id={"edit-identity"}
+                    variant="outlined"
+                    value={identity}
+                    onChange={(e) => setIdentity(e.target.value)}
+                  />
+                </div>
+              </div>
+
+              <div id={"edit-name-surname-container"} className={mode}>
+                <div id={"name-surname-label"} className={mode}>
+                  <h3 className={mode}>Name Surname:</h3>
+                </div>
+                <div id={"name-text-container"} className={mode}>
+                  <TextField
+                    error={false}
+                    id={"edit-name"}
+                    variant="outlined"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                </div>
+                <div id={"surname-text-container"} className={mode}>
+                  <TextField
+                    error={false}
+                    id={"edit-surname"}
+                    variant="outlined"
+                    value={surname}
+                    onChange={(e) => setSurname(e.target.value)}
+                  />
+                </div>
+              </div>
+
+              <div id={"email-container"} className={mode}>
+                <div id={"email-label"}>
+                  <h3 className={mode}>E-mail:</h3>
+                </div>
+                <div id={"email-text-container"} className={mode}>
+                  <TextField
+                    error={false}
+                    id={"edit-email"}
+                    variant="outlined"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </div>
+              </div>
+
+              <div id={"password-container"} className={mode}>
+                <div id={"password-label"}>
+                  <h3 className={mode}>Password:</h3>
+                </div>
+                <div id={"password-text-container"} className={mode}>
+                  <div>
+                    <IconButton
+                      color="primary"
+                      component="span"
+                      onClick={sendPasswordHandler}
+                    >
+                      <LinkIcon />
+                    </IconButton>
+                  </div>
+                </div>
+              </div>
+
+              <div id={"birth-container"} className={mode}>
+                <div id={"birth-label"} className={mode}>
+                  <h3 className={mode}>Birth:</h3>
+                </div>
+                <div id={"date-icon-container"}>
+                  <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                    <Grid container justify="space-around">
+                      <KeyboardDatePicker
+                        margin="normal"
+                        id="date-picker-dialog"
+                        label="Date picker dialog"
+                        format="MM/dd/yyyy"
+                        value={selectedDate}
+                        onChange={dateChangeHandler}
+                        KeyboardButtonProps={{
+                          "aria-label": "change date",
+                        }}
+                      />
+                    </Grid>
+                  </MuiPickersUtilsProvider>
+                </div>
+              </div>
+
+              <div id={"gender-container"} className={mode}>
+                <div id={"gender-label"} className={mode}>
+                  <h3 className={mode}>Gender:</h3>
+                </div>
+                <div id={"radiogroup-container"} className={mode}>
+                  <RadioGroup
+                    aria-label="gender"
+                    name="gender1"
+                    value={gender}
+                    id={"name-surname-container"}
+                    onChange={(e) => setGender(e.target.value)}
+                  >
+                    <FormControlLabel
+                      value="female"
+                      control={<Radio />}
+                      label="Female"
+                    />
+                    <FormControlLabel
+                      value="male"
+                      control={<Radio />}
+                      label="Male"
+                    />
+                    <FormControlLabel
+                      value="other"
+                      control={<Radio />}
+                      label="Other"
+                    />
+                  </RadioGroup>
+                </div>
+              </div>
+              <div id={"phone-container"} className={mode}>
+                <div id={"phone-label"}>
+                  <h3 className={mode}>Phone No:</h3>
+                </div>
+                <div id={"phone-text-container"} className={mode}>
+                  <TextField
+                    error={false}
+                    id={"edit-phone"}
+                    variant="outlined"
+                    value={identity}
+                    onChange={(e) => setIdentity(e.target.value)}
+                  />
+                </div>
+              </div>
+              <div id={"address-container"} className={mode}>
+                <div id={"address-label"}>
+                  <h3 className={mode}>Adress:</h3>
+                </div>
+                <div id={"address-text-container"} className={mode}>
+                  <TextField
+                    error={false}
+                    id={"edit-adress"}
+                    multiline
+                    rowsMax={4}
+                    variant="outlined"
+                    value={identity}
+                    onChange={(e) => setIdentity(e.target.value)}
+                  />
+                </div>
+              </div>
+              <div id={"photo-container"} className={mode}>
+                <div id={"photo-label"}>
+                  <h3 className={mode}>Photo:</h3>
+                </div>
+                <div>
+                  <input
+                    accept="image/*"
+                    className={mode}
+                    id="icon-button-file"
+                    type="file"
+                  />
+                  <label htmlFor="icon-button-file">
+                    <IconButton
+                      id="icon-button"
+                      color="primary"
+                      aria-label="upload picture"
+                      component="span"
+                    >
+                      <PhotoCamera />
+                    </IconButton>
+                  </label>
+                </div>
+              </div>
+              <div id={"button-container"} className={mode}>
+                <Button
+                  id={"editButton"}
+                  className={mode}
+                  variant="contained"
+                  onClick={() => console.log("Button clicked.")}
+                >
+                  <b>Save</b>
+                </Button>
+              </div>
+            </FormGroup>
+          </FormControl>
+        </div>
+      </div>
+    </div>
+  );
 };
 
-export default EditProfile;
+const mapStateToProps = ({ applicationReducer }) => {
+  const { mode } = applicationReducer;
+  return {
+    mode,
+  };
+};
+
+export default connect(mapStateToProps)(EditProfile);
