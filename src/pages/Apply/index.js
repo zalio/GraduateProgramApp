@@ -6,9 +6,11 @@ import Container from "@material-ui/core/Container";
 import "./apply.scss";
 import Button from "@material-ui/core/Button";
 import { apply } from "../../services/firebase/apply";
+import { CircularProgress } from "@material-ui/core";
 
 const Apply = ({ mode, userData }) => {
   const location = useLocation();
+  const history = useHistory();
 
   const [photo, setPhoto] = useState(null);
   const [transcript, setTranscript] = useState(null);
@@ -18,7 +20,10 @@ const Apply = ({ mode, userData }) => {
   const [reference, setReference] = useState(null);
   const [purpose, setPurpose] = useState(null);
 
+  const [loading, setLoading] = useState(false);
+
   const applyHandler = async () => {
+    setLoading(true);
     const applyData = {
       applicationId: location.state.id,
       applicantId: userData.uid,
@@ -32,8 +37,15 @@ const Apply = ({ mode, userData }) => {
         purpose: purpose,
       },
     };
-
-    await apply(applyData);
+    try {
+      await apply(applyData);
+      alert("Successfully applied!");
+    } catch (e) {
+      alert("There is an error while applying!");
+    } finally {
+      setLoading(false);
+      history.push("/dashboard");
+    }
   };
 
   return (
@@ -93,13 +105,24 @@ const Apply = ({ mode, userData }) => {
           />
         </div>
         <div id="apply-button-container">
-          <Button
-            id="apply-button"
-            className={mode}
-            onClick={() => applyHandler()}
-          >
-            APPLY
-          </Button>
+          {loading ? (
+            <CircularProgress />
+          ) : (
+            <Button
+              id="apply-button"
+              className={mode}
+              onClick={() => applyHandler()}
+              disabled={
+                photo === null ||
+                transcript === null ||
+                ales === null ||
+                englishExam === null ||
+                purpose === null
+              }
+            >
+              APPLY
+            </Button>
+          )}
         </div>
       </Container>
     </div>

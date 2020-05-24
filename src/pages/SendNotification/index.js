@@ -7,13 +7,23 @@ import FileUpload from "../../components/reusable/FileUpload";
 import Button from "@material-ui/core/Button";
 import { sendNotification } from "../../services/firebase/notification";
 import { getUserWithEmail } from "../../services/firebase/user";
+import { CircularProgress } from "@material-ui/core";
 
 const SendNotification = ({ mode }) => {
   const [notificationFile, setNotificationFile] = useState(null);
   const [receiver, setReceiver] = useState("");
   const [text, setText] = useState("");
 
+  const [loading, setLoading] = useState(false);
+
+  const clearData = () => {
+    setNotificationFile(null);
+    setReceiver("");
+    setText("");
+  };
+
   const onSendNotificationPress = async () => {
+    setLoading(true);
     if (receiver === "" || text === "") {
       return;
     }
@@ -26,11 +36,19 @@ const SendNotification = ({ mode }) => {
 
     const { uid: receiverId } = receiverUserData;
 
-    sendNotification({
-      receiverId,
-      content: text,
-      file: notificationFile,
-    });
+    try {
+      await sendNotification({
+        receiverId,
+        content: text,
+        file: notificationFile,
+      });
+      alert("Successfully sent!");
+    } catch (e) {
+      alert("There is an error while sending notificaiton!");
+    } finally {
+      setLoading(false);
+      clearData();
+    }
   };
 
   return (
@@ -45,7 +63,7 @@ const SendNotification = ({ mode }) => {
           <TextField
             error={false}
             id="login-email"
-            label="Your e-mail"
+            label="Receiver e-mail"
             value={receiver}
             className={mode}
             onChange={(e) => setReceiver(e.target.value)}
@@ -67,13 +85,18 @@ const SendNotification = ({ mode }) => {
           placeholder="Upload File (Optional)"
           mode={mode}
         />
-        <Button
-          id="apply-button"
-          className={mode}
-          onClick={onSendNotificationPress}
-        >
-          SEND
-        </Button>
+        {loading ? (
+          <CircularProgress />
+        ) : (
+          <Button
+            id="apply-button"
+            className={mode}
+            onClick={onSendNotificationPress}
+            disabled={text === "" || receiver === ""}
+          >
+            SEND
+          </Button>
+        )}
       </Container>
     </div>
   );
