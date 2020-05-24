@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
 import FileUpload from "../../components/reusable/FileUpload";
@@ -10,6 +10,9 @@ import { CircularProgress } from "@material-ui/core";
 
 const Apply = ({ mode, userData }) => {
   const location = useLocation();
+  const history = useHistory();
+
+  const [applicationData, setApplicationData] = useState(null);
 
   const [loading, setLoading] = useState(false);
   const [photo, setPhoto] = useState(null);
@@ -20,9 +23,24 @@ const Apply = ({ mode, userData }) => {
   const [reference, setReference] = useState(null);
   const [purpose, setPurpose] = useState(null);
 
-  const applyHandler = async () => {
-    setLoading(true);
+  const [loading, setLoading] = useState(false);
 
+  const isDisabled = () =>
+    photo === null ||
+    transcript === null ||
+    ales === null ||
+    englishExam === null ||
+    purpose === null ||
+    (applicationData &&
+      applicationData.applicationType === "postgraduate" &&
+      masterTranscript === null);
+
+  const applyHandler = async () => {
+    if (isDisabled()) {
+      alert("Please fill the all fields!");
+      return;
+    }
+    setLoading(true);
     const applyData = {
       applicationId: location.state.id,
       applicantId: userData.uid,
@@ -36,21 +54,25 @@ const Apply = ({ mode, userData }) => {
         purpose: purpose,
       },
     };
-
-    await apply(applyData);
-    setLoading(false);
+    try {
+      await apply(applyData);
+      alert("Successfully applied!");
+    } catch (e) {
+      alert("There is an error while applying!");
+    } finally {
+      setLoading(false);
+      history.push("/dashboard");
+    }
   };
+  console.log(location.state.application);
+  useEffect(() => setApplicationData(location.state.application), []);
 
   return (
     <div id="apply-page">
       <Container id="apply-page-container" className={mode}>
         <div id="apply-page-upper-text" className={mode}>
           Apply The Program!
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet consequuntur deserunt
-            dicta ducimus eos exercitationem id incidunt laborum magni modi molestias necessitatibus
-            obcaecati perferendis provident sed sint, tempora temporibus vitae.
-          </p>
+          <p>{applicationData ? applicationData.text : ""}</p>
         </div>
         <div id="apply-page-insider">
           <FileUpload type="photo" changeField={setPhoto} placeholder="Upload Photo" mode={mode} />
@@ -90,7 +112,12 @@ const Apply = ({ mode, userData }) => {
           {loading ? (
             <CircularProgress />
           ) : (
-            <Button id="apply-button" className={mode} onClick={() => applyHandler()}>
+            <Button
+              id="apply-button"
+              className={mode}
+              onClick={() => applyHandler()}
+              disabled={isDisabled()}
+            >
               APPLY
             </Button>
           )}

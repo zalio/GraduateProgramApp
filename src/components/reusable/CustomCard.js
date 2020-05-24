@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -9,9 +10,28 @@ import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import "./CustomCard.scss";
 import Divider from "@material-ui/core/Divider";
 
-const CustomCard = ({ mode, customButton, type }) => {
+const CustomCard = ({ mode, type, data }) => {
+  const history = useHistory();
   const [buttonIconDown, setButtonIconDown] = useState(true);
   const [contentWidthClass, setContentWidthClass] = useState("small");
+
+  const buttonRender = (idToGo) => {
+    return (
+      <Button
+        id="apply-button"
+        className={mode}
+        onClick={() =>
+          history.push({
+            pathname: "apply",
+            state: { id: idToGo, application: data },
+          })
+        }
+      >
+        Apply!
+      </Button>
+    );
+  };
+
   return (
     <Card className={mode}>
       <CardContent
@@ -20,10 +40,16 @@ const CustomCard = ({ mode, customButton, type }) => {
       >
         <div id="card-upper-text-container" className={mode}>
           <div id="card-upper-text-sub-container" className={mode}>
-            <span>
-              <b>From:</b>
-            </span>
-            <span>Rıdvan Mertoğlu</span>
+            {type === "notification" ? (
+              <>
+                <span>
+                  <b>From:</b>
+                </span>
+                <span>Rıdvan Mertoğlu</span>
+              </>
+            ) : (
+              ""
+            )}
           </div>
           <div id="card-upper-text-sub-container" className={mode}>
             <span>
@@ -33,15 +59,11 @@ const CustomCard = ({ mode, customButton, type }) => {
           </div>
         </div>
         <Divider className={mode} />
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus ad
-        animi blanditiis commodi eum fugit nulla quo reiciendis suscipit vitae!
-        Accusantium consectetur eveniet iste officiis, possimus quae quaerat
-        quas voluptatum? Lorem ipsum dolor sit amet, consectetur adipisicing
-        elit. Aliquam commodi eaque fugiat fugit nobis similique temporibus
-        velit voluptas? Aperiam aspernatur cum dolore ducimus eaque labore
-        laboriosam provident quis ratione tempore?
+        {type === "announcement" ? data.text : data.content}
         <div id="custom-button-container" className={mode}>
-          {customButton ? customButton() : ""}
+          {type === "announcement" && data.type === "application"
+            ? buttonRender(data.id)
+            : ""}
         </div>
       </CardContent>
       <CardActions className={mode}>

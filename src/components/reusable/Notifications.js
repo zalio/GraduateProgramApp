@@ -5,25 +5,21 @@ import CustomCard from "./CustomCard";
 import "./notifications.scss";
 import { Button } from "@material-ui/core";
 
-const Notifications = ({ mode }) => {
+const Notifications = ({ mode, title, type, data, route }) => {
   const history = useHistory();
   return (
     <>
       <div>
-        <p>Notifications</p>
+        <p>{title}</p>
         <div id="notifications-part">
-          <CustomCard />
-          <CustomCard />
-          <CustomCard />
-          <CustomCard />
-          <CustomCard />
-          <CustomCard />
-          <CustomCard />
+          {data.map((d) => (
+            <CustomCard type="notifications" data={d} />
+          ))}
         </div>
         <Button
           id="show-all-button"
           className={mode}
-          onClick={() => history.push("/notifications")}
+          onClick={() => history.push(route)}
         >
           SHOW ALL
         </Button>

@@ -4,7 +4,7 @@ import CustomCard from "../../components/reusable/CustomCard";
 import Container from "@material-ui/core/Container";
 import "./announcements.scss";
 
-const Announcements = ({ mode }) => {
+const Announcements = ({ mode, announcements }) => {
   return (
     <div id="cards-page">
       <Container className={mode}>
@@ -13,26 +13,20 @@ const Announcements = ({ mode }) => {
             <b>Announcements</b>
           </h1>
         </div>
-        <CustomCard />
-        <CustomCard />
-        <CustomCard />
-        <CustomCard />
-        <CustomCard />
-        <CustomCard />
-        <CustomCard />
-        <CustomCard />
-        <CustomCard />
-        <CustomCard />
-        <CustomCard />
-        <CustomCard />
+        <div id="announcements-part">
+          {announcements.map((d) => (
+            <CustomCard type="announcement" data={d} />
+          ))}
+        </div>
       </Container>
     </div>
   );
 };
 const mapStateToProps = ({ applicationReducer }) => {
-  const { mode } = applicationReducer;
+  const { mode, announcements } = applicationReducer;
   return {
     mode,
+    announcements,
   };
 };
 export default connect(mapStateToProps)(Announcements);

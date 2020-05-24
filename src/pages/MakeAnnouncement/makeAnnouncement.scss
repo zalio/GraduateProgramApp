@@ -1,6 +1,12 @@
 #make-announcement-page {
   height: 100vh;
 }
+#make-announcement-page.dark {
+
+  #combo-box-demo {
+    color: white;
+  }
+}
 #outlined-multiline-static {
   width: 500px;
 }
@@ -11,9 +17,7 @@
   .MuiOutlinedInput-input, .MuiOutlinedInput-inputMultiline {
     color: white !important;
   }
-
 }
-
 #make-announcement-page-container.dark {
   color: white;
   .MuiFormLabel-root{

@@ -3,18 +3,23 @@ import { connect } from "react-redux";
 
 import ApplicantMainPage from "../ApplicantMainPage";
 import "./dashboard.scss";
-import { saveUser, getUser } from "../../services/firebase/user";
-import {
-  makeAnnouncement,
-  getAllAnnouncements,
-  getSpesificDepartmentAnnouncements,
-} from "../../services/firebase/announcement";
-import {
-  sendNotification,
-  getUserNotifications,
-} from "../../services/firebase/notification";
+import { getAllAnnouncements } from "../../services/firebase/announcement";
+import { getUserNotifications } from "../../services/firebase/notification";
 
-const Dashboard = ({ mode, userData }) => {
+import {
+  announcementsRequest,
+  announcementsResponse,
+  notificationsRequest,
+  notificationsResponse,
+} from "../../store/actions/application";
+
+const Dashboard = ({
+  userData,
+  announcementsRequest,
+  announcementsResponse,
+  notificationsRequest,
+  notificationsResponse,
+}) => {
   useEffect(() => {
     // // const newUserData = { ...userData, name: "Ridvan" };
     // const newUserData = { ...userData, department: "Computer Engineer" };
@@ -40,24 +45,30 @@ const Dashboard = ({ mode, userData }) => {
     //   reference: "pathi",
     //   purpose: "pathi",
     // });
-    getUserNotificationss();
+    getUserNotification();
+    getAllAnnouncement();
   }, []);
 
-  const getAllAnnouncementss = async () => {
+  const getAllAnnouncement = async () => {
+    announcementsRequest();
     const allAnnouncements = await getAllAnnouncements();
+    announcementsResponse(allAnnouncements);
     console.log("allAnnouncements: ", allAnnouncements);
   };
 
-  const getSpesificDepartmentAnnouncementss = async () => {
-    const spesDep = await getSpesificDepartmentAnnouncements("MBG");
-    console.log("spes dep: ", spesDep);
-  };
-
-  const getUserNotificationss = async () => {
+  const getUserNotification = async () => {
+    notificationsRequest();
     const { uid } = userData;
     const notifications = await getUserNotifications(uid);
+    notificationsResponse(notifications);
     console.log("notifications: ", notifications);
   };
+
+  useEffect(() => {
+    getUserNotification();
+    getAllAnnouncement();
+  }, []);
+
   return (
     <>
       <ApplicantMainPage />
@@ -72,4 +83,11 @@ const mapStateToProps = ({ applicationReducer, authReducer }) => {
     userData: authReducer.userData,
   };
 };
-export default connect(mapStateToProps)(Dashboard);
+const mapDispatchToProps = {
+  announcementsRequest,
+  announcementsResponse,
+  notificationsRequest,
+  notificationsResponse,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

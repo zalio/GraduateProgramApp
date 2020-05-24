@@ -5,42 +5,21 @@ import CustomCard from "./CustomCard";
 import "./announcements.scss";
 import { Button } from "@material-ui/core";
 
-const Announcements = ({ mode }) => {
+const Announcements = ({ mode, title, type, data, route }) => {
   const history = useHistory();
-  const buttonRender = () => {
-    return (
-      <Button
-        id="apply-button"
-        className={mode}
-        onClick={() =>
-          history.push({
-            pathname: "apply",
-            state: { id: 2 },
-          })
-        }
-      >
-        Apply!
-      </Button>
-    );
-  };
-
   return (
     <>
       <div>
-        <p>Announcements</p>
+        <p>{title}</p>
         <div id="announcements-part">
-          <CustomCard customButton={buttonRender} />
-          <CustomCard customButton={buttonRender} />
-          <CustomCard customButton={buttonRender} />
-          <CustomCard customButton={buttonRender} />
-          <CustomCard customButton={buttonRender} />
-          <CustomCard customButton={buttonRender} />
-          <CustomCard customButton={buttonRender} />
+          {data.map((d) => (
+            <CustomCard type="announcement" data={d} />
+          ))}
         </div>
         <Button
           id="show-all-button"
           className={mode}
-          onClick={() => history.push("/announcements")}
+          onClick={() => history.push(route)}
         >
           SHOW ALL
         </Button>

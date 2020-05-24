@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import CustomCard from "../../components/reusable/CustomCard";
 import Container from "@material-ui/core/Container";
 
-const Notifications = ({ mode }) => {
+const Notifications = ({ mode, notifications }) => {
   return (
     <div id="cards-page">
       <Container className={mode}>
@@ -12,26 +12,20 @@ const Notifications = ({ mode }) => {
             <b>Notifications</b>
           </h1>
         </div>
-        <CustomCard />
-        <CustomCard />
-        <CustomCard />
-        <CustomCard />
-        <CustomCard />
-        <CustomCard />
-        <CustomCard />
-        <CustomCard />
-        <CustomCard />
-        <CustomCard />
-        <CustomCard />
-        <CustomCard />
+        <div id="notifications-part">
+          {notifications.map((d) => (
+            <CustomCard type="notifications" data={d} />
+          ))}
+        </div>
       </Container>
     </div>
   );
 };
 const mapStateToProps = ({ applicationReducer }) => {
-  const { mode } = applicationReducer;
+  const { mode, notifications } = applicationReducer;
   return {
     mode,
+    notifications,
   };
 };
 export default connect(mapStateToProps)(Notifications);
