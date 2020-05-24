@@ -6,10 +6,12 @@ import Container from "@material-ui/core/Container";
 import "./apply.scss";
 import Button from "@material-ui/core/Button";
 import { apply } from "../../services/firebase/apply";
+import { CircularProgress } from "@material-ui/core";
 
 const Apply = ({ mode, userData }) => {
   const location = useLocation();
 
+  const [loading, setLoading] = useState(false);
   const [photo, setPhoto] = useState(null);
   const [transcript, setTranscript] = useState(null);
   const [masterTranscript, setMasterTranscript] = useState(null);
@@ -19,6 +21,8 @@ const Apply = ({ mode, userData }) => {
   const [purpose, setPurpose] = useState(null);
 
   const applyHandler = async () => {
+    setLoading(true);
+
     const applyData = {
       applicationId: location.state.id,
       applicantId: userData.uid,
@@ -34,6 +38,7 @@ const Apply = ({ mode, userData }) => {
     };
 
     await apply(applyData);
+    setLoading(false);
   };
 
   return (
@@ -42,19 +47,13 @@ const Apply = ({ mode, userData }) => {
         <div id="apply-page-upper-text" className={mode}>
           Apply The Program!
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet
-            consequuntur deserunt dicta ducimus eos exercitationem id incidunt
-            laborum magni modi molestias necessitatibus obcaecati perferendis
-            provident sed sint, tempora temporibus vitae.
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet consequuntur deserunt
+            dicta ducimus eos exercitationem id incidunt laborum magni modi molestias necessitatibus
+            obcaecati perferendis provident sed sint, tempora temporibus vitae.
           </p>
         </div>
         <div id="apply-page-insider">
-          <FileUpload
-            type="photo"
-            changeField={setPhoto}
-            placeholder="Upload Photo"
-            mode={mode}
-          />
+          <FileUpload type="photo" changeField={setPhoto} placeholder="Upload Photo" mode={mode} />
           <FileUpload
             type="transcript"
             changeField={setTranscript}
@@ -67,12 +66,7 @@ const Apply = ({ mode, userData }) => {
             placeholder="Master Transcript"
             mode={mode}
           />
-          <FileUpload
-            type="ales"
-            changeField={setAles}
-            mode={mode}
-            placeholder="ALES Result"
-          />
+          <FileUpload type="ales" changeField={setAles} mode={mode} placeholder="ALES Result" />
           <FileUpload
             type="englishExam"
             changeField={setEnglishExam}
@@ -93,13 +87,13 @@ const Apply = ({ mode, userData }) => {
           />
         </div>
         <div id="apply-button-container">
-          <Button
-            id="apply-button"
-            className={mode}
-            onClick={() => applyHandler()}
-          >
-            APPLY
-          </Button>
+          {loading ? (
+            <CircularProgress />
+          ) : (
+            <Button id="apply-button" className={mode} onClick={() => applyHandler()}>
+              APPLY
+            </Button>
+          )}
         </div>
       </Container>
     </div>
