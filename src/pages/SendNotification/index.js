@@ -5,11 +5,33 @@ import "./sendNotification.scss";
 import TextField from "@material-ui/core/TextField";
 import FileUpload from "../../components/reusable/FileUpload";
 import Button from "@material-ui/core/Button";
+import { sendNotification } from "../../services/firebase/notification";
+import { getUserWithEmail } from "../../services/firebase/user";
 
 const SendNotification = ({ mode }) => {
-  const [noticiationFile, setNotificationFile] = useState(null);
-  const [receiver, setReceiver] = useState();
-  const [text, setText] = useState();
+  const [notificationFile, setNotificationFile] = useState(null);
+  const [receiver, setReceiver] = useState("");
+  const [text, setText] = useState("");
+
+  const onSendNotificationPress = async () => {
+    if (receiver === "" || text === "") {
+      return;
+    }
+
+    const receiverUserData = await getUserWithEmail(receiver);
+
+    if (!receiverUserData) {
+      return;
+    }
+
+    const { uid: receiverId } = receiverUserData;
+
+    sendNotification({
+      receiverId,
+      content: text,
+      file: notificationFile,
+    });
+  };
 
   return (
     <div id="make-announcement-page" className={mode}>
@@ -45,7 +67,7 @@ const SendNotification = ({ mode }) => {
           placeholder="Upload File (Optional)"
           mode={mode}
         />
-        <Button id="apply-button" className={mode}>
+        <Button id="apply-button" className={mode} onClick={onSendNotificationPress}>
           SEND
         </Button>
       </Container>

@@ -3,12 +3,13 @@ import { connect } from "react-redux";
 
 import ApplicantMainPage from "../ApplicantMainPage";
 import "./dashboard.scss";
-import { saveUser } from "../../services/firebase/user";
+import { saveUser, getUser } from "../../services/firebase/user";
 import {
   makeAnnouncement,
   getAllAnnouncements,
   getSpesificDepartmentAnnouncements,
-} from "../../services/firebase/announcements";
+} from "../../services/firebase/announcement";
+import { sendNotification, getUserNotifications } from "../../services/firebase/notification";
 
 const Dashboard = ({ mode, userData }) => {
   useEffect(() => {
@@ -36,6 +37,7 @@ const Dashboard = ({ mode, userData }) => {
     //   reference: "pathi",
     //   purpose: "pathi",
     // });
+    getUserNotificationss();
   }, []);
 
   const getAllAnnouncementss = async () => {
@@ -48,6 +50,11 @@ const Dashboard = ({ mode, userData }) => {
     console.log("spes dep: ", spesDep);
   };
 
+  const getUserNotificationss = async () => {
+    const { uid } = userData;
+    const notifications = await getUserNotifications(uid);
+    console.log("notifications: ", notifications);
+  };
   return (
     <>
       <ApplicantMainPage />
