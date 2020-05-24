@@ -67,7 +67,11 @@ const SendNotification = ({ mode }) => {
           placeholder="Upload File (Optional)"
           mode={mode}
         />
-        <Button id="apply-button" className={mode} onClick={onSendNotificationPress}>
+        <Button
+          id="apply-button"
+          className={mode}
+          onClick={onSendNotificationPress}
+        >
           SEND
         </Button>
       </Container>

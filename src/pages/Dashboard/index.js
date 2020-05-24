@@ -9,7 +9,10 @@ import {
   getAllAnnouncements,
   getSpesificDepartmentAnnouncements,
 } from "../../services/firebase/announcement";
-import { sendNotification, getUserNotifications } from "../../services/firebase/notification";
+import {
+  sendNotification,
+  getUserNotifications,
+} from "../../services/firebase/notification";
 
 const Dashboard = ({ mode, userData }) => {
   useEffect(() => {
