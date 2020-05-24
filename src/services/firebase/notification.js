@@ -17,8 +17,8 @@ export const sendNotification = async (notification) => {
   if (file) {
     const path = `notification_file_${uuidv4()}`;
     await storage.ref(path).put(file);
-
     const downloadUrl = await storage.ref(path).getDownloadURL();
+
     dataToSaveDb["file"] = downloadUrl;
   }
 
@@ -26,11 +26,8 @@ export const sendNotification = async (notification) => {
 };
 
 export const getUserNotifications = async (userId) => {
-  const notificationsPath = database.ref(
-    `${USERS_PATH}/${userId}/notifications`
-  );
+  const notificationsPath = database.ref(`${USERS_PATH}/${userId}/notifications`);
   const notificationsData = await notificationsPath.once("value");
-
   const result = [];
 
   notificationsData.forEach((value) => {

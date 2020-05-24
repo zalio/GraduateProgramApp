@@ -1,16 +1,29 @@
+import { v4 as uuidv4 } from "uuid";
+
 import firebase from "./index";
 
 const database = firebase.database();
+const storage = firebase.storage();
 const ANNOUNCEMENTS_PATH = "announcements";
 
 export const makeAnnouncement = async (announcement) => {
-  await database.ref(ANNOUNCEMENTS_PATH).push(announcement);
+  const { file } = announcement;
+  const dataToSaveDb = { ...announcement };
+
+  if (file) {
+    const path = `notification_file_${uuidv4()}`;
+    await storage.ref(path).put(file);
+
+    const downloadUrl = await storage.ref(path).getDownloadURL();
+    dataToSaveDb["file"] = downloadUrl;
+  }
+
+  await database.ref(ANNOUNCEMENTS_PATH).push(dataToSaveDb);
 };
 
 export const getAllAnnouncements = async () => {
   const announcementRef = database.ref(ANNOUNCEMENTS_PATH);
   const announcementData = await announcementRef.once("value");
-
   const result = [];
 
   announcementData.forEach((value) => {
@@ -23,7 +36,6 @@ export const getAllAnnouncements = async () => {
 export const getSpesificDepartmentAnnouncements = async (department) => {
   const announcementRef = database.ref(ANNOUNCEMENTS_PATH);
   const announcementData = await announcementRef.once("value");
-
   const result = [];
 
   announcementData.forEach((value) => {
