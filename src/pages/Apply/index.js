@@ -23,8 +23,6 @@ const Apply = ({ mode, userData }) => {
   const [reference, setReference] = useState(null);
   const [purpose, setPurpose] = useState(null);
 
-  const [loading, setLoading] = useState(false);
-
   const isDisabled = () =>
     photo === null ||
     transcript === null ||
