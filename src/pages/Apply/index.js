@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
 import FileUpload from "../../components/reusable/FileUpload";
@@ -12,6 +12,8 @@ const Apply = ({ mode, userData }) => {
   const location = useLocation();
   const history = useHistory();
 
+  const [applicationData, setApplicationData] = useState(null);
+
   const [photo, setPhoto] = useState(null);
   const [transcript, setTranscript] = useState(null);
   const [masterTranscript, setMasterTranscript] = useState(null);
@@ -22,7 +24,21 @@ const Apply = ({ mode, userData }) => {
 
   const [loading, setLoading] = useState(false);
 
+  const isDisabled = () =>
+    photo === null ||
+    transcript === null ||
+    ales === null ||
+    englishExam === null ||
+    purpose === null ||
+    (applicationData &&
+      applicationData.applicationType === "postgraduate" &&
+      masterTranscript === null);
+
   const applyHandler = async () => {
+    if (isDisabled()) {
+      alert("Please fill the all fields!");
+      return;
+    }
     setLoading(true);
     const applyData = {
       applicationId: location.state.id,
@@ -47,18 +63,15 @@ const Apply = ({ mode, userData }) => {
       history.push("/dashboard");
     }
   };
+  console.log(location.state.application);
+  useEffect(() => setApplicationData(location.state.application), []);
 
   return (
     <div id="apply-page">
       <Container id="apply-page-container" className={mode}>
         <div id="apply-page-upper-text" className={mode}>
           Apply The Program!
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet
-            consequuntur deserunt dicta ducimus eos exercitationem id incidunt
-            laborum magni modi molestias necessitatibus obcaecati perferendis
-            provident sed sint, tempora temporibus vitae.
-          </p>
+          <p>{applicationData ? applicationData.text : ""}</p>
         </div>
         <div id="apply-page-insider">
           <FileUpload
@@ -112,13 +125,7 @@ const Apply = ({ mode, userData }) => {
               id="apply-button"
               className={mode}
               onClick={() => applyHandler()}
-              disabled={
-                photo === null ||
-                transcript === null ||
-                ales === null ||
-                englishExam === null ||
-                purpose === null
-              }
+              disabled={isDisabled()}
             >
               APPLY
             </Button>
