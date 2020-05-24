@@ -11,7 +11,7 @@ export const makeAnnouncement = async (announcement) => {
   const dataToSaveDb = { ...announcement };
 
   if (file) {
-    const path = `notification_file_${uuidv4()}`;
+    const path = `announcement_file_${uuidv4()}`;
     await storage.ref(path).put(file);
 
     const downloadUrl = await storage.ref(path).getDownloadURL();
