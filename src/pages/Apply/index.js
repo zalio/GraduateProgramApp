@@ -14,6 +14,7 @@ const Apply = ({ mode, userData }) => {
 
   const [applicationData, setApplicationData] = useState(null);
 
+  const [loading, setLoading] = useState(false);
   const [photo, setPhoto] = useState(null);
   const [transcript, setTranscript] = useState(null);
   const [masterTranscript, setMasterTranscript] = useState(null);
@@ -74,12 +75,7 @@ const Apply = ({ mode, userData }) => {
           <p>{applicationData ? applicationData.text : ""}</p>
         </div>
         <div id="apply-page-insider">
-          <FileUpload
-            type="photo"
-            changeField={setPhoto}
-            placeholder="Upload Photo"
-            mode={mode}
-          />
+          <FileUpload type="photo" changeField={setPhoto} placeholder="Upload Photo" mode={mode} />
           <FileUpload
             type="transcript"
             changeField={setTranscript}
@@ -92,12 +88,7 @@ const Apply = ({ mode, userData }) => {
             placeholder="Master Transcript"
             mode={mode}
           />
-          <FileUpload
-            type="ales"
-            changeField={setAles}
-            mode={mode}
-            placeholder="ALES Result"
-          />
+          <FileUpload type="ales" changeField={setAles} mode={mode} placeholder="ALES Result" />
           <FileUpload
             type="englishExam"
             changeField={setEnglishExam}

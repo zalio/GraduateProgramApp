@@ -1,7 +1,6 @@
 import firebase from "./index";
 
 const database = firebase.database();
-const auth = firebase.auth();
 export const USERS_PATH = "users";
 
 export const saveUser = async (user) => {
@@ -18,10 +17,7 @@ export const getUser = async (uid) => {
 
 export const getUserWithEmail = async (email) => {
   const usersRef = database.ref(`${USERS_PATH}`);
-  const userData = await usersRef
-    .orderByChild("email")
-    .equalTo(email)
-    .once("value");
+  const userData = await usersRef.orderByChild("email").equalTo(email).once("value");
   const userDataVal = await userData.val();
   const userDataValParsing = userDataVal ? Object.values(userDataVal)[0] : null;
 
