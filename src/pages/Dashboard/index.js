@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 
 import ApplicantMainPage from "../ApplicantMainPage";
+import GradSchoolMainPage from "../GradSchoolMainPage";
+
 import "./dashboard.scss";
 import { getAllAnnouncements } from "../../services/firebase/announcement";
 import { getUserNotifications } from "../../services/firebase/notification";
@@ -73,11 +75,13 @@ const Dashboard = ({
     notificationsResponse(notifications);
   }, [notifications]);
 
-  return (
-    <>
-      <ApplicantMainPage />
-    </>
-  );
+  const renderItem = () => {
+    console.log(userData);
+    if (userData.type === "applicant") return <ApplicantMainPage />;
+    else if (userData.type === "gradschool") return <GradSchoolMainPage />;
+  };
+
+  return <>{renderItem()}</>;
 };
 
 const mapStateToProps = ({ applicationReducer, authReducer }) => {
