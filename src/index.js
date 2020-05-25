@@ -4,21 +4,23 @@ import { BrowserRouter } from "react-router-dom";
 import "./app/assets/styles/index.scss";
 import * as serviceWorker from "./serviceWorker";
 import { Provider } from "react-redux";
-import { createStore, applyMiddleware } from "redux";
-import ReduxThunk from "redux-thunk";
+import { PersistGate } from "redux-persist/integration/react";
 
 import App from "./app/App";
-import reducers from "./store/reducers";
 
-const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
+import configureStore from "./store/configureStore";
+
+const { persistor, store } = configureStore();
 
 ReactDOM.render(
   <Provider store={store}>
-    <BrowserRouter>
-      <React.StrictMode>
-        <App />
-      </React.StrictMode>
-    </BrowserRouter>
+    <PersistGate loading={null} persistor={persistor}>
+      <BrowserRouter>
+        <React.StrictMode>
+          <App />
+        </React.StrictMode>
+      </BrowserRouter>
+    </PersistGate>
   </Provider>,
   document.getElementById("root")
 );
