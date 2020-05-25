@@ -20,7 +20,7 @@ import { forgotPasswordWithEmail } from "../../services/firebase/auth";
 import "./editProfile.scss";
 import { connect } from "react-redux";
 
-const EditProfile = ({ mode }) => {
+const EditProfile = ({ mode, userData }) => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
@@ -29,6 +29,8 @@ const EditProfile = ({ mode }) => {
   const [selectedDate, setSelectedDate] = React.useState(
     new Date("2014-08-18T21:11:54")
   );
+
+  const userIsApplicant = () => userData.type !== "applicant";
 
   const dateChangeHandler = (date) => {
     setSelectedDate(date);
@@ -57,6 +59,7 @@ const EditProfile = ({ mode }) => {
                   <TextField
                     error={false}
                     id={"edit-identity"}
+                    disabled={userIsApplicant}
                     variant="outlined"
                     value={identity}
                     onChange={(e) => setIdentity(e.target.value)}
@@ -72,6 +75,7 @@ const EditProfile = ({ mode }) => {
                   <TextField
                     error={false}
                     id={"edit-name"}
+                    disabled={userIsApplicant}
                     variant="outlined"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
@@ -81,6 +85,7 @@ const EditProfile = ({ mode }) => {
                   <TextField
                     error={false}
                     id={"edit-surname"}
+                    disabled={userIsApplicant}
                     variant="outlined"
                     value={surname}
                     onChange={(e) => setSurname(e.target.value)}
@@ -96,6 +101,7 @@ const EditProfile = ({ mode }) => {
                   <TextField
                     error={false}
                     id={"edit-email"}
+                    disabled={userIsApplicant}
                     variant="outlined"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
@@ -112,6 +118,7 @@ const EditProfile = ({ mode }) => {
                     <IconButton
                       color="primary"
                       component="span"
+                      disabled={userIsApplicant}
                       onClick={sendPasswordHandler}
                     >
                       <LinkIcon />
@@ -132,6 +139,7 @@ const EditProfile = ({ mode }) => {
                         id="date-picker-dialog"
                         label="Date picker dialog"
                         format="MM/dd/yyyy"
+                        disabled={userIsApplicant}
                         value={selectedDate}
                         onChange={dateChangeHandler}
                         KeyboardButtonProps={{
@@ -157,16 +165,19 @@ const EditProfile = ({ mode }) => {
                   >
                     <FormControlLabel
                       value="female"
+                      disabled={userIsApplicant}
                       control={<Radio />}
                       label="Female"
                     />
                     <FormControlLabel
                       value="male"
+                      disabled={userIsApplicant}
                       control={<Radio />}
                       label="Male"
                     />
                     <FormControlLabel
                       value="other"
+                      disabled={userIsApplicant}
                       control={<Radio />}
                       label="Other"
                     />
@@ -181,6 +192,7 @@ const EditProfile = ({ mode }) => {
                   <TextField
                     error={false}
                     id={"edit-phone"}
+                    disabled={userIsApplicant}
                     variant="outlined"
                     value={identity}
                     onChange={(e) => setIdentity(e.target.value)}
@@ -195,6 +207,7 @@ const EditProfile = ({ mode }) => {
                   <TextField
                     error={false}
                     id={"edit-adress"}
+                    disabled={userIsApplicant}
                     multiline
                     rowsMax={4}
                     variant="outlined"
@@ -217,6 +230,7 @@ const EditProfile = ({ mode }) => {
                   <label htmlFor="icon-button-file">
                     <IconButton
                       id="icon-button"
+                      disabled={userIsApplicant}
                       color="primary"
                       aria-label="upload picture"
                       component="span"
@@ -229,6 +243,7 @@ const EditProfile = ({ mode }) => {
               <div id={"button-container"} className={mode}>
                 <Button
                   id={"editButton"}
+                  disabled={userIsApplicant}
                   className={mode}
                   variant="contained"
                   onClick={() => console.log("Button clicked.")}
@@ -244,10 +259,12 @@ const EditProfile = ({ mode }) => {
   );
 };
 
-const mapStateToProps = ({ applicationReducer }) => {
+const mapStateToProps = ({ applicationReducer, authReducer }) => {
   const { mode } = applicationReducer;
+  const { userData } = authReducer;
   return {
     mode,
+    userData,
   };
 };
 
