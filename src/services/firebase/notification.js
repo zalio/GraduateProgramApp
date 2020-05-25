@@ -26,7 +26,9 @@ export const sendNotification = async (notification) => {
 };
 
 export const getUserNotifications = async (userId) => {
-  const notificationsPath = database.ref(`${USERS_PATH}/${userId}/notifications`);
+  const notificationsPath = database.ref(
+    `${USERS_PATH}/${userId}/notifications`
+  );
   const notificationsData = await notificationsPath.once("value");
   const result = [];
 
