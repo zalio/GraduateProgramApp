@@ -38,7 +38,6 @@ const CustomPopover = ({ popoverContent, buttonContent }) => {
       </Typography>
       <Popover
         id="mouse-over-popover"
-        className={classes.popover}
         classes={{
           paper: classes.paper,
         }}
