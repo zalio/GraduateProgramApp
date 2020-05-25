@@ -1,5 +1,5 @@
 #edit-page {
-  height: 100vh;
+  height: 120vh;
   padding-top: 80px;
   background-color: #24292E;
 }
@@ -11,7 +11,7 @@
   justify-content: center;
   align-items: center;
   position: absolute;
-  top: 50vh;
+  top: 55vh;
   left: 0;
 }
 
@@ -26,18 +26,17 @@
   #identity-container, #edit-name-surname-container, #email-container, #password-container,#birth-container, #gender-container, #phone-container,#address-container,#photo-container{
     display: flex;
     flex-direction: row;
+    align-items: center;
 
   }
 
-  #identity-label,#name-surname-label,#password-label,#birth-label,#gender-label,#phone-label,#address-label,#photo-label{
+  #identity-label,#name-surname-label,#password-label,#birth-label,#email-label,#gender-label,#phone-label,#address-label,#photo-label{
     width: 30%;
 
   }
-  #email-label{
-    width: 32%;
-  }
 
-  #identity-text-container,#name-text-container,#surname-text-container,#email-text-container,#password-text-container,#phone-text-container,#address-text-container{
+
+  #identity-text-container,#name-text-container,#surname-text-container,#email-text-container,#phone-text-container,#address-text-container{
     width: 30%;
     margin-left: 15px;
   }
@@ -73,13 +72,23 @@
 
   #radiogroup-container{
     margin-top: 10px;
+    margin-left: 5px;
+  }
+  #date-icon-container{
+    margin-left: 15px;
+  }
+
+  #file-upload-container{
+    width: 25vh;
+    margin-bottom: 10px;
+    align-items: center;
   }
 
 }
 
 #editButton {
   height: 40px;
-  margin-top: 25px;
+  margin-top: 10px;
   background-color: rgba(0,175,0,.8);
   width: 20%;
   border-radius: 5px;
@@ -106,11 +115,21 @@
 
 #edit-container.dark{
   border: 2px solid white;
+  #edit-identity, #edit-name,
+  #edit-surname, #edit-email, #edit-password,#edit-phone,
+  #edit-adress,#date-picker-dialog,#date-picker-dialog-label{
+    color: white;
+  }
 
 }
 #edit-container.light{
   border: 2px solid black;
   background-color: white;
+  #edit-identity, #edit-name, #edit-surname,
+  #edit-email, #edit-password,#edit-phone,
+  #edit-adress, #radiogroup-container{
+    color: black;
+  }
 }
 h3.dark {
   color: white;
@@ -118,6 +137,9 @@ h3.dark {
 h3.light {
   color: black;
 }
+
+
+
 #editButton.light{
   border: 2px solid black;
 }

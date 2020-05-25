@@ -8,7 +8,7 @@ import Radio from "@material-ui/core/Radio/Radio";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import LinkIcon from "@material-ui/icons/Link";
-import PhotoCamera from "@material-ui/icons/PhotoCamera";
+import FileUpload from "../../components/reusable/FileUpload";
 import "date-fns";
 import Grid from "@material-ui/core/Grid";
 import DateFnsUtils from "@date-io/date-fns";
@@ -21,11 +21,14 @@ import "./editProfile.scss";
 import { connect } from "react-redux";
 
 const EditProfile = ({ mode, userData }) => {
-  const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
-  const [surname, setSurname] = useState("");
+  const [email, setEmail] = useState(userData.email);
+  const [name, setName] = useState(userData.name);
+  const [surname, setSurname] = useState(userData.surname);
   const [identity, setIdentity] = useState("");
   const [gender, setGender] = useState("");
+  const [phone, setPhone] = useState("");
+  const [photo, setPhoto] = useState("");
+  const [adress, setAdress] = useState("");
   const [selectedDate, setSelectedDate] = React.useState(
     new Date("2014-08-18T21:11:54")
   );
@@ -34,6 +37,7 @@ const EditProfile = ({ mode, userData }) => {
 
   const dateChangeHandler = (date) => {
     setSelectedDate(date);
+    console.log(userData);
   };
 
   const sendPasswordHandler = async () => {
@@ -59,6 +63,7 @@ const EditProfile = ({ mode, userData }) => {
                   <TextField
                     error={false}
                     id={"edit-identity"}
+                    placeholder="Your identity"
                     disabled={userIsApplicant}
                     variant="outlined"
                     value={identity}
@@ -75,6 +80,7 @@ const EditProfile = ({ mode, userData }) => {
                   <TextField
                     error={false}
                     id={"edit-name"}
+                    placeholder="Your name"
                     disabled={userIsApplicant}
                     variant="outlined"
                     value={name}
@@ -85,6 +91,7 @@ const EditProfile = ({ mode, userData }) => {
                   <TextField
                     error={false}
                     id={"edit-surname"}
+                    placeholder="Your Surname"
                     disabled={userIsApplicant}
                     variant="outlined"
                     value={surname}
@@ -101,6 +108,7 @@ const EditProfile = ({ mode, userData }) => {
                   <TextField
                     error={false}
                     id={"edit-email"}
+                    placeholder="Your E-mail"
                     disabled={userIsApplicant}
                     variant="outlined"
                     value={email}
@@ -114,16 +122,13 @@ const EditProfile = ({ mode, userData }) => {
                   <h3 className={mode}>Password:</h3>
                 </div>
                 <div id={"password-text-container"} className={mode}>
-                  <div>
-                    <IconButton
-                      color="primary"
-                      component="span"
-                      disabled={userIsApplicant}
-                      onClick={sendPasswordHandler}
-                    >
-                      <LinkIcon />
-                    </IconButton>
-                  </div>
+                  <IconButton
+                    color="primary"
+                    component="span"
+                    onClick={sendPasswordHandler}
+                  >
+                    <LinkIcon />
+                  </IconButton>
                 </div>
               </div>
 
@@ -136,10 +141,10 @@ const EditProfile = ({ mode, userData }) => {
                     <Grid container justify="space-around">
                       <KeyboardDatePicker
                         margin="normal"
-                        id="date-picker-dialog"
                         label="Date picker dialog"
+                        id="date-picker-dialog"
+                        className={mode}
                         format="MM/dd/yyyy"
-                        disabled={userIsApplicant}
                         value={selectedDate}
                         onChange={dateChangeHandler}
                         KeyboardButtonProps={{
@@ -157,27 +162,26 @@ const EditProfile = ({ mode, userData }) => {
                 </div>
                 <div id={"radiogroup-container"} className={mode}>
                   <RadioGroup
+                    className={mode}
                     aria-label="gender"
                     name="gender1"
                     value={gender}
-                    id={"name-surname-container"}
+                    row
+                    id={"radiogroup-container"}
                     onChange={(e) => setGender(e.target.value)}
                   >
                     <FormControlLabel
                       value="female"
-                      disabled={userIsApplicant}
                       control={<Radio />}
                       label="Female"
                     />
                     <FormControlLabel
                       value="male"
-                      disabled={userIsApplicant}
                       control={<Radio />}
                       label="Male"
                     />
                     <FormControlLabel
                       value="other"
-                      disabled={userIsApplicant}
                       control={<Radio />}
                       label="Other"
                     />
@@ -192,10 +196,11 @@ const EditProfile = ({ mode, userData }) => {
                   <TextField
                     error={false}
                     id={"edit-phone"}
+                    placeholder="Your phone"
                     disabled={userIsApplicant}
                     variant="outlined"
-                    value={identity}
-                    onChange={(e) => setIdentity(e.target.value)}
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
                   />
                 </div>
               </div>
@@ -207,12 +212,13 @@ const EditProfile = ({ mode, userData }) => {
                   <TextField
                     error={false}
                     id={"edit-adress"}
+                    placeholder="Your adress"
                     disabled={userIsApplicant}
                     multiline
                     rowsMax={4}
                     variant="outlined"
-                    value={identity}
-                    onChange={(e) => setIdentity(e.target.value)}
+                    value={adress}
+                    onChange={(e) => setAdress(e.target.value)}
                   />
                 </div>
               </div>
@@ -220,30 +226,18 @@ const EditProfile = ({ mode, userData }) => {
                 <div id={"photo-label"}>
                   <h3 className={mode}>Photo:</h3>
                 </div>
-                <div>
-                  <input
-                    accept="image/*"
-                    className={mode}
-                    id="icon-button-file"
-                    type="file"
+                <div id={"file-upload-container"}>
+                  <FileUpload
+                    type="photo"
+                    changeField={setPhoto}
+                    placeholder="Upload Photo"
+                    mode={mode}
                   />
-                  <label htmlFor="icon-button-file">
-                    <IconButton
-                      id="icon-button"
-                      disabled={userIsApplicant}
-                      color="primary"
-                      aria-label="upload picture"
-                      component="span"
-                    >
-                      <PhotoCamera />
-                    </IconButton>
-                  </label>
                 </div>
               </div>
               <div id={"button-container"} className={mode}>
                 <Button
                   id={"editButton"}
-                  disabled={userIsApplicant}
                   className={mode}
                   variant="contained"
                   onClick={() => console.log("Button clicked.")}

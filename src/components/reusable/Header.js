@@ -20,7 +20,7 @@ import CustomPopover from "./CustomPopover";
 const Header = ({ themeButton, clearUserData, loading, mode, userData }) => {
   const location = useLocation();
   const history = useHistory();
-  const { name } = userData;
+  const { name, type } = userData;
   const onExitPress = async () => {
     clearUserData();
     localStorage.removeItem(SESSION_STORAGE_KEY);
@@ -45,53 +45,63 @@ const Header = ({ themeButton, clearUserData, loading, mode, userData }) => {
         <div id="header-bottom-container">
           <div>
             <Typography variant="h6">
-              Hoşgeldin, <span id="header-user-name">{name}!</span>
+              Welcome, <span id="header-user-name">{name}!</span>
             </Typography>
           </div>
           <CustomPopover
             popoverContent={() => "CHANGE THEME"}
             buttonContent={themeButton}
           />
-          <CustomPopover
-            popoverContent={() => "MAKE ANNOUNCEMENT"}
-            buttonContent={() => (
-              <Button
-                id="exit-button"
-                className={
-                  mode +
-                  ` ${
-                    location.pathname === "/make-announcement"
-                      ? "active-page"
-                      : ""
-                  }`
-                }
-                variant="contained"
-                onClick={() => history.push("/make-announcement")}
-              >
-                <PostAddTwoToneIcon />
-              </Button>
-            )}
-          />
-          <CustomPopover
-            popoverContent={() => "SEND NOTIFICATION"}
-            buttonContent={() => (
-              <Button
-                id="exit-button"
-                className={
-                  mode +
-                  ` ${
-                    location.pathname === "/send-notification"
-                      ? "active-page"
-                      : ""
-                  }`
-                }
-                variant="contained"
-                onClick={() => history.push("/send-notification")}
-              >
-                <NotificationsActiveTwoToneIcon />
-              </Button>
-            )}
-          />
+
+          {type === "gradschool" ? (
+            <CustomPopover
+              popoverContent={() => "MAKE ANNOUNCEMENT"}
+              buttonContent={() => (
+                <Button
+                  id="exit-button"
+                  className={
+                    mode +
+                    ` ${
+                      location.pathname === "/make-announcement"
+                        ? "active-page"
+                        : ""
+                    }`
+                  }
+                  variant="contained"
+                  onClick={() => history.push("/make-announcement")}
+                >
+                  <PostAddTwoToneIcon />
+                </Button>
+              )}
+            />
+          ) : (
+            ""
+          )}
+          {type !== "applicant" ? (
+            <CustomPopover
+              popoverContent={() => "SEND NOTIFICATION"}
+              buttonContent={() => (
+                <Button
+                  id="exit-button"
+                  className={
+                    mode +
+                    ` ${
+                      location.pathname === "/send-notification"
+                        ? "active-page"
+                        : ""
+                    }`
+                  }
+                  variant="contained"
+                  onClick={() => history.push("/send-notification")}
+                >
+                  <NotificationsActiveTwoToneIcon />
+                </Button>
+              )}
+            />
+          ) : (
+            ""
+          )}
+
           <CustomPopover
             popoverContent={() => "EDIT PROFILE"}
             buttonContent={() => (
