@@ -11,7 +11,7 @@ const storage = firebase.storage();
 
 export const sendNotification = async (notification) => {
   const { receiverId, file } = notification;
-  const userNotificatiosPath = `${USERS_PATH}/${receiverId}/${notificationsPath}`;
+  const userNotificationsPath = `${USERS_PATH}/${receiverId}/${notificationsPath}`;
   const dataToSaveDb = { ...notification };
 
   if (file) {
@@ -22,19 +22,23 @@ export const sendNotification = async (notification) => {
     dataToSaveDb["file"] = downloadUrl;
   }
 
-  await database.ref(userNotificatiosPath).push(dataToSaveDb);
+  await database.ref(userNotificationsPath).push(dataToSaveDb);
 };
 
-export const getUserNotifications = async (userId) => {
+export const getUserNotifications = async (userId, setData) => {
   const notificationsPath = database.ref(
     `${USERS_PATH}/${userId}/notifications`
   );
-  const notificationsData = await notificationsPath.once("value");
-  const result = [];
-
-  notificationsData.forEach((value) => {
-    result.push(value.val());
+  var result = [];
+  const notificationsData = await notificationsPath.on("value", (snapshot) => {
+    result = [];
+    setData([]);
+    Object.keys(snapshot.val()).forEach((value) => {
+      result.push({
+        value,
+        ...snapshot.val()[value],
+      });
+    });
+    setData(result);
   });
-
-  return result;
 };

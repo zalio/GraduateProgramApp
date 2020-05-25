@@ -21,16 +21,20 @@ export const makeAnnouncement = async (announcement) => {
   await database.ref(ANNOUNCEMENTS_PATH).push(dataToSaveDb);
 };
 
-export const getAllAnnouncements = async () => {
+export const getAllAnnouncements = async (setData) => {
   const announcementRef = database.ref(ANNOUNCEMENTS_PATH);
-  const announcementData = await announcementRef.once("value");
-  const result = [];
-
-  announcementData.forEach((value) => {
-    result.push(value.val());
+  let result = [];
+  const announcementData = await announcementRef.on("value", (snapshot) => {
+    setData([]);
+    result = [];
+    Object.keys(snapshot.val()).forEach((value) => {
+      result.push({
+        value,
+        ...snapshot.val()[value],
+      });
+    });
+    setData(result);
   });
-
-  return result;
 };
 
 export const getSpesificDepartmentAnnouncements = async (department) => {

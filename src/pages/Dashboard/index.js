@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 
 import ApplicantMainPage from "../ApplicantMainPage";
@@ -45,29 +45,33 @@ const Dashboard = ({
     //   reference: "pathi",
     //   purpose: "pathi",
     // });
-    getUserNotification();
-    getAllAnnouncement();
   }, []);
+  const [announcements, setAnnouncements] = useState([]);
+  const [notifications, setNotifications] = useState([]);
 
   const getAllAnnouncement = async () => {
     announcementsRequest();
-    const allAnnouncements = await getAllAnnouncements();
-    announcementsResponse(allAnnouncements);
-    console.log("allAnnouncements: ", allAnnouncements);
+    await getAllAnnouncements(setAnnouncements);
   };
 
   const getUserNotification = async () => {
     notificationsRequest();
     const { uid } = userData;
-    const notifications = await getUserNotifications(uid);
-    notificationsResponse(notifications);
-    console.log("notifications: ", notifications);
+    await getUserNotifications(uid, setNotifications);
   };
 
   useEffect(() => {
     getUserNotification();
     getAllAnnouncement();
   }, []);
+
+  useEffect(() => {
+    announcementsResponse(announcements);
+  }, [announcements]);
+
+  useEffect(() => {
+    notificationsResponse(notifications);
+  }, [notifications]);
 
   return (
     <>

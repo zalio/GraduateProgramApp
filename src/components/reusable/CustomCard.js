@@ -34,10 +34,7 @@ const CustomCard = ({ mode, type, data }) => {
 
   return (
     <Card className={mode}>
-      <CardContent
-        className={mode + ` ${contentWidthClass}`}
-        classes={contentWidthClass}
-      >
+      <CardContent className={mode + ` ${contentWidthClass}`}>
         <div id="card-upper-text-container" className={mode}>
           <div id="card-upper-text-sub-container" className={mode}>
             {type === "notification" ? (
@@ -76,7 +73,6 @@ const CustomCard = ({ mode, type, data }) => {
               contentWidthClass === "small" ? "big" : "small"
             );
           }}
-          size="small"
         >
           {buttonIconDown ? <KeyboardArrowDownIcon /> : <KeyboardArrowUpIcon />}
         </Button>
