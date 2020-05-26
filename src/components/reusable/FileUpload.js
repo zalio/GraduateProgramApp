@@ -3,7 +3,7 @@ import Button from "@material-ui/core/Button";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 
-const FileUpload = ({ mode, type, changeField, placeholder }) => {
+const FileUpload = ({ mode, type, changeField, placeholder, disabled }) => {
   const [state, setStateVar] = useState({ selectedFile: null });
 
   // On file select (from the pop up)
@@ -64,6 +64,7 @@ const FileUpload = ({ mode, type, changeField, placeholder }) => {
           variant="contained"
           component="label"
           className={mode}
+          disabled={disabled}
         >
           {mode === "dark" ? <AddCircleOutlineIcon /> : <AddCircleIcon />}
           <input
