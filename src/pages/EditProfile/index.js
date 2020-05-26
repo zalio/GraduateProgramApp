@@ -12,10 +12,7 @@ import FileUpload from "../../components/reusable/FileUpload";
 import "date-fns";
 import Grid from "@material-ui/core/Grid";
 import DateFnsUtils from "@date-io/date-fns";
-import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker,
-} from "@material-ui/pickers";
+import { MuiPickersUtilsProvider, KeyboardDatePicker } from "@material-ui/pickers";
 import { forgotPasswordWithEmail } from "../../services/firebase/auth";
 import "./editProfile.scss";
 import { connect } from "react-redux";
@@ -26,9 +23,9 @@ import { loginSuccess } from "../../store/actions/auth";
 const EditProfile = ({ mode, userData, loginSuccess }) => {
   const [name, setName] = useState(userData.name);
   const [surname, setSurname] = useState(userData.surname);
-  const [identity, setIdentity] = useState(userData.identity);
-  const [phone, setPhone] = useState(userData.phone);
-  const [birth, setBirth] = useState(userData.birth);
+  const [identity, setIdentity] = useState(userData.identity || null);
+  const [phone, setPhone] = useState(userData.phone || null);
+  const [birth, setBirth] = useState(userData.birth || null);
 
   const userIsApplicant = () => userData.type !== "applicant";
 
@@ -45,13 +42,18 @@ const EditProfile = ({ mode, userData, loginSuccess }) => {
   };
 
   const applyHandler = async () => {
+    if (name === "" || surname === "") {
+      return alert("Please fill required fields");
+    }
+
+    const birthToSave = birth && birth.toString();
     const newUserData = {
       ...userData,
       name,
       surname,
-      identity: identity ? identity : "",
-      phone: phone ? phone : "",
-      birth: birth ? birth.toString() : null,
+      identity,
+      phone,
+      birth: birthToSave,
     };
     try {
       await saveUser(newUserData);
@@ -117,11 +119,7 @@ const EditProfile = ({ mode, userData, loginSuccess }) => {
                   <h3 className={mode}>Password:</h3>
                 </div>
                 <div id={"password-text-container"} className={mode}>
-                  <IconButton
-                    color="primary"
-                    component="span"
-                    onClick={sendPasswordHandler}
-                  >
+                  <IconButton color="primary" component="span" onClick={sendPasswordHandler}>
                     <LinkIcon />
                   </IconButton>
                 </div>
