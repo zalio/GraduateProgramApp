@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 
 import ApplicantMainPage from "../ApplicantMainPage";
 import GradSchoolMainPage from "../GradSchoolMainPage";
+import AnnouncementMainPage from "../AnnouncementMainPage";
 
 import "./dashboard.scss";
 import { getAllAnnouncements } from "../../services/firebase/announcement";
@@ -79,6 +80,7 @@ const Dashboard = ({
     console.log(userData);
     if (userData.type === "applicant") return <ApplicantMainPage />;
     else if (userData.type === "gradschool") return <GradSchoolMainPage />;
+    else if (userData.type === "department") return <AnnouncementMainPage />;
   };
 
   return <>{renderItem()}</>;
