@@ -118,28 +118,32 @@ const MakeAnnouncement = ({ mode }) => {
             />
           </RadioGroup>
         </div>
-        <div id="file-uploader">
-          <Autocomplete
-            id="combo-box-demo"
-            className={mode}
-            options={departments}
-            getOptionLabel={(option) => option.title}
-            value={department}
-            style={{ width: 1100 }}
-            openOnFocus
-            blurOnSelect
-            onChange={(e, v) => {
-              setDepartment(v);
-            }}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label="Department (Required)"
-                variant="outlined"
-              />
-            )}
-          />
-        </div>
+        {type === "result" ? (
+          <div id="file-uploader">
+            <Autocomplete
+              id="combo-box-demo"
+              className={mode}
+              options={departments}
+              getOptionLabel={(option) => option.title}
+              value={department}
+              style={{ width: 1100 }}
+              openOnFocus
+              blurOnSelect
+              onChange={(e, v) => {
+                setDepartment(v);
+              }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Department (Required)"
+                  variant="outlined"
+                />
+              )}
+            />
+          </div>
+        ) : (
+          ""
+        )}
         <FileUpload
           type="announceFile"
           changeField={setAnnounceFile}
@@ -154,7 +158,7 @@ const MakeAnnouncement = ({ mode }) => {
             className={mode}
             variant="contained"
             onClick={submitHandler}
-            disabled={text === "" || department === null}
+            disabled={text === "" || (type !== "result" && department === null)}
           >
             <b>ANNOUNCE</b>
           </Button>

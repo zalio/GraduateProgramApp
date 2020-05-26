@@ -62,7 +62,6 @@ const EditProfile = ({ mode, userData }) => {
                     error={false}
                     id={"edit-identity"}
                     placeholder="Your identity"
-                    disabled={userIsApplicant()}
                     variant="outlined"
                     value={identity}
                     onChange={(e) => setIdentity(e.target.value)}
@@ -97,24 +96,6 @@ const EditProfile = ({ mode, userData }) => {
                   />
                 </div>
               </div>
-
-              <div id={"email-container"} className={mode}>
-                <div id={"email-label"}>
-                  <h3 className={mode}>E-mail:</h3>
-                </div>
-                <div id={"email-text-container"} className={mode}>
-                  <TextField
-                    error={false}
-                    id={"edit-email"}
-                    placeholder="Your E-mail"
-                    disabled={userIsApplicant()}
-                    variant="outlined"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                </div>
-              </div>
-
               <div id={"password-container"} className={mode}>
                 <div id={"password-label"}>
                   <h3 className={mode}>Password:</h3>
@@ -129,7 +110,6 @@ const EditProfile = ({ mode, userData }) => {
                   </IconButton>
                 </div>
               </div>
-
               <div id={"birth-container"} className={mode}>
                 <div id={"birth-label"} className={mode}>
                   <h3 className={mode}>Birth:</h3>
@@ -145,49 +125,12 @@ const EditProfile = ({ mode, userData }) => {
                         format="MM/dd/yyyy"
                         value={selectedDate}
                         onChange={dateChangeHandler}
-                        disabled={userIsApplicant()}
                         KeyboardButtonProps={{
                           "aria-label": "change date",
                         }}
                       />
                     </Grid>
                   </MuiPickersUtilsProvider>
-                </div>
-              </div>
-
-              <div id={"gender-container"} className={mode}>
-                <div id={"gender-label"} className={mode}>
-                  <h3 className={mode}>Gender:</h3>
-                </div>
-                <div id={"radiogroup-container"} className={mode}>
-                  <RadioGroup
-                    className={mode}
-                    aria-label="gender"
-                    name="gender1"
-                    value={gender}
-                    row
-                    id={"radiogroup-sub-container"}
-                    onChange={(e) => setGender(e.target.value)}
-                  >
-                    <FormControlLabel
-                      value="female"
-                      control={<Radio />}
-                      label="Female"
-                      disabled={userIsApplicant()}
-                    />
-                    <FormControlLabel
-                      value="male"
-                      control={<Radio />}
-                      label="Male"
-                      disabled={userIsApplicant()}
-                    />
-                    <FormControlLabel
-                      value="other"
-                      control={<Radio />}
-                      label="Other"
-                      disabled={userIsApplicant()}
-                    />
-                  </RadioGroup>
                 </div>
               </div>
               <div id={"phone-container"} className={mode}>
@@ -199,42 +142,9 @@ const EditProfile = ({ mode, userData }) => {
                     error={false}
                     id={"edit-phone"}
                     placeholder="Your phone"
-                    disabled={userIsApplicant()}
                     variant="outlined"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                  />
-                </div>
-              </div>
-              <div id={"address-container"} className={mode}>
-                <div id={"address-label"}>
-                  <h3 className={mode}>Adress:</h3>
-                </div>
-                <div id={"address-text-container"} className={mode}>
-                  <TextField
-                    error={false}
-                    id={"edit-adress"}
-                    placeholder="Your adress"
-                    disabled={userIsApplicant()}
-                    multiline
-                    rowsMax={4}
-                    variant="outlined"
-                    value={adress}
-                    onChange={(e) => setAdress(e.target.value)}
-                  />
-                </div>
-              </div>
-              <div id={"photo-container"} className={mode}>
-                <div id={"photo-label"}>
-                  <h3 className={mode}>Photo:</h3>
-                </div>
-                <div id={"file-upload-container"}>
-                  <FileUpload
-                    type="photo"
-                    changeField={setPhoto}
-                    placeholder="Upload Photo"
-                    mode={mode}
-                    disabled={userIsApplicant()}
                   />
                 </div>
               </div>
