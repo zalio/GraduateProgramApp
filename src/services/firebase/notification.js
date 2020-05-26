@@ -26,9 +26,7 @@ export const sendNotification = async (notification) => {
 };
 
 export const getUserNotifications = async (userId, setData) => {
-  const notificationsPath = database.ref(
-    `${USERS_PATH}/${userId}/notifications`
-  );
+  const notificationsPath = database.ref(`${USERS_PATH}/${userId}/notifications`);
   var result = [];
   const notificationsData = await notificationsPath.on("value", (snapshot) => {
     result = [];
@@ -42,7 +40,7 @@ export const getUserNotifications = async (userId, setData) => {
         ...snapshot.val()[value],
       });
     });
-    result = result.reverse();
-    setData(result);
+
+    setData(result.reverse());
   });
 };
