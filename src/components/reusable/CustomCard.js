@@ -10,7 +10,7 @@ import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import "./CustomCard.scss";
 import Divider from "@material-ui/core/Divider";
 
-const CustomCard = ({ mode, type, data }) => {
+const CustomCard = ({ mode, type, data, userData }) => {
   const history = useHistory();
   const [buttonIconDown, setButtonIconDown] = useState(true);
   const [contentWidthClass, setContentWidthClass] = useState("small");
@@ -58,7 +58,9 @@ const CustomCard = ({ mode, type, data }) => {
         <Divider className={mode} />
         {type === "announcement" ? data.text : data.content}
         <div id="custom-button-container" className={mode}>
-          {type === "announcement" && data.type === "application"
+          {type === "announcement" &&
+          data.type === "application" &&
+          userData.type === "applicant"
             ? buttonRender(data.id)
             : ""}
         </div>
@@ -81,10 +83,12 @@ const CustomCard = ({ mode, type, data }) => {
   );
 };
 
-const mapStateToProps = ({ applicationReducer }) => {
+const mapStateToProps = ({ applicationReducer, authReducer }) => {
   const { mode } = applicationReducer;
+  const { userData } = authReducer;
   return {
     mode,
+    userData,
   };
 };
 

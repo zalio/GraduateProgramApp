@@ -29,9 +29,7 @@ const EditProfile = ({ mode, userData }) => {
   const [phone, setPhone] = useState("");
   const [photo, setPhoto] = useState("");
   const [adress, setAdress] = useState("");
-  const [selectedDate, setSelectedDate] = React.useState(
-    new Date("2014-08-18T21:11:54")
-  );
+  const [selectedDate, setSelectedDate] = useState();
 
   const userIsApplicant = () => userData.type !== "applicant";
 
@@ -64,7 +62,7 @@ const EditProfile = ({ mode, userData }) => {
                     error={false}
                     id={"edit-identity"}
                     placeholder="Your identity"
-                    disabled={userIsApplicant}
+                    disabled={userIsApplicant()}
                     variant="outlined"
                     value={identity}
                     onChange={(e) => setIdentity(e.target.value)}
@@ -81,7 +79,7 @@ const EditProfile = ({ mode, userData }) => {
                     error={false}
                     id={"edit-name"}
                     placeholder="Your name"
-                    disabled={userIsApplicant}
+                    disabled={userIsApplicant()}
                     variant="outlined"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
@@ -92,7 +90,7 @@ const EditProfile = ({ mode, userData }) => {
                     error={false}
                     id={"edit-surname"}
                     placeholder="Your Surname"
-                    disabled={userIsApplicant}
+                    disabled={userIsApplicant()}
                     variant="outlined"
                     value={surname}
                     onChange={(e) => setSurname(e.target.value)}
@@ -109,7 +107,7 @@ const EditProfile = ({ mode, userData }) => {
                     error={false}
                     id={"edit-email"}
                     placeholder="Your E-mail"
-                    disabled={userIsApplicant}
+                    disabled={userIsApplicant()}
                     variant="outlined"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
@@ -147,6 +145,7 @@ const EditProfile = ({ mode, userData }) => {
                         format="MM/dd/yyyy"
                         value={selectedDate}
                         onChange={dateChangeHandler}
+                        disabled={userIsApplicant()}
                         KeyboardButtonProps={{
                           "aria-label": "change date",
                         }}
@@ -167,23 +166,26 @@ const EditProfile = ({ mode, userData }) => {
                     name="gender1"
                     value={gender}
                     row
-                    id={"radiogroup-container"}
+                    id={"radiogroup-sub-container"}
                     onChange={(e) => setGender(e.target.value)}
                   >
                     <FormControlLabel
                       value="female"
                       control={<Radio />}
                       label="Female"
+                      disabled={userIsApplicant()}
                     />
                     <FormControlLabel
                       value="male"
                       control={<Radio />}
                       label="Male"
+                      disabled={userIsApplicant()}
                     />
                     <FormControlLabel
                       value="other"
                       control={<Radio />}
                       label="Other"
+                      disabled={userIsApplicant()}
                     />
                   </RadioGroup>
                 </div>
@@ -197,7 +199,7 @@ const EditProfile = ({ mode, userData }) => {
                     error={false}
                     id={"edit-phone"}
                     placeholder="Your phone"
-                    disabled={userIsApplicant}
+                    disabled={userIsApplicant()}
                     variant="outlined"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
@@ -213,7 +215,7 @@ const EditProfile = ({ mode, userData }) => {
                     error={false}
                     id={"edit-adress"}
                     placeholder="Your adress"
-                    disabled={userIsApplicant}
+                    disabled={userIsApplicant()}
                     multiline
                     rowsMax={4}
                     variant="outlined"
@@ -232,6 +234,7 @@ const EditProfile = ({ mode, userData }) => {
                     changeField={setPhoto}
                     placeholder="Upload Photo"
                     mode={mode}
+                    disabled={userIsApplicant()}
                   />
                 </div>
               </div>
