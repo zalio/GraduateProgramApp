@@ -11,18 +11,24 @@ const Notifications = ({ mode, title, type, data, route }) => {
     <>
       <div>
         <p>{title}</p>
-        <div id="notifications-part">
-          {data.map((d) => (
-            <CustomCard type="notifications" data={d} />
-          ))}
-        </div>
-        <Button
-          id="show-all-button"
-          className={mode}
-          onClick={() => history.push(route)}
-        >
-          SHOW ALL
-        </Button>
+        {data.length !== 0 ? (
+          <>
+            <div id="notifications-part">
+              {data.map((d) => (
+                <CustomCard type="notifications" data={d} />
+              ))}
+            </div>
+            <Button
+              id="show-all-button"
+              className={mode}
+              onClick={() => history.push(route)}
+            >
+              SHOW ALL
+            </Button>
+          </>
+        ) : (
+          <div>There is no Notification!</div>
+        )}
       </div>
     </>
   );

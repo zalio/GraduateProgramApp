@@ -25,8 +25,11 @@ export const getAllAnnouncements = async (setData) => {
   const announcementRef = database.ref(ANNOUNCEMENTS_PATH);
   let result = [];
   const announcementData = await announcementRef.on("value", (snapshot) => {
-    setData([]);
     result = [];
+    if (snapshot.val() === null) {
+      setData([]);
+      return;
+    }
     Object.keys(snapshot.val()).forEach((value) => {
       result.push({
         value,

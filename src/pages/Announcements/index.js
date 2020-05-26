@@ -14,9 +14,13 @@ const Announcements = ({ mode, announcements }) => {
           </h1>
         </div>
         <div id="announcements-part">
-          {announcements.map((d) => (
-            <CustomCard type="announcement" data={d} />
-          ))}
+          {announcements.length !== 0 ? (
+            announcements.map((d) => (
+              <CustomCard type="announcement" data={d} />
+            ))
+          ) : (
+            <div>There is no announcement yet!</div>
+          )}
         </div>
       </Container>
     </div>

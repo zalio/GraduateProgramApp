@@ -11,18 +11,24 @@ const Announcements = ({ mode, title, type, data, route }) => {
     <>
       <div>
         <p>{title}</p>
-        <div id="announcements-part">
-          {data.map((d) => (
-            <CustomCard type="announcement" data={d} />
-          ))}
-        </div>
-        <Button
-          id="show-all-button"
-          className={mode}
-          onClick={() => history.push(route)}
-        >
-          SHOW ALL
-        </Button>
+        {data.length !== 0 ? (
+          <>
+            <div id="announcements-part">
+              {data.map((d) => (
+                <CustomCard type="announcement" data={d} />
+              ))}
+            </div>
+            <Button
+              id="show-all-button"
+              className={mode}
+              onClick={() => history.push(route)}
+            >
+              SHOW ALL
+            </Button>
+          </>
+        ) : (
+          <div>There is no Announcement!</div>
+        )}
       </div>
     </>
   );

@@ -6,7 +6,7 @@ import Notifications from "../../components/reusable/Notifications";
 import Announcements from "../../components/reusable/Announcements";
 import LoadingScreen from "../../components/reusable/LoadingScreen";
 
-const GradSchoolMainPage = ({
+const DepartmentMainPage = ({
   mode,
   announcements,
   notifications,
@@ -57,4 +57,4 @@ const mapStateToProps = ({ applicationReducer }) => {
     notifications,
   };
 };
-export default connect(mapStateToProps)(GradSchoolMainPage);
+export default connect(mapStateToProps)(DepartmentMainPage);
