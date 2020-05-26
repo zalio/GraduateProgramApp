@@ -28,10 +28,7 @@ const Apply = ({ mode, userData }) => {
     transcript === null ||
     ales === null ||
     englishExam === null ||
-    purpose === null ||
-    (applicationData &&
-      applicationData.applicationType === "postgraduate" &&
-      masterTranscript === null);
+    purpose === null;
 
   const applyHandler = async () => {
     if (isDisabled()) {
@@ -76,13 +73,13 @@ const Apply = ({ mode, userData }) => {
           <FileUpload
             type="photo"
             changeField={setPhoto}
-            placeholder="Upload Photo"
+            placeholder="Upload Photo (Required)"
             mode={mode}
           />
           <FileUpload
             type="transcript"
             changeField={setTranscript}
-            placeholder="Undergrad Transcript"
+            placeholder="Undergrad Transcript (Required)"
             mode={mode}
           />
           <FileUpload
@@ -95,12 +92,12 @@ const Apply = ({ mode, userData }) => {
             type="ales"
             changeField={setAles}
             mode={mode}
-            placeholder="ALES Result"
+            placeholder="ALES Result (Required)"
           />
           <FileUpload
             type="englishExam"
             changeField={setEnglishExam}
-            placeholder="English Exam Result"
+            placeholder="English Exam Result (Required)"
             mode={mode}
           />
           <FileUpload
@@ -112,7 +109,7 @@ const Apply = ({ mode, userData }) => {
           <FileUpload
             type="purpose"
             changeField={setPurpose}
-            placeholder="Statement of Purpose"
+            placeholder="Statement of Purpose (Required)"
             mode={mode}
           />
         </div>

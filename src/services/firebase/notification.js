@@ -32,7 +32,10 @@ export const getUserNotifications = async (userId, setData) => {
   var result = [];
   const notificationsData = await notificationsPath.on("value", (snapshot) => {
     result = [];
-    setData([]);
+    if (snapshot.val() === null) {
+      setData([]);
+      return;
+    }
     Object.keys(snapshot.val()).forEach((value) => {
       result.push({
         value,

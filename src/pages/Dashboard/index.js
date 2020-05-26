@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 import ApplicantMainPage from "../ApplicantMainPage";
 import GradSchoolMainPage from "../GradSchoolMainPage";
-import AnnouncementMainPage from "../AnnouncementMainPage";
+import DepartmentMainPage from "../DepartmentMainPage";
 
 import "./dashboard.scss";
 import { getAllAnnouncements } from "../../services/firebase/announcement";
@@ -49,18 +49,18 @@ const Dashboard = ({
     //   purpose: "pathi",
     // });
   }, []);
-  const [announcements, setAnnouncements] = useState([]);
-  const [notifications, setNotifications] = useState([]);
+  const [announcements, setAnnouncements] = useState(null);
+  const [notifications, setNotifications] = useState(null);
 
   const getAllAnnouncement = async () => {
     announcementsRequest();
-    await getAllAnnouncements(setAnnouncements);
+    const result = await getAllAnnouncements(setAnnouncements);
   };
 
   const getUserNotification = async () => {
     notificationsRequest();
     const { uid } = userData;
-    await getUserNotifications(uid, setNotifications);
+    const result = await getUserNotifications(uid, setNotifications);
   };
 
   useEffect(() => {
@@ -69,18 +69,36 @@ const Dashboard = ({
   }, []);
 
   useEffect(() => {
-    announcementsResponse(announcements);
+    if (announcements !== null) {
+      announcementsResponse(announcements);
+    }
   }, [announcements]);
 
   useEffect(() => {
-    notificationsResponse(notifications);
+    if (notifications !== null) notificationsResponse(notifications);
   }, [notifications]);
 
   const renderItem = () => {
-    console.log(userData);
-    if (userData.type === "applicant") return <ApplicantMainPage />;
-    else if (userData.type === "gradschool") return <GradSchoolMainPage />;
-    else if (userData.type === "department") return <AnnouncementMainPage />;
+    if (userData.type === "gradschool")
+      return (
+        <GradSchoolMainPage
+          announcementsIsLoading={announcements === null}
+          notificationsIsLoading={notifications === null}
+        />
+      );
+    else if (userData.type === "department")
+      return (
+        <DepartmentMainPage
+          announcementsIsLoading={announcements === null}
+          notificationsIsLoading={notifications === null}
+        />
+      );
+    return (
+      <ApplicantMainPage
+        announcementsIsLoading={announcements === null}
+        notificationsIsLoading={notifications === null}
+      />
+    );
   };
 
   return <>{renderItem()}</>;

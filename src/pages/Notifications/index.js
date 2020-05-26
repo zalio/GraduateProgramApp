@@ -13,9 +13,13 @@ const Notifications = ({ mode, notifications }) => {
           </h1>
         </div>
         <div id="notifications-part">
-          {notifications.map((d) => (
-            <CustomCard type="notifications" data={d} />
-          ))}
+          {notifications.length !== 0 ? (
+            notifications.map((d) => (
+              <CustomCard type="notifications" data={d} />
+            ))
+          ) : (
+            <div>There is no notification yet!</div>
+          )}
         </div>
       </Container>
     </div>

@@ -7,7 +7,7 @@ import {
 } from "../types";
 
 const INITIAL_STATE = {
-  mode: "dark",
+  mode: "light",
   announcements: [],
   notifications: [],
   applications: [],

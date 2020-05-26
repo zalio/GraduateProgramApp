@@ -3,6 +3,10 @@ import firebase from "./index";
 const auth = firebase.auth();
 const provider = new firebase.auth.GoogleAuthProvider();
 
+provider.setCustomParameters({
+  type: "applicant",
+});
+
 export const signInWithGoogle = () => auth.signInWithPopup(provider);
 
 export const signInWithEmailAndPassword = (email, password) =>
