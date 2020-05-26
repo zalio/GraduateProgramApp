@@ -42,7 +42,7 @@ export const getUserNotifications = async (userId, setData) => {
         ...snapshot.val()[value],
       });
     });
-    result = result.reverse();
-    setData(result);
+
+    setData(result.reverse());
   });
 };
