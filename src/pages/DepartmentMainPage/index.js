@@ -23,7 +23,7 @@ const DepartmentMainPage = ({
                 <Announcements
                   title="Announcements"
                   type="announcements"
-                  data={announcements}
+                  data={announcements.slice(0, 4)}
                   route="announcements"
                 />
               ) : (
@@ -35,7 +35,7 @@ const DepartmentMainPage = ({
                 <Notifications
                   title="Notifications"
                   type="notifications"
-                  data={notifications}
+                  data={notifications.slice(0, 4)}
                   route="notifications"
                 />
               ) : (

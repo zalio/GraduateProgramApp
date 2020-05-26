@@ -36,6 +36,7 @@ export const getAllAnnouncements = async (setData) => {
         ...snapshot.val()[value],
       });
     });
+    result = result.reverse();
     setData(result);
   });
 };

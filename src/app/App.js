@@ -59,7 +59,10 @@ const App = (props) => {
         ) : (
           <Header themeButton={themeButton} />
         )}
-        <Content isSignIned={props.userData !== null} />
+        <Content
+          isSignIned={props.userData !== null}
+          userType={props.userData ? props.userData.type : ""}
+        />
       </div>
     );
   };

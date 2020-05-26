@@ -118,7 +118,7 @@ const MakeAnnouncement = ({ mode }) => {
             />
           </RadioGroup>
         </div>
-        {type === "result" ? (
+        {type !== "result" ? (
           <div id="file-uploader">
             <Autocomplete
               id="combo-box-demo"

@@ -19,30 +19,44 @@ import {
 import { forgotPasswordWithEmail } from "../../services/firebase/auth";
 import "./editProfile.scss";
 import { connect } from "react-redux";
+import { saveUser } from "../../services/firebase/user";
 
-const EditProfile = ({ mode, userData }) => {
-  const [email, setEmail] = useState(userData.email);
+import { loginSuccess } from "../../store/actions/auth";
+
+const EditProfile = ({ mode, userData, loginSuccess }) => {
   const [name, setName] = useState(userData.name);
   const [surname, setSurname] = useState(userData.surname);
-  const [identity, setIdentity] = useState("");
-  const [gender, setGender] = useState("");
-  const [phone, setPhone] = useState("");
-  const [photo, setPhoto] = useState("");
-  const [adress, setAdress] = useState("");
-  const [selectedDate, setSelectedDate] = useState();
+  const [identity, setIdentity] = useState(userData.identity);
+  const [phone, setPhone] = useState(userData.phone);
+  const [birth, setBirth] = useState(userData.birth);
 
   const userIsApplicant = () => userData.type !== "applicant";
 
   const dateChangeHandler = (date) => {
-    setSelectedDate(date);
-    console.log(userData);
+    setBirth(date);
   };
 
   const sendPasswordHandler = async () => {
-    const result = await forgotPasswordWithEmail(email);
+    const result = await forgotPasswordWithEmail(userData.email);
     if (!result) alert("Please enter valid email!");
     else {
       alert("Password reset email has been sent to your email!");
+    }
+  };
+
+  const applyHandler = async () => {
+    const newUserData = {
+      ...userData,
+      identity,
+      phone,
+      birth: birth.toString(),
+    };
+    try {
+      await saveUser(newUserData);
+      loginSuccess(newUserData);
+      alert("Successfully updated!");
+    } catch (e) {
+      alert("There is an error while submitting!");
     }
   };
 
@@ -123,7 +137,7 @@ const EditProfile = ({ mode, userData }) => {
                         id="date-picker-dialog"
                         className={mode}
                         format="MM/dd/yyyy"
-                        value={selectedDate}
+                        value={birth}
                         onChange={dateChangeHandler}
                         KeyboardButtonProps={{
                           "aria-label": "change date",
@@ -153,7 +167,7 @@ const EditProfile = ({ mode, userData }) => {
                   id={"editButton"}
                   className={mode}
                   variant="contained"
-                  onClick={() => console.log("Button clicked.")}
+                  onClick={applyHandler}
                 >
                   <b>Save</b>
                 </Button>
@@ -175,4 +189,4 @@ const mapStateToProps = ({ applicationReducer, authReducer }) => {
   };
 };
 
-export default connect(mapStateToProps)(EditProfile);
+export default connect(mapStateToProps, { loginSuccess })(EditProfile);
