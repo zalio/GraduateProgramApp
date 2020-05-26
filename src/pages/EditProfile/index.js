@@ -47,9 +47,11 @@ const EditProfile = ({ mode, userData, loginSuccess }) => {
   const applyHandler = async () => {
     const newUserData = {
       ...userData,
-      identity,
-      phone,
-      birth: birth.toString(),
+      name,
+      surname,
+      identity: identity ? identity : "",
+      phone: phone ? phone : "",
+      birth: birth ? birth.toString() : null,
     };
     try {
       await saveUser(newUserData);
