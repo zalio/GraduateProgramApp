@@ -9,6 +9,7 @@ import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import "./CustomCard.scss";
 import Divider from "@material-ui/core/Divider";
+import dayjs from "../../utils/dayjs";
 
 const CustomCard = ({ mode, type, data, userData }) => {
   const history = useHistory();
@@ -50,17 +51,15 @@ const CustomCard = ({ mode, type, data, userData }) => {
           </div>
           <div id="card-upper-text-sub-container" className={mode}>
             <span>
-              <b>Date:</b>
+              <b>Date: </b>
             </span>
-            <span>03/06/1998</span>
+            <span>{dayjs(data.createdAt).fromNow()}</span>
           </div>
         </div>
         <Divider className={mode} />
         {type === "announcement" ? data.text : data.content}
         <div id="custom-button-container" className={mode}>
-          {type === "announcement" &&
-          data.type === "application" &&
-          userData.type === "applicant"
+          {type === "announcement" && data.type === "application" && userData.type === "applicant"
             ? buttonRender(data.id)
             : ""}
         </div>
@@ -71,9 +70,7 @@ const CustomCard = ({ mode, type, data, userData }) => {
           className={mode}
           onClick={() => {
             setButtonIconDown(!buttonIconDown);
-            setContentWidthClass(
-              contentWidthClass === "small" ? "big" : "small"
-            );
+            setContentWidthClass(contentWidthClass === "small" ? "big" : "small");
           }}
         >
           {buttonIconDown ? <KeyboardArrowDownIcon /> : <KeyboardArrowUpIcon />}

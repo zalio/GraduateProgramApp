@@ -43,6 +43,7 @@ const MakeAnnouncement = ({ mode }) => {
       type: type,
       applicationType: applicationType,
       department: department,
+      createdAt: Date.now(),
     };
     try {
       await makeAnnouncement(submitData);
@@ -77,11 +78,7 @@ const MakeAnnouncement = ({ mode }) => {
           onChange={(e) => setText(e.target.value)}
         />
         <div id="file-uploader" className={mode}>
-          <RadioGroup
-            aria-label="type"
-            name="gender1"
-            id={"name-surname-container"}
-          >
+          <RadioGroup aria-label="type" name="gender1" id={"name-surname-container"}>
             <FormControlLabel
               value="application"
               control={<Radio />}
@@ -97,11 +94,7 @@ const MakeAnnouncement = ({ mode }) => {
               onChange={(e) => setType(e.target.value)}
             />
           </RadioGroup>
-          <RadioGroup
-            aria-label="applicationType"
-            name="gender1"
-            id={"name-surname-container"}
-          >
+          <RadioGroup aria-label="applicationType" name="gender1" id={"name-surname-container"}>
             <FormControlLabel
               value="graduate"
               control={<Radio />}
@@ -133,11 +126,7 @@ const MakeAnnouncement = ({ mode }) => {
                 setDepartment(v);
               }}
               renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Department (Required)"
-                  variant="outlined"
-                />
+                <TextField {...params} label="Department (Required)" variant="outlined" />
               )}
             />
           </div>

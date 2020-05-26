@@ -31,7 +31,8 @@ const SendNotification = ({ mode }) => {
     const receiverUserData = await getUserWithEmail(receiver);
 
     if (!receiverUserData) {
-      return;
+      setLoading(false);
+      return alert("There is no user with this email!");
     }
 
     const { uid: receiverId } = receiverUserData;
@@ -41,6 +42,7 @@ const SendNotification = ({ mode }) => {
         receiverId,
         content: text,
         file: notificationFile,
+        createdAt: Date.now(),
       });
       alert("Successfully sent!");
     } catch (e) {

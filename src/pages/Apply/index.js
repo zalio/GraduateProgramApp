@@ -59,7 +59,6 @@ const Apply = ({ mode, userData }) => {
       history.push("/dashboard");
     }
   };
-  console.log(location.state.application);
   useEffect(() => setApplicationData(location.state.application), []);
 
   return (
