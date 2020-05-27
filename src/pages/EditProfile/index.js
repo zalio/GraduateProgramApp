@@ -12,7 +12,10 @@ import FileUpload from "../../components/reusable/FileUpload";
 import "date-fns";
 import Grid from "@material-ui/core/Grid";
 import DateFnsUtils from "@date-io/date-fns";
-import { MuiPickersUtilsProvider, KeyboardDatePicker } from "@material-ui/pickers";
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+} from "@material-ui/pickers";
 import { forgotPasswordWithEmail } from "../../services/firebase/auth";
 import "./editProfile.scss";
 import { connect } from "react-redux";
@@ -119,7 +122,11 @@ const EditProfile = ({ mode, userData, loginSuccess }) => {
                   <h3 className={mode}>Password:</h3>
                 </div>
                 <div id={"password-text-container"} className={mode}>
-                  <IconButton color="primary" component="span" onClick={sendPasswordHandler}>
+                  <IconButton
+                    color="primary"
+                    component="span"
+                    onClick={sendPasswordHandler}
+                  >
                     <LinkIcon />
                   </IconButton>
                 </div>

@@ -60,7 +60,7 @@ const CustomCard = ({ mode, type, data, userData }) => {
         {type === "announcement" ? data.text : data.content}
         <div id="custom-button-container" className={mode}>
           {type === "announcement" && data.type === "application" && userData.type === "applicant"
-            ? buttonRender(data.id)
+            ? buttonRender(data.applicationId)
             : ""}
         </div>
       </CardContent>

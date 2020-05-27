@@ -30,10 +30,10 @@ export const getAllAnnouncements = async (setData) => {
       setData([]);
       return;
     }
-    Object.keys(snapshot.val()).forEach((value) => {
+    Object.keys(snapshot.val()).forEach((applicationId) => {
       result.push({
-        value,
-        ...snapshot.val()[value],
+        applicationId,
+        ...snapshot.val()[applicationId],
       });
     });
     setData(result.reverse());
