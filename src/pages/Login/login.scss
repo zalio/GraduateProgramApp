@@ -122,9 +122,15 @@
 #login-page.light {
   background-color: white;
 }
+#upper-logo.dark {
+  box-shadow: inset -5px -5px 9px #666666,
+  inset 5px 5px 9px #ffffff;
+
+}
 #upper-logo.light {
-  border-right: 2px solid black;
-  border-bottom: 2px solid black;
+  box-shadow: inset -5px -5px 10px #b5b5b5,
+  inset 5px 5px 10px #ffffff;
+
 }
 #login-container.dark{
   border: 1px solid white;
