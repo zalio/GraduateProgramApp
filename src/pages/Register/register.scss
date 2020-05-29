@@ -92,7 +92,9 @@
 
 
 #register-container.dark{
-  border: 2px solid white;
+  border: 1px solid white;
+  box-shadow: inset 14px 14px 28px #111315,
+  inset -14px -14px 28px #373f47;
   #register-email-label, #register-password-label, #register-repassword-label, #register-name-label, #register-surname-label {
     color: white;
   }
@@ -101,7 +103,9 @@
   }
 }
 #register-container.light{
-  border: 2px solid black;
+  border: 1px solid black;
+  box-shadow: inset 5px 5px 20px #666666,
+  inset -5px -5px 20px #ffffff;
   #register-email, #register-password, #register-repassword, #register-name, #register-surname {
     color: black;
   }
