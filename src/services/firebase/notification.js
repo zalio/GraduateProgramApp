@@ -30,7 +30,8 @@ export const getUserNotifications = async (userId, setData) => {
     `${USERS_PATH}/${userId}/notifications`
   );
   var result = [];
-  const notificationsData = await notificationsPath.on("value", (snapshot) => {
+
+  notificationsPath.on("value", (snapshot) => {
     result = [];
     if (snapshot.val() === null) {
       setData([]);

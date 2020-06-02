@@ -43,6 +43,7 @@ const MakeAnnouncement = ({ mode }) => {
       type: type,
       applicationType: applicationType,
       department: department,
+      createdAt: Date.now(),
     };
     try {
       await makeAnnouncement(submitData);

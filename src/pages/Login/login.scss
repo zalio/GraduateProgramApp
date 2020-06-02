@@ -122,12 +122,20 @@
 #login-page.light {
   background-color: white;
 }
+#upper-logo.dark {
+  box-shadow: inset -5px -5px 9px #666666,
+  inset 5px 5px 9px #ffffff;
+
+}
 #upper-logo.light {
-  border-right: 2px solid black;
-  border-bottom: 2px solid black;
+  box-shadow: inset -5px -5px 10px #b5b5b5,
+  inset 5px 5px 10px #ffffff;
+
 }
 #login-container.dark{
-  border: 2px solid white;
+  border: 1px solid white;
+  box-shadow: inset 14px 14px 28px #111315,
+  inset -14px -14px 28px #373f47;
   #login-email-label, #login-password-label {
     color: white;
   }
@@ -136,7 +144,9 @@
   }
 }
 #login-container.light{
-  border: 2px solid black;
+  border: 1px solid black;
+  box-shadow: inset 5px 5px 20px #666666,
+  inset -5px -5px 20px #ffffff;
   #login-email-label, #login-password-label {
     color: black;
   }
