@@ -11,6 +11,8 @@ import Notifications from "../pages/Notifications";
 import Apply from "../pages/Apply";
 import MakeAnnouncement from "../pages/MakeAnnouncement";
 import SendNotification from "../pages/SendNotification";
+import ViewApplications from "../pages/ViewApplications";
+import DisplayFiles from "../pages/DisplayFiles";
 import NoRoute from "../pages/NoRoute";
 
 const Content = ({ isSignIned, userType }) => {
@@ -59,6 +61,20 @@ const Content = ({ isSignIned, userType }) => {
       ) : (
         ""
       )}
+      {userType === "gradschool" ? (
+        <Route
+          exact
+          path="/view-applications"
+          component={isSignIned ? ViewApplications : Login}
+        />
+      ) : (
+        ""
+      )}
+      <Route
+        exact
+        path="/display-files"
+        component={isSignIned ? DisplayFiles : Login}
+      />
       {userType !== "applicant" ? (
         <Route
           exact

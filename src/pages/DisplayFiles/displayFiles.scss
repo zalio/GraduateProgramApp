@@ -1,0 +1,17 @@
+.avatar-img {
+  max-width: 250px;
+  border-radius: 250px;
+}
+#accept-radio-container {
+  display: flex;
+  flex-direction: row;
+}
+
+#accept-radio {
+  .MuiRadio-colorPrimary {
+    color: green !important;
+  }
+  .Mui-checked{
+    color: green;
+  }
+}

@@ -59,7 +59,10 @@ const Apply = ({ mode, userData }) => {
       history.push("/dashboard");
     }
   };
-  useEffect(() => setApplicationData(location.state.application), []);
+  useEffect(() => {
+    if (location.state) setApplicationData(location.state.application);
+    else history.push("/");
+  }, []);
 
   return (
     <div id="apply-page">

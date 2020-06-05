@@ -59,7 +59,9 @@ const CustomCard = ({ mode, type, data, userData }) => {
         <Divider className={mode} />
         {type === "announcement" ? data.text : data.content}
         <div id="custom-button-container" className={mode}>
-          {type === "announcement" && data.type === "application" && userData.type === "applicant"
+          {type === "announcement" &&
+          data.type === "application" &&
+          userData.type === "applicant"
             ? buttonRender(data.applicationId)
             : ""}
         </div>
@@ -70,7 +72,9 @@ const CustomCard = ({ mode, type, data, userData }) => {
           className={mode}
           onClick={() => {
             setButtonIconDown(!buttonIconDown);
-            setContentWidthClass(contentWidthClass === "small" ? "big" : "small");
+            setContentWidthClass(
+              contentWidthClass === "small" ? "big" : "small"
+            );
           }}
         >
           {buttonIconDown ? <KeyboardArrowDownIcon /> : <KeyboardArrowUpIcon />}
