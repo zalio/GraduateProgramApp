@@ -15,6 +15,7 @@ import AccountCircleTwoToneIcon from "@material-ui/icons/AccountCircleTwoTone";
 import NotificationsActiveTwoToneIcon from "@material-ui/icons/NotificationsActiveTwoTone";
 import PostAddTwoToneIcon from "@material-ui/icons/PostAddTwoTone";
 import ExitToAppSharpIcon from "@material-ui/icons/ExitToAppSharp";
+import LibraryBooksTwoToneIcon from "@material-ui/icons/LibraryBooksTwoTone";
 import CustomPopover from "./CustomPopover";
 
 const Header = ({ themeButton, clearUserData, loading, mode, userData }) => {
@@ -53,27 +54,49 @@ const Header = ({ themeButton, clearUserData, loading, mode, userData }) => {
             buttonContent={themeButton}
           />
 
-          {type === "gradschool" ? (
-            <CustomPopover
-              popoverContent={() => "MAKE ANNOUNCEMENT"}
-              buttonContent={() => (
-                <Button
-                  id="exit-button"
-                  className={
-                    mode +
-                    ` ${
-                      location.pathname === "/make-announcement"
-                        ? "active-page"
-                        : ""
-                    }`
-                  }
-                  variant="contained"
-                  onClick={() => history.push("/make-announcement")}
-                >
-                  <PostAddTwoToneIcon />
-                </Button>
-              )}
-            />
+          {type !== "applicant" ? (
+            <>
+              <CustomPopover
+                popoverContent={() => "VIEW APPLICATIONS"}
+                buttonContent={() => (
+                  <Button
+                    id="exit-button"
+                    className={
+                      mode +
+                      ` ${
+                        location.pathname === "/view-applications"
+                          ? "active-page"
+                          : ""
+                      }`
+                    }
+                    variant="contained"
+                    onClick={() => history.push("/view-applications")}
+                  >
+                    <LibraryBooksTwoToneIcon />
+                  </Button>
+                )}
+              />
+              <CustomPopover
+                popoverContent={() => "MAKE ANNOUNCEMENT"}
+                buttonContent={() => (
+                  <Button
+                    id="exit-button"
+                    className={
+                      mode +
+                      ` ${
+                        location.pathname === "/make-announcement"
+                          ? "active-page"
+                          : ""
+                      }`
+                    }
+                    variant="contained"
+                    onClick={() => history.push("/make-announcement")}
+                  >
+                    <PostAddTwoToneIcon />
+                  </Button>
+                )}
+              />
+            </>
           ) : (
             ""
           )}

@@ -1,0 +1,144 @@
+import React, { useEffect, useState } from "react";
+import { connect } from "react-redux";
+import { useHistory, useLocation } from "react-router-dom";
+import Container from "@material-ui/core/Container";
+import "./displayFiles.scss";
+import Grid from "@material-ui/core/Grid";
+import FileDisplayer from "../../components/reusable/FileDisplayer";
+import avatar from "../../app/assets/images/avatar.jpg";
+import FormControlLabel from "@material-ui/core/FormControlLabel/FormControlLabel";
+import Radio from "@material-ui/core/Radio/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup/RadioGroup";
+import Button from "@material-ui/core/Button";
+
+const DisplayFiles = ({ mode }) => {
+  const location = useLocation();
+  const history = useHistory();
+
+  const [applicationData, setApplicationData] = useState(null);
+  const [department, setDepartment] = useState(null);
+  const [program, setProgram] = useState("graduate");
+  const [loading, setLoading] = useState(false);
+
+  const [acceptTranscript, setAcceptTranscript] = useState(false);
+  const [acceptMasterTranscript, setAcceptMasterTranscript] = useState(false);
+  const [acceptALES, setAcceptALES] = useState(false);
+  const [acceptEnglish, setAcceptEnglish] = useState(false);
+  const [acceptReference, setAcceptReference] = useState(false);
+  const [acceptPurpose, setAcceptPurpose] = useState(false);
+
+  const customControl = (value, setValue) => {
+    return (
+      <RadioGroup aria-label="type" name="gender1" id="accept-radio-container">
+        <FormControlLabel
+          value={true}
+          control={<Radio id="accept-radio-icon" />}
+          label="Accept"
+          checked={value === true}
+          id="accept-radio"
+          onChange={(e) => setValue(true)}
+        />
+        <FormControlLabel
+          value={false}
+          control={<Radio />}
+          label="Deny"
+          checked={value === false}
+          onChange={(e) => setValue(false)}
+        />
+      </RadioGroup>
+    );
+  };
+
+  useEffect(() => {
+    //if (location.state) setApplicationData(location.state.application);
+    //else history.push("/");
+  }, []);
+
+  return (
+    <div id="make-announcement-page" className={mode}>
+      <Container id="make-announcement-page-container" className={mode}>
+        <div>
+          <h1>
+            <b>View Application</b>
+          </h1>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque
+            ea, esse? Accusantium ad amet asperiores, cupiditate distinctio est
+            ex maiores neque nihil, nisi nostrum nulla similique soluta suscipit
+            tenetur ullam?
+          </p>
+        </div>
+        <Grid container spacing={2}>
+          <Grid item xs={3}>
+            <img className="avatar-img" src={avatar} alt="" />
+          </Grid>
+          <Grid item xs={9}>
+            <FileDisplayer
+              mode={mode}
+              title="Transcript"
+              customControl={customControl}
+              value={acceptTranscript}
+              setValue={setAcceptTranscript}
+            />
+            <FileDisplayer
+              mode={mode}
+              title="Master Transcript"
+              customControl={customControl}
+              value={acceptMasterTranscript}
+              setValue={setAcceptMasterTranscript}
+            />
+            <FileDisplayer
+              mode={mode}
+              title="ALES Result"
+              customControl={customControl}
+              value={acceptALES}
+              setValue={setAcceptALES}
+            />
+            <FileDisplayer
+              mode={mode}
+              title="English Exam Result"
+              customControl={customControl}
+              value={acceptEnglish}
+              setValue={setAcceptEnglish}
+            />
+            <FileDisplayer
+              mode={mode}
+              title="Reference Letters"
+              customControl={customControl}
+              value={acceptReference}
+              setValue={setAcceptReference}
+            />
+            <FileDisplayer
+              mode={mode}
+              title="Statement of Purpose"
+              customControl={customControl}
+              value={acceptPurpose}
+              setValue={setAcceptPurpose}
+            />
+          </Grid>
+        </Grid>
+        <Grid container spacing={2}>
+          <Grid item xs={6}>
+            <div>
+              <Button>Reject Application</Button>
+            </div>
+          </Grid>
+          <Grid item xs={6}>
+            <div>
+              <Button>Accept Application</Button>
+            </div>
+          </Grid>
+        </Grid>
+      </Container>
+    </div>
+  );
+};
+
+const mapStateToProps = ({ applicationReducer }) => {
+  const { mode } = applicationReducer;
+  return {
+    mode,
+  };
+};
+
+export default connect(mapStateToProps)(DisplayFiles);
