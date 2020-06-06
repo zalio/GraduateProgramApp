@@ -94,13 +94,33 @@ const Header = ({ themeButton, clearUserData, loading, mode, userData }) => {
                   variant="contained"
                   onClick={() => history.push("/send-result-to-gradschool")}
                 >
-                  <LibraryBooksTwoToneIcon />
+                  <SendTwoToneIcon />
                 </Button>
               )}
             />
           ) : (
             ""
           )}
+          <CustomPopover
+            popoverContent={() => "CREATE INTERVIEW"}
+            buttonContent={() => (
+              <Button
+                id="exit-button"
+                className={
+                  mode +
+                  ` ${
+                    location.pathname === "/create-interview"
+                      ? "active-page"
+                      : ""
+                  }`
+                }
+                variant="contained"
+                onClick={() => history.push("/create-interview")}
+              >
+                <LibraryBooksTwoToneIcon />
+              </Button>
+            )}
+          />
           {type !== "applicant" ? (
             <>
               <CustomPopover

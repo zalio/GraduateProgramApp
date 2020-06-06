@@ -16,58 +16,65 @@ import DisplayFiles from "../pages/DisplayFiles";
 import NoRoute from "../pages/NoRoute";
 import SendResult from "../pages/SendResult";
 import SendResultToGradschool from "../pages/SendResultToGradscool";
+import CreateInterview from "../pages/CreateInterview";
+import DetermineInterview from "../pages/DetermineInterview";
 
-const Content = ({ isSignIned, userType }) => {
+const Content = ({ isSignedIn, userType }) => {
   const location = useLocation();
 
   return (
     <Switch location={location} key={location.pathname}>
-      <Route exact path="/" component={isSignIned ? Dashboard : Login} />
+      <Route exact path="/" component={isSignedIn ? Dashboard : Login} />
       <Route
         exact
         path="/dashboard"
-        component={isSignIned ? Dashboard : Login}
+        component={isSignedIn ? Dashboard : Login}
       />
       <Route
         exact
         path="/register"
-        component={isSignIned ? Dashboard : Register}
+        component={isSignedIn ? Dashboard : Register}
       />
       <Route
         exact
         path="/forgot-password"
-        component={isSignIned ? Dashboard : ForgotPassword}
+        component={isSignedIn ? Dashboard : ForgotPassword}
       />
       <Route
         exact
         path="/edit-profile"
-        component={isSignIned ? EditProfile : Login}
+        component={isSignedIn ? EditProfile : Login}
       />
       <Route
         exact
         path="/announcements"
-        component={isSignIned ? Announcements : Login}
+        component={isSignedIn ? Announcements : Login}
       />
       <Route
         exact
         path="/notifications"
-        component={isSignIned ? Notifications : Login}
+        component={isSignedIn ? Notifications : Login}
       />
-      <Route exact path="/apply" component={isSignIned ? Apply : Login} />
+      <Route exact path="/apply" component={isSignedIn ? Apply : Login} />
       {userType === "gradschool" ? (
         <Route
           exact
           path="/make-announcement"
-          component={isSignIned ? MakeAnnouncement : Login}
+          component={isSignedIn ? MakeAnnouncement : Login}
         />
       ) : (
         ""
       )}
+      <Route
+        exact
+        path="/create-interview"
+        component={isSignedIn ? CreateInterview : Login}
+      />
       {userType !== "applicant" ? (
         <Route
           exact
           path="/view-applications"
-          component={isSignIned ? ViewApplications : Login}
+          component={isSignedIn ? ViewApplications : Login}
         />
       ) : (
         ""
@@ -76,7 +83,7 @@ const Content = ({ isSignIned, userType }) => {
         <Route
           exact
           path="/send-result"
-          component={isSignIned ? SendResult : Login}
+          component={isSignedIn ? SendResult : Login}
         />
       ) : (
         ""
@@ -85,7 +92,7 @@ const Content = ({ isSignIned, userType }) => {
         <Route
           exact
           path="/send-result-to-gradschool"
-          component={isSignIned ? SendResultToGradschool : Login}
+          component={isSignedIn ? SendResultToGradschool : Login}
         />
       ) : (
         ""
@@ -93,13 +100,18 @@ const Content = ({ isSignIned, userType }) => {
       <Route
         exact
         path="/display-files"
-        component={isSignIned ? DisplayFiles : Login}
+        component={isSignedIn ? DisplayFiles : Login}
+      />
+      <Route
+        exact
+        path="/determine-interview"
+        component={isSignedIn ? DetermineInterview : Login}
       />
       {userType !== "applicant" ? (
         <Route
           exact
           path="/send-notification"
-          component={isSignIned ? SendNotification : Login}
+          component={isSignedIn ? SendNotification : Login}
         />
       ) : (
         ""
