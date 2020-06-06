@@ -15,6 +15,7 @@ import ViewApplications from "../pages/ViewApplications";
 import DisplayFiles from "../pages/DisplayFiles";
 import NoRoute from "../pages/NoRoute";
 import SendResult from "../pages/SendResult";
+import SendResultToGradschool from "../pages/SendResultToGradscool";
 
 const Content = ({ isSignIned, userType }) => {
   const location = useLocation();
@@ -62,7 +63,7 @@ const Content = ({ isSignIned, userType }) => {
       ) : (
         ""
       )}
-      {userType === "gradschool" ? (
+      {userType !== "applicant" ? (
         <Route
           exact
           path="/view-applications"
@@ -76,6 +77,15 @@ const Content = ({ isSignIned, userType }) => {
           exact
           path="/send-result"
           component={isSignIned ? SendResult : Login}
+        />
+      ) : (
+        ""
+      )}
+      {userType === "department" ? (
+        <Route
+          exact
+          path="/send-result-to-gradschool"
+          component={isSignIned ? SendResultToGradschool : Login}
         />
       ) : (
         ""
