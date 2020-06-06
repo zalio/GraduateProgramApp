@@ -16,6 +16,7 @@ import NotificationsActiveTwoToneIcon from "@material-ui/icons/NotificationsActi
 import PostAddTwoToneIcon from "@material-ui/icons/PostAddTwoTone";
 import ExitToAppSharpIcon from "@material-ui/icons/ExitToAppSharp";
 import LibraryBooksTwoToneIcon from "@material-ui/icons/LibraryBooksTwoTone";
+import SendTwoToneIcon from "@material-ui/icons/SendTwoTone";
 import CustomPopover from "./CustomPopover";
 
 const Header = ({ themeButton, clearUserData, loading, mode, userData }) => {
@@ -54,6 +55,28 @@ const Header = ({ themeButton, clearUserData, loading, mode, userData }) => {
             buttonContent={themeButton}
           />
 
+          {type === "department" ? (
+            <CustomPopover
+              popoverContent={() => "SEND INTERVIEW RESULT"}
+              buttonContent={() => (
+                <Button
+                  id="exit-button"
+                  className={
+                    mode +
+                    ` ${
+                      location.pathname === "/send-result" ? "active-page" : ""
+                    }`
+                  }
+                  variant="contained"
+                  onClick={() => history.push("/send-result")}
+                >
+                  <SendTwoToneIcon />
+                </Button>
+              )}
+            />
+          ) : (
+            ""
+          )}
           {type !== "applicant" ? (
             <>
               <CustomPopover
@@ -124,7 +147,6 @@ const Header = ({ themeButton, clearUserData, loading, mode, userData }) => {
           ) : (
             ""
           )}
-
           <CustomPopover
             popoverContent={() => "EDIT PROFILE"}
             buttonContent={() => (

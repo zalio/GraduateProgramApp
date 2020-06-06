@@ -14,6 +14,7 @@ import SendNotification from "../pages/SendNotification";
 import ViewApplications from "../pages/ViewApplications";
 import DisplayFiles from "../pages/DisplayFiles";
 import NoRoute from "../pages/NoRoute";
+import SendResult from "../pages/SendResult";
 
 const Content = ({ isSignIned, userType }) => {
   const location = useLocation();
@@ -66,6 +67,15 @@ const Content = ({ isSignIned, userType }) => {
           exact
           path="/view-applications"
           component={isSignIned ? ViewApplications : Login}
+        />
+      ) : (
+        ""
+      )}
+      {userType === "department" ? (
+        <Route
+          exact
+          path="/send-result"
+          component={isSignIned ? SendResult : Login}
         />
       ) : (
         ""
