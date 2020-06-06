@@ -77,6 +77,30 @@ const Header = ({ themeButton, clearUserData, loading, mode, userData }) => {
           ) : (
             ""
           )}
+          {type === "department" ? (
+            <CustomPopover
+              popoverContent={() => "SEND RESULT TO GRADSCHOOL"}
+              buttonContent={() => (
+                <Button
+                  id="exit-button"
+                  className={
+                    mode +
+                    ` ${
+                      location.pathname === "/send-result-to-gradschool"
+                        ? "active-page"
+                        : ""
+                    }`
+                  }
+                  variant="contained"
+                  onClick={() => history.push("/send-result-to-gradschool")}
+                >
+                  <LibraryBooksTwoToneIcon />
+                </Button>
+              )}
+            />
+          ) : (
+            ""
+          )}
           {type !== "applicant" ? (
             <>
               <CustomPopover
