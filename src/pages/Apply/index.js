@@ -37,8 +37,9 @@ const Apply = ({ mode, userData }) => {
     }
     setLoading(true);
     const applyData = {
-      applicationId: location.state.id,
+      announcementId: location.state.id,
       applicantId: userData.uid,
+      status: "pending",
       fileData: {
         applicantPhoto: photo,
         transcript: transcript,

@@ -54,3 +54,10 @@ export const getSpesificDepartmentAnnouncements = async (department) => {
 
   return result;
 };
+
+export const getAnnouncementData = async (id) => {
+  const announcementRef = database.ref(`${ANNOUNCEMENTS_PATH}/${id}`);
+  const announcementData = await announcementRef.once("value");
+
+  return announcementData.val();
+};
