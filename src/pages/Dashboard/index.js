@@ -15,6 +15,7 @@ import {
   notificationsRequest,
   notificationsResponse,
 } from "../../store/actions/application";
+import { getAllUser } from "../../services/firebase/user";
 
 const Dashboard = ({
   userData,
@@ -48,6 +49,8 @@ const Dashboard = ({
     //   reference: "pathi",
     //   purpose: "pathi",
     // });
+
+    getAllUser();
   }, []);
   const [announcements, setAnnouncements] = useState(null);
   const [notifications, setNotifications] = useState(null);
