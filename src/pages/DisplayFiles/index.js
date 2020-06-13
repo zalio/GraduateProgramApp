@@ -33,7 +33,7 @@ const DisplayFiles = ({ mode }) => {
         <FormControlLabel
           value={true}
           control={<Radio id="accept-radio-icon" />}
-          label="Accept"
+          label="Correct"
           checked={value === true}
           id="accept-radio"
           onChange={(e) => setValue(true)}
@@ -41,7 +41,7 @@ const DisplayFiles = ({ mode }) => {
         <FormControlLabel
           value={false}
           control={<Radio />}
-          label="Deny"
+          label="Incorrect"
           checked={value === false}
           onChange={(e) => setValue(false)}
         />
@@ -59,7 +59,7 @@ const DisplayFiles = ({ mode }) => {
       <Container id="make-announcement-page-container" className={mode}>
         <div>
           <h1>
-            <b>View Application</b>
+            <b>Display Application</b>
           </h1>
           <p>
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque
@@ -120,7 +120,7 @@ const DisplayFiles = ({ mode }) => {
         <Grid container spacing={2}>
           <Grid item xs={6}>
             <div>
-              <Button>Reject Application</Button>
+              <Button>Inform Application</Button>
             </div>
           </Grid>
           <Grid item xs={6}>
