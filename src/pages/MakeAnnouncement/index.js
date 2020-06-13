@@ -12,6 +12,12 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 
 import { makeAnnouncement } from "../../services/firebase/announcement";
 import { CircularProgress } from "@material-ui/core";
+import {
+  KeyboardDatePicker,
+  MuiPickersUtilsProvider,
+} from "@material-ui/pickers";
+import DateFnsUtils from "@date-io/date-fns";
+import Grid from "@material-ui/core/Grid";
 
 const departments = [
   { title: "Computer Engineering", value: 1 },
@@ -33,6 +39,7 @@ const MakeAnnouncement = ({ mode }) => {
   const [type, setType] = useState("application");
   const [applicationType, setApplicationType] = useState("graduate");
   const [department, setDepartment] = useState(null);
+  const [deadline, setDeadline] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const submitHandler = async () => {
@@ -44,6 +51,7 @@ const MakeAnnouncement = ({ mode }) => {
       applicationType: applicationType,
       department: department,
       createdAt: Date.now(),
+      deadline: deadline,
     };
     try {
       await makeAnnouncement(submitData);
@@ -151,6 +159,29 @@ const MakeAnnouncement = ({ mode }) => {
           placeholder="Upload File (Optional)"
           mode={mode}
         />
+        <div id="announcement-deadline" className={mode}>
+          <div className={mode}>
+            <h3 className={mode}>Deadline</h3>
+          </div>
+          <div style={{ width: "300px" }}>
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+              <Grid container justify="space-around">
+                <KeyboardDatePicker
+                  margin="normal"
+                  label="Please select the deadline!"
+                  id="date-picker-dialog"
+                  className={mode}
+                  format="dd/MM/yyyy"
+                  value={deadline}
+                  onChange={(e) => setDeadline(e)}
+                  KeyboardButtonProps={{
+                    "aria-label": "change date",
+                  }}
+                />
+              </Grid>
+            </MuiPickersUtilsProvider>
+          </div>
+        </div>
         {loading ? (
           <CircularProgress />
         ) : (

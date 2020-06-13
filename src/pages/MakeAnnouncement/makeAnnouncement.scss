@@ -29,3 +29,13 @@
   color: white !important;
   border-color: white !important;
 }
+
+#announcement-deadline {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  .MuiFormControl-root {
+    width: 80% !important;
+  }
+}
