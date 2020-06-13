@@ -100,7 +100,7 @@ const ViewApplications = ({ mode }) => {
       <Container id="make-announcement-page-container" className={mode}>
         <div>
           <h1>
-            <b>View Applications</b>
+            <b>Display Applications</b>
           </h1>
         </div>
         <div id="file-uploader">
@@ -134,14 +134,14 @@ const ViewApplications = ({ mode }) => {
             <FormControlLabel
               value="graduate"
               control={<Radio />}
-              label="Graduate"
+              label="Master"
               checked={program === "graduate"}
               onChange={(e) => setProgram(e.target.value)}
             />
             <FormControlLabel
               value="postgraduate"
               control={<Radio />}
-              label="Postgraduate"
+              label="PhD"
               checked={program === "postgraduate"}
               onChange={(e) => setProgram(e.target.value)}
             />

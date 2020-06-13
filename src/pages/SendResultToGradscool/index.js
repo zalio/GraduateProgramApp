@@ -16,7 +16,7 @@ const SendResultToGradschool = ({ mode }) => {
         <Container id="make-announcement-page-container" className={mode}>
           <div>
             <h1>
-              <b>Send Result To Gradschool</b>
+              <b>Send Results To Grad School</b>
             </h1>
           </div>
           <div id="file-uploader">
@@ -31,7 +31,7 @@ const SendResultToGradschool = ({ mode }) => {
               renderInput={(params) => (
                 <TextField
                   {...params}
-                  label="Gradschool admin"
+                  label="Grad School User"
                   variant="outlined"
                 />
               )}
@@ -42,7 +42,7 @@ const SendResultToGradschool = ({ mode }) => {
               type="ales"
               changeField={() => {}}
               mode={mode}
-              placeholder="Result file (Required)"
+              placeholder="Combined Results File (Required)"
             />
           </div>
           <div id="file-uploader">
