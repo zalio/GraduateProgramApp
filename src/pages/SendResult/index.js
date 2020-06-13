@@ -16,7 +16,7 @@ const SendResult = ({ mode }) => {
         <Container id="make-announcement-page-container" className={mode}>
           <div>
             <h1>
-              <b>Send Result</b>
+              <b>Send Interview Result to Program Admin</b>
             </h1>
           </div>
           <div id="file-uploader">
@@ -47,7 +47,7 @@ const SendResult = ({ mode }) => {
               openOnFocus
               blurOnSelect
               renderInput={(params) => (
-                <TextField {...params} label="Applicant" variant="outlined" />
+                <TextField {...params} label="Interviewed Applicant" variant="outlined" />
               )}
             />
           </div>
@@ -55,7 +55,7 @@ const SendResult = ({ mode }) => {
             <TextField
               error={false}
               id="login-email"
-              label="Score (0-100)"
+              label="Score (0-100) (optional)"
               className={mode}
             />
           </div>
