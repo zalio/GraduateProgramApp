@@ -106,14 +106,14 @@ const MakeAnnouncement = ({ mode }) => {
             <FormControlLabel
               value="graduate"
               control={<Radio />}
-              label="Graduate"
+              label="Master"
               checked={applicationType === "graduate"}
               onChange={(e) => setApplicationType(e.target.value)}
             />
             <FormControlLabel
               value="postgraduate"
               control={<Radio />}
-              label="Post Graduate"
+              label="PhD"
               checked={applicationType === "postgraduate"}
               onChange={(e) => setApplicationType(e.target.value)}
             />
