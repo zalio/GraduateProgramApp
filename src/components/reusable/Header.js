@@ -66,7 +66,7 @@ const Header = ({ themeButton, clearUserData, loading, mode, userData }) => {
         <div id="header-bottom-container">
           <div>
             <Typography variant="h6">
-              Welcome, <span id="header-user-name">{name}!</span>
+              Welcome, <span id="header-user-name">{name}</span>
             </Typography>
           </div>
           <CustomPopover
