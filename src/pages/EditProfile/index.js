@@ -140,7 +140,7 @@ const EditProfile = ({ mode, userData, loginSuccess }) => {
                     <Grid container justify="space-around">
                       <KeyboardDatePicker
                         margin="normal"
-                        label="Date picker dialog"
+                        label="Enter Your Birth Date"
                         id="date-picker-dialog"
                         className={mode}
                         format="MM/dd/yyyy"
