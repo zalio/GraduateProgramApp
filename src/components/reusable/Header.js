@@ -46,8 +46,9 @@ const Header = ({ themeButton, clearUserData, loading, mode, userData }) => {
           </Link>
           {type !== "applicant" ? (
             <div id="header-user-info">
-              {type === "gradschool" ? <b>You are a GradSchool user</b> : ""}
-              {userData.isAdmin === "true" ? (
+              {type === "gradschool" ? (
+                <b>You are a GradSchool user</b>
+              ) : userData.isAdmin === "true" ? (
                 <p>
                   You are a <b>Program Coordinator</b> in{" "}
                   <b>{userData.department}</b>
