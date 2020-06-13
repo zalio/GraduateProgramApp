@@ -31,7 +31,7 @@ const DetermineInterview = ({ mode, userData }) => {
     <div id="make-announcement-page" className={mode}>
       <Container id="make-announcement-page-container" className={mode}>
         <div id="apply-page-upper-text" className={mode}>
-          Determine the Interview
+          Choose the Interviewers
         </div>
         <div id="apply-page-insider">
           <div id="file-uploader">
@@ -46,7 +46,7 @@ const DetermineInterview = ({ mode, userData }) => {
               renderInput={(params) => (
                 <TextField
                   {...params}
-                  label="Interviewer 1"
+                  label="Interviewer 1 Email"
                   variant="outlined"
                 />
               )}
@@ -64,7 +64,7 @@ const DetermineInterview = ({ mode, userData }) => {
               renderInput={(params) => (
                 <TextField
                   {...params}
-                  label="Interviewer 2"
+                  label="Interviewer 2 Email"
                   variant="outlined"
                 />
               )}
@@ -82,7 +82,7 @@ const DetermineInterview = ({ mode, userData }) => {
               renderInput={(params) => (
                 <TextField
                   {...params}
-                  label="Interviewer 3"
+                  label="Interviewer 3 Email"
                   variant="outlined"
                 />
               )}
@@ -100,7 +100,7 @@ const DetermineInterview = ({ mode, userData }) => {
               renderInput={(params) => (
                 <TextField
                   {...params}
-                  label="Interviewer 4"
+                  label="Interviewer 4 Email"
                   variant="outlined"
                 />
               )}
@@ -118,7 +118,7 @@ const DetermineInterview = ({ mode, userData }) => {
               renderInput={(params) => (
                 <TextField
                   {...params}
-                  label="Interviewer 5"
+                  label="Interviewer 5 Email"
                   variant="outlined"
                 />
               )}
@@ -126,7 +126,7 @@ const DetermineInterview = ({ mode, userData }) => {
           </div>
           <div id={"birth-container"} className={mode}>
             <div id={"birth-label"} className={mode}>
-              <h3 className={mode}>Date</h3>
+              <h3 className={mode}>Date and Location</h3>
             </div>
             <div id={"date-icon-container"}>
               <MuiPickersUtilsProvider utils={DateFnsUtils}>

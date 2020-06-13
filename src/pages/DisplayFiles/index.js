@@ -33,7 +33,7 @@ const DisplayFiles = ({ mode }) => {
         <FormControlLabel
           value={true}
           control={<Radio id="accept-radio-icon" />}
-          label="Correct"
+          label="Valid"
           checked={value === true}
           id="accept-radio"
           onChange={(e) => setValue(true)}
@@ -41,7 +41,7 @@ const DisplayFiles = ({ mode }) => {
         <FormControlLabel
           value={false}
           control={<Radio />}
-          label="Incorrect"
+          label="Invalid"
           checked={value === false}
           onChange={(e) => setValue(false)}
         />
@@ -120,7 +120,7 @@ const DisplayFiles = ({ mode }) => {
         <Grid container spacing={2}>
           <Grid item xs={6}>
             <div>
-              <Button>Inform Application</Button>
+              <Button>Inform Applicant</Button>
             </div>
           </Grid>
           <Grid item xs={6}>
