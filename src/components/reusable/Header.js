@@ -35,7 +35,7 @@ const Header = ({ themeButton, clearUserData, loading, mode, userData }) => {
         <div id="header-upper-container" className={mode}>
           <Link
             id="header-logo-link"
-            onClick={() => history.push("/")}
+            onClick={() => history.push("/dashboard")}
             className={mode}
           >
             <img

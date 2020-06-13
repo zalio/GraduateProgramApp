@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
 import Container from "@material-ui/core/Container";
 import "./makeAnnouncement.scss";
 import TextField from "@material-ui/core/TextField";
@@ -11,6 +12,7 @@ import Radio from "@material-ui/core/Radio/Radio";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 
 import { makeAnnouncement } from "../../services/firebase/announcement";
+import { getAllUser, saveUser } from "../../services/firebase/user";
 import { CircularProgress } from "@material-ui/core";
 import {
   KeyboardDatePicker,
@@ -33,14 +35,29 @@ const departments = [
   { title: "Mathematics", value: 11 },
 ];
 
-const MakeAnnouncement = ({ mode }) => {
+const MakeAnnouncement = ({ mode, allUsers }) => {
+  const history = useHistory();
+
   const [announceFile, setAnnounceFile] = useState(null);
   const [text, setText] = useState("");
   const [type, setType] = useState("application");
   const [applicationType, setApplicationType] = useState("graduate");
   const [department, setDepartment] = useState(null);
+  const [coordinator, setCoordinator] = useState(null);
   const [deadline, setDeadline] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    if (department !== null && allUsers.length !== 0) {
+      setUsers(
+        allUsers.filter(
+          (gu) => gu.type === "department" && gu.department === department.title
+        )
+      );
+    }
+  }, [department]);
 
   const submitHandler = async () => {
     setLoading(true);
@@ -52,9 +69,11 @@ const MakeAnnouncement = ({ mode }) => {
       department: department,
       createdAt: Date.now(),
       deadline: deadline,
+      coordinator: coordinator,
     };
     try {
       await makeAnnouncement(submitData);
+      await saveUser({ ...coordinator, isAdmin: "true" });
       alert("Successfully announced!");
     } catch (e) {
       alert("There is an error while announcing!");
@@ -128,28 +147,52 @@ const MakeAnnouncement = ({ mode }) => {
           </RadioGroup>
         </div>
         {type !== "result" ? (
-          <div id="file-uploader">
-            <Autocomplete
-              id="combo-box-demo"
-              className={mode}
-              options={departments}
-              getOptionLabel={(option) => option.title}
-              value={department}
-              style={{ width: 1100 }}
-              openOnFocus
-              blurOnSelect
-              onChange={(e, v) => {
-                setDepartment(v);
-              }}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Department (Required)"
-                  variant="outlined"
-                />
-              )}
-            />
-          </div>
+          <>
+            <div id="file-uploader">
+              <Autocomplete
+                id="combo-box-demo"
+                className={mode}
+                options={departments}
+                getOptionLabel={(option) => option.title}
+                value={department}
+                style={{ width: 1100 }}
+                openOnFocus
+                blurOnSelect
+                onChange={(e, v) => {
+                  setDepartment(v);
+                }}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Department (Required)"
+                    variant="outlined"
+                  />
+                )}
+              />
+            </div>
+            <div id="file-uploader">
+              <Autocomplete
+                id="combo-box-demo"
+                className={mode}
+                options={users}
+                getOptionLabel={(option) => option.email}
+                value={coordinator}
+                style={{ width: 1100 }}
+                openOnFocus
+                blurOnSelect
+                onChange={(e, v) => {
+                  setCoordinator(v);
+                }}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Coordinator (Required)"
+                    variant="outlined"
+                  />
+                )}
+              />
+            </div>
+          </>
         ) : (
           ""
         )}
@@ -173,7 +216,7 @@ const MakeAnnouncement = ({ mode }) => {
                   className={mode}
                   format="dd/MM/yyyy"
                   value={deadline}
-                  onChange={(e) => setDeadline(e)}
+                  onChange={(e) => setDeadline(e.getTime())}
                   KeyboardButtonProps={{
                     "aria-label": "change date",
                   }}
@@ -200,10 +243,12 @@ const MakeAnnouncement = ({ mode }) => {
   );
 };
 
-const mapStateToProps = ({ applicationReducer }) => {
+const mapStateToProps = ({ applicationReducer, usersReducer }) => {
   const { mode } = applicationReducer;
+  const { allUsers } = usersReducer;
   return {
     mode,
+    allUsers,
   };
 };
 
