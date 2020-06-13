@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
+import moment from "moment";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
@@ -44,6 +45,16 @@ const CustomCard = ({ mode, type, data, userData }) => {
                   <b>From:</b>
                 </span>
                 <span>Rıdvan Mertoğlu</span>
+              </>
+            ) : (
+              ""
+            )}
+            {type === "announcement" ? (
+              <>
+                <span>
+                  <b>Deadline:</b>
+                </span>
+                <span>{moment(data.deadline).calendar()}</span>
               </>
             ) : (
               ""

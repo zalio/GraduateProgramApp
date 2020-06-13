@@ -214,7 +214,7 @@ const MakeAnnouncement = ({ mode, allUsers }) => {
                   label="Please select the deadline!"
                   id="date-picker-dialog"
                   className={mode}
-                  format="dd/MM/yyyy"
+                  format="MM/dd/yyyy"
                   value={deadline}
                   onChange={(e) => setDeadline(e.getTime())}
                   KeyboardButtonProps={{
