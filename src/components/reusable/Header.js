@@ -17,6 +17,7 @@ import PostAddTwoToneIcon from "@material-ui/icons/PostAddTwoTone";
 import ExitToAppSharpIcon from "@material-ui/icons/ExitToAppSharp";
 import LibraryBooksTwoToneIcon from "@material-ui/icons/LibraryBooksTwoTone";
 import SendTwoToneIcon from "@material-ui/icons/SendTwoTone";
+import NoteAddTwoToneIcon from "@material-ui/icons/NoteAddTwoTone";
 import CustomPopover from "./CustomPopover";
 
 const Header = ({ themeButton, clearUserData, loading, mode, userData }) => {
@@ -43,6 +44,24 @@ const Header = ({ themeButton, clearUserData, loading, mode, userData }) => {
               alt=""
             />
           </Link>
+          {type !== "applicant" ? (
+            <div id="header-user-info">
+              {type === "gradschool" ? <b>You are a GradSchool user</b> : ""}
+              {userData.isAdmin === "true" ? (
+                <p>
+                  You are a <b>Program Coordinator</b> in{" "}
+                  <b>{userData.department}</b>
+                </p>
+              ) : (
+                <p>
+                  You are a <b>Department Lecturer</b> in{" "}
+                  <b>{userData.department}</b>
+                </p>
+              )}
+            </div>
+          ) : (
+            ""
+          )}
         </div>
         <div id="header-bottom-container">
           <div>
@@ -55,7 +74,7 @@ const Header = ({ themeButton, clearUserData, loading, mode, userData }) => {
             buttonContent={themeButton}
           />
 
-          {type === "department" ? (
+          {type === "department" && userData.isAdmin !== "true" ? (
             <CustomPopover
               popoverContent={() => "SEND INTERVIEW RESULT"}
               buttonContent={() => (
@@ -77,7 +96,7 @@ const Header = ({ themeButton, clearUserData, loading, mode, userData }) => {
           ) : (
             ""
           )}
-          {type === "department" ? (
+          {type === "department" && userData.isAdmin === "true" ? (
             <CustomPopover
               popoverContent={() => "SEND RESULT TO GRADSCHOOL"}
               buttonContent={() => (
@@ -101,69 +120,75 @@ const Header = ({ themeButton, clearUserData, loading, mode, userData }) => {
           ) : (
             ""
           )}
-          <CustomPopover
-            popoverContent={() => "CREATE INTERVIEW"}
-            buttonContent={() => (
-              <Button
-                id="exit-button"
-                className={
-                  mode +
-                  ` ${
-                    location.pathname === "/create-interview"
-                      ? "active-page"
-                      : ""
-                  }`
-                }
-                variant="contained"
-                onClick={() => history.push("/create-interview")}
-              >
-                <LibraryBooksTwoToneIcon />
-              </Button>
-            )}
-          />
+          {type === "department" && userData.isAdmin === "true" ? (
+            <CustomPopover
+              popoverContent={() => "CREATE INTERVIEW"}
+              buttonContent={() => (
+                <Button
+                  id="exit-button"
+                  className={
+                    mode +
+                    ` ${
+                      location.pathname === "/create-interview"
+                        ? "active-page"
+                        : ""
+                    }`
+                  }
+                  variant="contained"
+                  onClick={() => history.push("/create-interview")}
+                >
+                  <NoteAddTwoToneIcon />
+                </Button>
+              )}
+            />
+          ) : (
+            ""
+          )}
           {type !== "applicant" ? (
-            <>
-              <CustomPopover
-                popoverContent={() => "VIEW APPLICATIONS"}
-                buttonContent={() => (
-                  <Button
-                    id="exit-button"
-                    className={
-                      mode +
-                      ` ${
-                        location.pathname === "/view-applications"
-                          ? "active-page"
-                          : ""
-                      }`
-                    }
-                    variant="contained"
-                    onClick={() => history.push("/view-applications")}
-                  >
-                    <LibraryBooksTwoToneIcon />
-                  </Button>
-                )}
-              />
-              <CustomPopover
-                popoverContent={() => "MAKE ANNOUNCEMENT"}
-                buttonContent={() => (
-                  <Button
-                    id="exit-button"
-                    className={
-                      mode +
-                      ` ${
-                        location.pathname === "/make-announcement"
-                          ? "active-page"
-                          : ""
-                      }`
-                    }
-                    variant="contained"
-                    onClick={() => history.push("/make-announcement")}
-                  >
-                    <PostAddTwoToneIcon />
-                  </Button>
-                )}
-              />
-            </>
+            <CustomPopover
+              popoverContent={() => "VIEW APPLICATIONS"}
+              buttonContent={() => (
+                <Button
+                  id="exit-button"
+                  className={
+                    mode +
+                    ` ${
+                      location.pathname === "/view-applications"
+                        ? "active-page"
+                        : ""
+                    }`
+                  }
+                  variant="contained"
+                  onClick={() => history.push("/view-applications")}
+                >
+                  <LibraryBooksTwoToneIcon />
+                </Button>
+              )}
+            />
+          ) : (
+            ""
+          )}
+          {type === "gradschool" ? (
+            <CustomPopover
+              popoverContent={() => "MAKE ANNOUNCEMENT"}
+              buttonContent={() => (
+                <Button
+                  id="exit-button"
+                  className={
+                    mode +
+                    ` ${
+                      location.pathname === "/make-announcement"
+                        ? "active-page"
+                        : ""
+                    }`
+                  }
+                  variant="contained"
+                  onClick={() => history.push("/make-announcement")}
+                >
+                  <PostAddTwoToneIcon />
+                </Button>
+              )}
+            />
           ) : (
             ""
           )}

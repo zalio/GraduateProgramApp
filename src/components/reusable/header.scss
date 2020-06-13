@@ -3,6 +3,14 @@
   display: flex;
   justify-content: space-between;
 }
+#header-upper-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  #header-user-info {
+    max-width: 250px;
+  }
+}
 #theme-button-signed-in {
   min-width: 36px;
   border-radius: 20px;
