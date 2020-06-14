@@ -18,15 +18,12 @@ const FileDisplayer = ({
     <div className={`file-displayer-container ${mode}`}>
       <div className={`file-displayer-sub-container ${mode}`}>
         <div className={mode}>
-          <Link
-            className={`file-displayer-link ${mode}`}
-            href="https://firebasestorage.googleapis.com/v0/b/graduateprogramapp.appspot.com/o/-M8IMS6P2lVS62m4RDvM_alesResult?alt=media&token=7253a199-8a54-49a0-ad6c-ab5ed15ec482"
-          >
+          <Link className={`file-displayer-link ${mode}`} href={dataSrc}>
             {title}
           </Link>
         </div>
       </div>
-      {customControl(value, setValue)}
+      {customControl !== null ? customControl(value, setValue) : ""}
     </div>
   );
 };

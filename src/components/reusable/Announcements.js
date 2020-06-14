@@ -8,7 +8,6 @@ import { Button } from "@material-ui/core";
 
 const Announcements = ({ mode, title, type, data, route }) => {
   const history = useHistory();
-  console.log(data);
   return (
     <>
       <div>

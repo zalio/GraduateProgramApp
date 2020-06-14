@@ -11,6 +11,7 @@ import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import "./CustomCard.scss";
 import Divider from "@material-ui/core/Divider";
 import dayjs from "../../utils/dayjs";
+import FileDisplayer from "./FileDisplayer";
 
 const CustomCard = ({ mode, type, data, userData }) => {
   const history = useHistory();
@@ -69,6 +70,17 @@ const CustomCard = ({ mode, type, data, userData }) => {
         </div>
         <Divider className={mode} />
         {type === "announcement" ? data.text : data.content}
+        {data.file ? (
+          <>
+            <FileDisplayer
+              mode={mode}
+              title="Reference Letters"
+              dataSrc={data.file}
+            />
+          </>
+        ) : (
+          ""
+        )}
         <div id="custom-button-container" className={mode}>
           {type === "announcement" &&
           data.type === "application" &&
