@@ -50,6 +50,7 @@ const Apply = ({ mode, userData }) => {
       announcementId: location.state.id,
       applicantId: userData.uid,
       status: "pending",
+      createdAt: Date.now(),
       fileData: {
         applicantPhoto: photo,
         transcript: transcript,

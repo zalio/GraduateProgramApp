@@ -76,6 +76,7 @@ const CustomCard = ({ mode, type, data, userData }) => {
               mode={mode}
               title="Reference Letters"
               dataSrc={data.file}
+              customControl={null}
             />
           </>
         ) : (
