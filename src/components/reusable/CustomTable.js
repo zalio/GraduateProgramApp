@@ -88,7 +88,7 @@ const CustomTable = ({
                               )
                             ]
                           )
-                        : ""}
+                        : customButton()}
                     </TableCell>
                   </TableRow>
                 );
