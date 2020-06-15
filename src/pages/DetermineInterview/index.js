@@ -16,7 +16,7 @@ import {
 import DateFnsUtils from "@date-io/date-fns";
 import Grid from "@material-ui/core/Grid";
 import { saveInterview } from "../../services/firebase/interviews";
-import { getAllUser } from "../../services/firebase/user";
+import { getAllUser, saveUser } from "../../services/firebase/user";
 import { sendNotification } from "../../services/firebase/notification";
 
 const DetermineInterview = ({ mode, userData, allUsers }) => {
@@ -42,7 +42,6 @@ const DetermineInterview = ({ mode, userData, allUsers }) => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    console.log(allUsers, interviewData);
     if (allUsers !== null && allUsers.length !== 0 && interviewData !== null) {
       console.log(allUsers);
       setUsers(
@@ -58,6 +57,7 @@ const DetermineInterview = ({ mode, userData, allUsers }) => {
       interviewData !== null &&
       interviewData.interviewerOne !== "Still, not selected"
     ) {
+      console.log(interviewData);
       setInterviewer1(interviewData.interviewerOne);
       setInterviewer2(interviewData.interviewerTwo);
       setInterviewer3(interviewData.interviewerThree);
@@ -92,6 +92,11 @@ const DetermineInterview = ({ mode, userData, allUsers }) => {
       alert(
         "Successfully saved! Information is sent to applicant and all of the interviewers!"
       );
+      await saveUser({ ...interviewer1, isCoordinator: "true" });
+      await saveUser({ ...interviewer2, isCoordinator: "true" });
+      await saveUser({ ...interviewer3, isCoordinator: "true" });
+      await saveUser({ ...interviewer4, isCoordinator: "true" });
+      await saveUser({ ...interviewer5, isCoordinator: "true" });
       await sendNotification({
         receiverId: interviewData.applicantId,
         content:
