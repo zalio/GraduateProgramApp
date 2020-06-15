@@ -47,7 +47,11 @@ const SendResult = ({ mode }) => {
               openOnFocus
               blurOnSelect
               renderInput={(params) => (
-                <TextField {...params} label="Interviewed Applicant" variant="outlined" />
+                <TextField
+                  {...params}
+                  label="Interviewed Applicant"
+                  variant="outlined"
+                />
               )}
             />
           </div>
