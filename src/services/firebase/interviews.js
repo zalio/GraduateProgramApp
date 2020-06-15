@@ -9,8 +9,8 @@ export const createInterview = async (interview) => {
 };
 
 export const saveInterview = async (interview) => {
-  const { id } = interview;
-  await database.ref(`${USERS_PATH}/${id}`).set(interview);
+  const { iid } = interview;
+  await database.ref(`${INTERVIEWS_PATH}/${iid}`).set(interview);
 };
 
 export const getAllInterviews = async () => {
@@ -20,7 +20,7 @@ export const getAllInterviews = async () => {
   const result = [];
 
   usersData.forEach((value) => {
-    result.push(value.val());
+    result.push({ ...value.val(), iid: value.key });
   });
 
   return result;

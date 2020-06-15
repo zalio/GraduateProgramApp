@@ -91,7 +91,6 @@ const ViewApplications = ({ mode }) => {
   }, []);
 
   const customButton = (idToGo, appData) => {
-    console.log(idToGo, appData);
     return (
       <Button
         onClick={() =>

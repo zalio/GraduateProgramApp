@@ -15,17 +15,144 @@ import {
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import Grid from "@material-ui/core/Grid";
+import { saveInterview } from "../../services/firebase/interviews";
+import { getAllUser } from "../../services/firebase/user";
+import { sendNotification } from "../../services/firebase/notification";
 
-const DetermineInterview = ({ mode, userData }) => {
+const DetermineInterview = ({ mode, userData, allUsers }) => {
   const location = useLocation();
   const history = useHistory();
 
+  const [interviewData, setInterviewData] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  const [interviewer1, setInterviewer1] = useState(null);
+  const [interviewer2, setInterviewer2] = useState(null);
+  const [interviewer3, setInterviewer3] = useState(null);
+  const [interviewer4, setInterviewer4] = useState(null);
+  const [interviewer5, setInterviewer5] = useState(null);
+  const [date, setDate] = useState(null);
+  const [interviewLocation, setInterviewLocation] = useState("");
+
   useEffect(() => {
-    //if (location.state) setApplicationData(location.state.application);
-    //else history.push("/");
+    if (location.state) setInterviewData(location.state.interview);
+    else history.push("/");
   }, []);
+
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    console.log(allUsers, interviewData);
+    if (allUsers !== null && allUsers.length !== 0 && interviewData !== null) {
+      console.log(allUsers);
+      setUsers(
+        allUsers.filter(
+          (gu) =>
+            gu &&
+            gu.type === "department" &&
+            gu.department === interviewData.department
+        )
+      );
+    }
+    if (
+      interviewData !== null &&
+      interviewData.interviewerOne !== "Still, not selected"
+    ) {
+      setInterviewer1(interviewData.interviewerOne);
+      setInterviewer2(interviewData.interviewerTwo);
+      setInterviewer3(interviewData.interviewerThree);
+      setInterviewer4(interviewData.interviewerFour);
+      setInterviewer5(interviewData.interviewerFive);
+      setInterviewLocation(interviewData.location);
+      setDate(interviewData.date);
+    }
+  }, [interviewData]);
+
+  const saveHandler = async () => {
+    setLoading(true);
+    if (
+      interviewer1 !== null &&
+      interviewer2 !== null &&
+      interviewer3 !== null &&
+      interviewer4 !== null &&
+      interviewer5 !== null &&
+      date !== null &&
+      interviewLocation !== null
+    ) {
+      await saveInterview({
+        ...interviewData,
+        interviewerOne: interviewer1,
+        interviewerTwo: interviewer2,
+        interviewerThree: interviewer3,
+        interviewerFour: interviewer4,
+        interviewerFive: interviewer5,
+        date: date,
+        location: interviewLocation,
+      });
+      alert(
+        "Successfully saved! Information is sent to applicant and all of the interviewers!"
+      );
+      await sendNotification({
+        receiverId: interviewData.applicantId,
+        content:
+          "Your interview details are Location is " +
+          interviewLocation.toString() +
+          ", and the Date is " +
+          date,
+        createdAt: Date.now(),
+      });
+      await sendNotification({
+        receiverId: interviewer1.uid,
+        content:
+          "Your interview details are Location is " +
+          interviewLocation.toString() +
+          ", and the Date is " +
+          date,
+        createdAt: Date.now(),
+      });
+      await sendNotification({
+        receiverId: interviewer2.uid,
+        content:
+          "Your interview details are Location is " +
+          interviewLocation.toString() +
+          ", and the Date is " +
+          date,
+        createdAt: Date.now(),
+      });
+      await sendNotification({
+        receiverId: interviewer3.uid,
+        content:
+          "Your interview details are Location is " +
+          interviewLocation.toString() +
+          ", and the Date is " +
+          date,
+        createdAt: Date.now(),
+      });
+      await sendNotification({
+        receiverId: interviewer4.uid,
+        content:
+          "Your interview details are Location is " +
+          interviewLocation.toString() +
+          ", and the Date is " +
+          date,
+        createdAt: Date.now(),
+      });
+      await sendNotification({
+        receiverId: interviewer5.uid,
+        content:
+          "Your interview details are Location is " +
+          interviewLocation.toString() +
+          ", and the Date is " +
+          date,
+        createdAt: Date.now(),
+      });
+      setLoading(false);
+      history.push("/");
+    } else {
+      alert("You must select all of the fields!");
+      setLoading(false);
+    }
+  };
 
   return (
     <div id="make-announcement-page" className={mode}>
@@ -38,8 +165,10 @@ const DetermineInterview = ({ mode, userData }) => {
             <Autocomplete
               id="combo-box-demo"
               className={mode}
-              options={[]}
-              getOptionLabel={(option) => option.title}
+              value={interviewer1}
+              options={users}
+              onChange={(e, v) => setInterviewer1(v)}
+              getOptionLabel={(option) => option.email}
               style={{ width: 1100 }}
               openOnFocus
               blurOnSelect
@@ -56,8 +185,10 @@ const DetermineInterview = ({ mode, userData }) => {
             <Autocomplete
               id="combo-box-demo"
               className={mode}
-              options={[]}
-              getOptionLabel={(option) => option.title}
+              value={interviewer2}
+              options={users}
+              onChange={(e, v) => setInterviewer2(v)}
+              getOptionLabel={(option) => option.email}
               style={{ width: 1100 }}
               openOnFocus
               blurOnSelect
@@ -74,8 +205,10 @@ const DetermineInterview = ({ mode, userData }) => {
             <Autocomplete
               id="combo-box-demo"
               className={mode}
-              options={[]}
-              getOptionLabel={(option) => option.title}
+              value={interviewer3}
+              options={users}
+              onChange={(e, v) => setInterviewer3(v)}
+              getOptionLabel={(option) => option.email}
               style={{ width: 1100 }}
               openOnFocus
               blurOnSelect
@@ -92,8 +225,10 @@ const DetermineInterview = ({ mode, userData }) => {
             <Autocomplete
               id="combo-box-demo"
               className={mode}
-              options={[]}
-              getOptionLabel={(option) => option.title}
+              value={interviewer4}
+              options={users}
+              onChange={(e, v) => setInterviewer4(v)}
+              getOptionLabel={(option) => option.email}
               style={{ width: 1100 }}
               openOnFocus
               blurOnSelect
@@ -110,8 +245,10 @@ const DetermineInterview = ({ mode, userData }) => {
             <Autocomplete
               id="combo-box-demo"
               className={mode}
-              options={[]}
-              getOptionLabel={(option) => option.title}
+              value={interviewer5}
+              options={users}
+              onChange={(e, v) => setInterviewer5(v)}
+              getOptionLabel={(option) => option.email}
               style={{ width: 1100 }}
               openOnFocus
               blurOnSelect
@@ -136,6 +273,8 @@ const DetermineInterview = ({ mode, userData }) => {
                     label="Choose Date"
                     id="date-picker-dialog"
                     className={mode}
+                    value={date}
+                    onChange={(e) => setDate(e.getTime())}
                     format="MM/dd/yyyy"
                     KeyboardButtonProps={{
                       "aria-label": "change date",
@@ -150,6 +289,8 @@ const DetermineInterview = ({ mode, userData }) => {
               error={false}
               id="login-email"
               label="Location"
+              value={interviewLocation}
+              onChange={(e) => setInterviewLocation(e.target.value)}
               className={mode}
             />
           </div>
@@ -158,7 +299,11 @@ const DetermineInterview = ({ mode, userData }) => {
           {loading ? (
             <CircularProgress />
           ) : (
-            <Button id="apply-button" className={mode}>
+            <Button
+              id="apply-button"
+              className={mode}
+              onClick={() => saveHandler()}
+            >
               SAVE
             </Button>
           )}
@@ -168,12 +313,14 @@ const DetermineInterview = ({ mode, userData }) => {
   );
 };
 
-const mapStateToProps = ({ applicationReducer, authReducer }) => {
+const mapStateToProps = ({ applicationReducer, authReducer, usersReducer }) => {
   const { mode } = applicationReducer;
   const { userData } = authReducer;
+  const { allUsers } = usersReducer;
   return {
     mode,
     userData,
+    allUsers,
   };
 };
 
