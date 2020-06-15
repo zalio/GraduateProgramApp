@@ -10,6 +10,8 @@ import FormControlLabel from "@material-ui/core/FormControlLabel/FormControlLabe
 import Radio from "@material-ui/core/Radio/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup/RadioGroup";
 import Button from "@material-ui/core/Button";
+import { sendNotification } from "../../services/firebase/notification";
+import { getUserWithEmail } from "../../services/firebase/user";
 
 const DisplayFiles = ({ mode, userData }) => {
   const location = useLocation();
@@ -26,6 +28,8 @@ const DisplayFiles = ({ mode, userData }) => {
   const [acceptEnglish, setAcceptEnglish] = useState(false);
   const [acceptReference, setAcceptReference] = useState(false);
   const [acceptPurpose, setAcceptPurpose] = useState(false);
+  const [acceptPermissionLetter, setAcceptPermissionLetter] = useState(false);
+  const [acceptPassport, setAcceptPassport] = useState(false);
 
   const customControl = (value, setValue) => {
     return (
@@ -53,6 +57,43 @@ const DisplayFiles = ({ mode, userData }) => {
     if (location.state) setApplicationData(location.state.application);
     else history.push("/");
   }, []);
+
+  const rejectApplicationHandler = async () => {
+    const receiverUserData = await getUserWithEmail(
+      applicationData.applicantEmail
+    );
+    await sendNotification({
+      receiverId: receiverUserData.uid,
+      content:
+        "Your application has been rejected, please check your files and reapply the application!!",
+      createdAt: Date.now(),
+    });
+  };
+
+  const acceptApplicationHandler = async () => {
+    const receiverUserData = await getUserWithEmail(
+      applicationData.applicantEmail
+    );
+    if (
+      acceptTranscript &&
+      (applicationData.masterTranscript ? acceptMasterTranscript : true) &&
+      acceptALES &&
+      acceptEnglish &&
+      (applicationData.reference ? acceptReference : true) &&
+      acceptPurpose &&
+      (applicationData.permissionLetter ? acceptPermissionLetter : true) &&
+      (applicationData.passport ? acceptPassport : true)
+    ) {
+      await sendNotification({
+        receiverId: receiverUserData.uid,
+        content:
+          "Your application has been accepted, wait for notification about your interview!",
+        createdAt: Date.now(),
+      });
+    } else {
+      alert("You can not accept without selecting all of the files ");
+    }
+  };
 
   return (
     <div id="make-announcement-page" className={mode}>
@@ -154,8 +195,8 @@ const DisplayFiles = ({ mode, userData }) => {
                 mode={mode}
                 title="Permission Letter"
                 customControl={customControl}
-                value={acceptPurpose}
-                setValue={setAcceptPurpose}
+                value={acceptPermissionLetter}
+                setValue={setAcceptPermissionLetter}
                 dataSrc={applicationData.permissionLetter}
               />
             ) : (
@@ -166,8 +207,8 @@ const DisplayFiles = ({ mode, userData }) => {
                 mode={mode}
                 title="Passport"
                 customControl={customControl}
-                value={acceptPurpose}
-                setValue={setAcceptPurpose}
+                value={acceptPassport}
+                setValue={setAcceptPassport}
                 dataSrc={applicationData.passport}
               />
             ) : (
@@ -179,12 +220,22 @@ const DisplayFiles = ({ mode, userData }) => {
           <Grid container spacing={2}>
             <Grid item xs={6}>
               <div>
-                <Button>Inform Applicant</Button>
+                <Button
+                  id="diplay-files-button"
+                  onClick={() => rejectApplicationHandler()}
+                >
+                  Inform Applicant
+                </Button>
               </div>
             </Grid>
             <Grid item xs={6}>
               <div>
-                <Button>Accept Applicant</Button>
+                <Button
+                  id="apply-button"
+                  onClick={() => acceptApplicationHandler()}
+                >
+                  Accept Applicant
+                </Button>
               </div>
             </Grid>
           </Grid>
