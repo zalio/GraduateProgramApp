@@ -1,6 +1,7 @@
 import firebase from "./index";
 import { getUser } from "./user";
 import { getAnnouncementData } from "./announcement";
+import { app } from "firebase";
 
 const database = firebase.database();
 
@@ -13,7 +14,10 @@ export const getApplications = async () => {
   const result = [];
 
   applicationsData.forEach((application) => {
-    applicationsDataAsArray.push(application.val());
+    applicationsDataAsArray.push({
+      ...application.val(),
+      id: application.key,
+    });
   });
 
   for (let index = 0; index < applicationsDataAsArray.length; index++) {
@@ -36,6 +40,15 @@ export const getApplications = async () => {
     });
   }
 
-  console.log(result);
   return result;
+};
+
+export const saveApplication = async (application) => {
+  const { id } = application;
+  await database.ref(`${APPLICATIONS_REF}/${id}`).set(application);
+};
+
+export const deleteApplication = async (application) => {
+  const { id } = application;
+  await database.ref(`${APPLICATIONS_REF}/${id}`).remove();
 };

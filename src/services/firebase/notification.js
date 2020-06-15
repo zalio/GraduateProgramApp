@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from "uuid";
 
 import firebase from "./index";
 
-import { USERS_PATH } from "./user";
+import { USERS_PATH, getAllUser } from "./user";
 
 const notificationsPath = "notifications";
 
@@ -25,10 +25,29 @@ export const sendNotification = async (notification) => {
   await database.ref(userNotificationsPath).push(dataToSaveDb);
 };
 
+export const sendNotificationToAllUser = async (notification) => {
+  const { file } = notification;
+  const dataToSaveDb = { ...notification };
+
+  if (file) {
+    const path = `notification_file_${uuidv4()}`;
+    await storage.ref(path).put(file);
+    const downloadUrl = await storage.ref(path).getDownloadURL();
+
+    dataToSaveDb["file"] = downloadUrl;
+  }
+
+  const allUser = await getAllUser();
+
+  allUser.forEach(async (user) => {
+    const { uid } = user;
+    const userNotificationsPath = `${USERS_PATH}/${uid}/${notificationsPath}`;
+    await database.ref(userNotificationsPath).push(dataToSaveDb);
+  });
+};
+
 export const getUserNotifications = async (userId, setData) => {
-  const notificationsPath = database.ref(
-    `${USERS_PATH}/${userId}/notifications`
-  );
+  const notificationsPath = database.ref(`${USERS_PATH}/${userId}/notifications`);
   var result = [];
 
   notificationsPath.on("value", (snapshot) => {

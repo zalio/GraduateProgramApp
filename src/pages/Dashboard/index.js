@@ -7,7 +7,10 @@ import DepartmentMainPage from "../DepartmentMainPage";
 
 import "./dashboard.scss";
 import { getAllAnnouncements } from "../../services/firebase/announcement";
-import { getUserNotifications } from "../../services/firebase/notification";
+import {
+  getUserNotifications,
+  sendNotificationToAllUser,
+} from "../../services/firebase/notification";
 
 import {
   announcementsRequest,
@@ -16,6 +19,7 @@ import {
   notificationsResponse,
 } from "../../store/actions/application";
 import { getAllUser } from "../../services/firebase/user";
+import { getApplications } from "../../services/firebase/applications";
 
 const Dashboard = ({
   userData,
@@ -49,8 +53,13 @@ const Dashboard = ({
     //   reference: "pathi",
     //   purpose: "pathi",
     // });
+    // getAllUser();
+    // sendNotificationToAllUser({
+    //   content: "text",
+    //   createdAt: Date.now(),
+    // });
 
-    getAllUser();
+    getApplications();
   }, []);
   const [announcements, setAnnouncements] = useState(null);
   const [notifications, setNotifications] = useState(null);
