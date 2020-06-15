@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
+import moment from "moment";
 import Container from "@material-ui/core/Container";
 import "./viewApplications.scss";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 
-import { CircularProgress } from "@material-ui/core";
 import RadioGroup from "@material-ui/core/RadioGroup/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel/FormControlLabel";
 import Radio from "@material-ui/core/Radio/Radio";
@@ -14,6 +14,8 @@ import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Button from "@material-ui/core/Button";
 import CustomTable from "../../components/reusable/CustomTable";
 import ArrowForwardIosTwoToneIcon from "@material-ui/icons/ArrowForwardIosTwoTone";
+import { getApplications } from "../../services/firebase/applications";
+import { getAllAnnouncements } from "../../services/firebase/announcement";
 
 const departments = [
   { title: "Computer Engineering", value: 1 },
@@ -62,37 +64,87 @@ function createData(name, mail, date, status, department, program) {
   return { name, mail, date, status, department, program };
 }
 
-const rows = [
-  createData("India", "IN", 1324171354, 3287263, 5656, 565656),
-  createData("China", "CN", 1403500365, 9596961),
-  createData("Italy", "IT", 60483973, 301340),
-  createData("United States", "US", 327167434, 9833520),
-  createData("Canada", "CA", 37602103, 9984670),
-  createData("Australia", "AU", 25475400, 7692024),
-  createData("Germany", "DE", 83019200, 357578),
-  createData("Ireland", "IE", 4857000, 70273),
-  createData("Mexico", "MX", 126577691, 1972550),
-  createData("Japan", "JP", 126317000, 377973),
-  createData("France", "FR", 67022000, 640679),
-  createData("United Kingdom", "GB", 67545757, 242495),
-  createData("Russia", "RU", 146793744, 17098246),
-  createData("Nigeria", "NG", 200962417, 923768),
-  createData("Brazil", "BR", 210147125, 8515767),
-];
-
 const ViewApplications = ({ mode }) => {
   const history = useHistory();
 
+  const [rows, setRows] = useState([]);
+  const [filesResult, setFilesResult] = useState([]);
+
   const [department, setDepartment] = useState(null);
   const [program, setProgram] = useState("graduate");
-  const [loading, setLoading] = useState(false);
 
-  const customButton = () => {
+  const [allApplications, setAllApplications] = useState([]);
+  const [allAnnouncements, setAllAnnouncements] = useState([]);
+
+  const getAllApps = async () => {
+    const getting = await getApplications();
+    await getAllAnnouncements(setAllAnnouncements);
+    setAllApplications(getting);
+  };
+
+  useEffect(() => {
+    console.log(allAnnouncements, allApplications);
+  }, [allAnnouncements, allApplications]);
+
+  useEffect(() => {
+    getAllApps();
+  }, []);
+
+  const customButton = (idToGo, appData) => {
+    console.log(idToGo, appData);
     return (
-      <Button onClick={() => history.push("/display-files")}>
+      <Button
+        onClick={() =>
+          history.push({
+            pathname: "display-files",
+            state: { id: idToGo, application: appData },
+          })
+        }
+      >
         <ArrowForwardIosTwoToneIcon />
       </Button>
     );
+  };
+
+  const viewApplicationsHandler = (type) => {
+    const apps = [];
+    const result = [];
+    allAnnouncements.forEach((ann) => {
+      if (
+        ann.applicationType === program &&
+        ann.department.title === department.title
+      ) {
+        if (type === "past") {
+          if (ann.deadline < Date.now()) {
+            apps.push(ann.applicationId);
+          }
+        } else if (type === "current") {
+          if (ann.deadline > Date.now()) {
+            apps.push(ann.applicationId);
+          }
+        }
+      }
+    });
+    allApplications.forEach((app) => {
+      if (apps.includes(app.announcementId)) {
+        result.push(app);
+      }
+    });
+    const tempRows = [];
+    result.forEach((app) => {
+      tempRows.push(
+        createData(
+          app.applicantName,
+          app.applicantEmail,
+          moment(app.createdAt).calendar(),
+          app.status,
+          app.department,
+          app.applicationType
+        )
+      );
+    });
+    setRows(tempRows);
+    setFilesResult(result);
   };
 
   return (
@@ -149,14 +201,25 @@ const ViewApplications = ({ mode }) => {
         </div>
         <div id="button-group-container">
           <ButtonGroup disableElevation variant="contained" color="primary">
-            <Button>Past Applicatons</Button>
-            <Button>Current Applications</Button>
+            <Button
+              onClick={() => viewApplicationsHandler("past")}
+              disabled={department === null}
+            >
+              Past Applicatons
+            </Button>
+            <Button
+              onClick={() => viewApplicationsHandler("current")}
+              disabled={department === null}
+            >
+              Current Applications
+            </Button>
           </ButtonGroup>
         </div>
         <CustomTable
           columns={columns}
           rows={rows}
           customButton={customButton}
+          fileData={filesResult}
           customColumnTitle="Display Files"
         />
       </Container>

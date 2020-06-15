@@ -24,6 +24,7 @@ export const getApplications = async () => {
     const announcementData = await getAnnouncementData(announcementId);
     const {
       department: { title },
+      applicationType,
     } = announcementData;
 
     result.push({
@@ -31,8 +32,10 @@ export const getApplications = async () => {
       applicantName,
       applicantEmail,
       department: title,
+      applicationType,
     });
   }
 
   console.log(result);
+  return result;
 };

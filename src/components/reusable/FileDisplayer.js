@@ -18,7 +18,11 @@ const FileDisplayer = ({
     <div className={`file-displayer-container ${mode}`}>
       <div className={`file-displayer-sub-container ${mode}`}>
         <div className={mode}>
-          <Link className={`file-displayer-link ${mode}`} href={dataSrc}>
+          <Link
+            className={`file-displayer-link ${mode}`}
+            href={dataSrc}
+            target="_blank"
+          >
             {title}
           </Link>
         </div>

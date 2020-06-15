@@ -50,8 +50,8 @@ const DisplayFiles = ({ mode, userData }) => {
   };
 
   useEffect(() => {
-    //if (location.state) setApplicationData(location.state.application);
-    //else history.push("/");
+    if (location.state) setApplicationData(location.state.application);
+    else history.push("/");
   }, []);
 
   return (
@@ -70,10 +70,14 @@ const DisplayFiles = ({ mode, userData }) => {
         </div>
         <Grid container spacing={2}>
           <Grid item xs={3}>
-            <img className="avatar-img" src={avatar} alt="" />
+            <img
+              className="avatar-img"
+              src={applicationData ? applicationData.applicantPhoto : avatar}
+              alt=""
+            />
           </Grid>
           <Grid item xs={9}>
-            {applicationData.transcript ? (
+            {applicationData ? (
               <FileDisplayer
                 mode={mode}
                 title="Transcript"
@@ -85,7 +89,7 @@ const DisplayFiles = ({ mode, userData }) => {
             ) : (
               ""
             )}
-            {applicationData.masterTranscript ? (
+            {applicationData && applicationData.masterTranscript ? (
               <FileDisplayer
                 mode={mode}
                 title="Master Transcript"
@@ -97,7 +101,7 @@ const DisplayFiles = ({ mode, userData }) => {
             ) : (
               ""
             )}
-            {applicationData.alesResult ? (
+            {applicationData ? (
               <FileDisplayer
                 mode={mode}
                 title="ALES Result"
@@ -109,7 +113,7 @@ const DisplayFiles = ({ mode, userData }) => {
             ) : (
               ""
             )}
-            {applicationData.englishExamResult ? (
+            {applicationData ? (
               <FileDisplayer
                 mode={mode}
                 title="English Exam Result"
@@ -121,7 +125,7 @@ const DisplayFiles = ({ mode, userData }) => {
             ) : (
               ""
             )}
-            {applicationData.reference ? (
+            {applicationData && applicationData.reference ? (
               <FileDisplayer
                 mode={mode}
                 title="Reference Letters"
@@ -133,7 +137,7 @@ const DisplayFiles = ({ mode, userData }) => {
             ) : (
               ""
             )}
-            {applicationData.purpose ? (
+            {applicationData ? (
               <FileDisplayer
                 mode={mode}
                 title="Statement of Purpose"
@@ -145,7 +149,7 @@ const DisplayFiles = ({ mode, userData }) => {
             ) : (
               ""
             )}
-            {applicationData.permissionLetter ? (
+            {applicationData && applicationData.permissionLetter ? (
               <FileDisplayer
                 mode={mode}
                 title="Permission Letter"
@@ -157,7 +161,7 @@ const DisplayFiles = ({ mode, userData }) => {
             ) : (
               ""
             )}
-            {applicationData.passport ? (
+            {applicationData && applicationData.passport ? (
               <FileDisplayer
                 mode={mode}
                 title="Passport"
