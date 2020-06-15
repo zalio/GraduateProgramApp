@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import CustomCard from "../../components/reusable/CustomCard";
 import Container from "@material-ui/core/Container";
 import "./announcements.scss";
+import moment from "moment";
 
 const Announcements = ({ mode, announcements }) => {
   return (
@@ -14,10 +15,12 @@ const Announcements = ({ mode, announcements }) => {
           </h1>
         </div>
         <div id="announcements-part">
-          {announcements.length !== 0 ? (
-            announcements.map((d) => (
-              <CustomCard type="announcement" data={d} />
-            ))
+          {announcements.filter(
+            (d) => moment(d.deadline).valueOf() > moment().valueOf()
+          ).length !== 0 ? (
+            announcements
+              .filter((d) => moment(d.deadline).valueOf() > moment().valueOf())
+              .map((d) => <CustomCard type="announcement" data={d} />)
           ) : (
             <div>There is no announcement yet!</div>
           )}

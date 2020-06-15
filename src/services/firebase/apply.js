@@ -7,12 +7,19 @@ const APPLICATIONS_REF = "applications";
 
 export const apply = async (applyData) => {
   try {
-    const { fileData, announcementId, applicantId, status } = applyData;
+    const {
+      fileData,
+      announcementId,
+      applicantId,
+      status,
+      createdAt,
+    } = applyData;
     const fileDataKeys = Object.keys(fileData);
     const dataToSaveDb = {
       announcementId,
       applicantId,
       status,
+      createdAt,
     };
 
     for (let index = 0; index < fileDataKeys.length; index++) {

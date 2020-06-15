@@ -1,5 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
+import moment from "moment";
 import { connect } from "react-redux";
 import CustomCard from "./CustomCard";
 import "./announcements.scss";
@@ -11,12 +12,17 @@ const Announcements = ({ mode, title, type, data, route }) => {
     <>
       <div>
         <p>{title}</p>
-        {data.length !== 0 ? (
+        {data.filter((d) => moment(d.deadline).valueOf() > moment().valueOf())
+          .length !== 0 ? (
           <>
             <div id="announcements-part">
-              {data.map((d) => (
-                <CustomCard type="announcement" data={d} />
-              ))}
+              {data
+                .filter(
+                  (d) => moment(d.deadline).valueOf() > moment().valueOf()
+                )
+                .map((d) => (
+                  <CustomCard type="announcement" data={d} />
+                ))}
             </div>
             <Button
               id="show-all-button"

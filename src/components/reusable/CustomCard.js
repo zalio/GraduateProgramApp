@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
+import moment from "moment";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
@@ -10,6 +11,7 @@ import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import "./CustomCard.scss";
 import Divider from "@material-ui/core/Divider";
 import dayjs from "../../utils/dayjs";
+import FileDisplayer from "./FileDisplayer";
 
 const CustomCard = ({ mode, type, data, userData }) => {
   const history = useHistory();
@@ -48,6 +50,16 @@ const CustomCard = ({ mode, type, data, userData }) => {
             ) : (
               ""
             )}
+            {type === "announcement" ? (
+              <>
+                <span>
+                  <b>Deadline:</b>
+                </span>
+                <span>{moment(data.deadline).calendar()}</span>
+              </>
+            ) : (
+              ""
+            )}
           </div>
           <div id="card-upper-text-sub-container" className={mode}>
             <span>
@@ -58,6 +70,18 @@ const CustomCard = ({ mode, type, data, userData }) => {
         </div>
         <Divider className={mode} />
         {type === "announcement" ? data.text : data.content}
+        {data.file ? (
+          <>
+            <FileDisplayer
+              mode={mode}
+              title="Reference Letters"
+              dataSrc={data.file}
+              customControl={null}
+            />
+          </>
+        ) : (
+          ""
+        )}
         <div id="custom-button-container" className={mode}>
           {type === "announcement" &&
           data.type === "application" &&

@@ -9,7 +9,14 @@ import TableHead from "@material-ui/core/TableHead";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 
-const CustomTable = ({ columns, rows, customButton, customColumnTitle }) => {
+const CustomTable = ({
+  columns,
+  rows,
+  customButton,
+  customColumnTitle,
+  fileData,
+  type,
+}) => {
   const useStyles = makeStyles({
     root: {
       width: "100%",
@@ -32,6 +39,7 @@ const CustomTable = ({ columns, rows, customButton, customColumnTitle }) => {
     setPage(0);
   };
 
+  console.log(fileData, rows);
   return (
     <Paper className={classes.root}>
       <TableContainer className={classes.container}>
@@ -66,7 +74,22 @@ const CustomTable = ({ columns, rows, customButton, customColumnTitle }) => {
                         </TableCell>
                       );
                     })}
-                    <TableCell padding="checkbox">{customButton()}</TableCell>
+                    <TableCell key={row.code + 1} padding="checkbox">
+                      {type === "displayfiles"
+                        ? customButton(
+                            fileData[
+                              fileData.findIndex(
+                                (data) => data.applicantEmail === row.mail
+                              )
+                            ].announcementId,
+                            fileData[
+                              fileData.findIndex(
+                                (data) => data.applicantEmail === row.mail
+                              )
+                            ]
+                          )
+                        : ""}
+                    </TableCell>
                   </TableRow>
                 );
               })}

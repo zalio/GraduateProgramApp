@@ -7,6 +7,8 @@ import "./apply.scss";
 import Button from "@material-ui/core/Button";
 import { apply } from "../../services/firebase/apply";
 import { CircularProgress } from "@material-ui/core";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
 
 const Apply = ({ mode, userData }) => {
   const location = useLocation();
@@ -23,12 +25,20 @@ const Apply = ({ mode, userData }) => {
   const [reference, setReference] = useState(null);
   const [purpose, setPurpose] = useState(null);
 
+  const [working, setWorking] = useState(false);
+  const [notCitizen, setNotCitizen] = useState(false);
+
+  const [passport, setPassport] = useState(null);
+  const [permissionLetter, setPermissionLetter] = useState(null);
+
   const isDisabled = () =>
     photo === null ||
     transcript === null ||
     ales === null ||
     englishExam === null ||
-    purpose === null;
+    purpose === null ||
+    (working === true && permissionLetter === null) ||
+    (notCitizen === true && passport === null);
 
   const applyHandler = async () => {
     if (isDisabled()) {
@@ -40,6 +50,7 @@ const Apply = ({ mode, userData }) => {
       announcementId: location.state.id,
       applicantId: userData.uid,
       status: "pending",
+      createdAt: Date.now(),
       fileData: {
         applicantPhoto: photo,
         transcript: transcript,
@@ -48,6 +59,8 @@ const Apply = ({ mode, userData }) => {
         englishExamResult: englishExam,
         reference: reference,
         purpose: purpose,
+        permissionLetter: permissionLetter,
+        passport: passport,
       },
     };
     try {
@@ -115,6 +128,48 @@ const Apply = ({ mode, userData }) => {
             placeholder="Statement of Purpose (Required)"
             mode={mode}
           />
+          <FormControlLabel
+            control={
+              <Checkbox
+                name="working"
+                checked={working === true}
+                onChange={(e) => setWorking(e.target.checked)}
+                color="primary"
+              />
+            }
+            label="I am working"
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                name="notCitizen"
+                checked={notCitizen === true}
+                onChange={(e) => setNotCitizen(e.target.checked)}
+                color="primary"
+              />
+            }
+            label="I am not citizen of Turkey"
+          />
+          {working === true ? (
+            <FileUpload
+              type="permission"
+              changeField={setPermissionLetter}
+              placeholder="Permission Letter (Required)"
+              mode={mode}
+            />
+          ) : (
+            ""
+          )}
+          {notCitizen === true ? (
+            <FileUpload
+              type="notCitizen"
+              changeField={setNotCitizen}
+              placeholder="Passport Copy (Required)"
+              mode={mode}
+            />
+          ) : (
+            ""
+          )}
         </div>
         <div id="apply-button-container">
           {loading ? (

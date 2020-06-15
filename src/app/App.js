@@ -7,10 +7,11 @@ import LoadingScreen from "../components/reusable/LoadingScreen";
 import Button from "@material-ui/core/Button";
 import { themeChanger } from "../store/actions/application";
 import { loginRequest, loginSuccess, loginFail } from "../store/actions/auth";
+import { allUsersRequest, allUsersResponse } from "../store/actions/user";
 import { SESSION_STORAGE_KEY } from "../pages/Login";
 import Header from "../components/reusable/Header";
 
-import { getUser } from "../services/firebase/user";
+import { getUser, getAllUser } from "../services/firebase/user";
 import dayModeIcon from "./assets/images/day-moon.png";
 import nightModeIcon from "./assets/images/night-moon.png";
 
@@ -23,7 +24,14 @@ const App = (props) => {
     setIsLoading(false);
   };
 
+  const getAllUsers = async () => {
+    props.allUsersRequest();
+    const all = await getAllUser();
+    props.allUsersResponse(all);
+  };
+
   useEffect(() => {
+    getAllUsers();
     props.loginRequest();
     const userFromLS = localStorage.getItem(SESSION_STORAGE_KEY);
     if (userFromLS === null) {
@@ -83,6 +91,8 @@ const mapDispatchToProps = {
   loginSuccess,
   loginRequest,
   loginFail,
+  allUsersRequest,
+  allUsersResponse,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
