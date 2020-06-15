@@ -12,6 +12,10 @@ import RadioGroup from "@material-ui/core/RadioGroup/RadioGroup";
 import Button from "@material-ui/core/Button";
 import { sendNotification } from "../../services/firebase/notification";
 import { getUserWithEmail } from "../../services/firebase/user";
+import {
+  deleteApplication,
+  saveApplication,
+} from "../../services/firebase/applications";
 
 const DisplayFiles = ({ mode, userData }) => {
   const location = useLocation();
@@ -68,6 +72,7 @@ const DisplayFiles = ({ mode, userData }) => {
         "Your application has been rejected, please check your files and reapply the application!!",
       createdAt: Date.now(),
     });
+    await deleteApplication(applicationData);
   };
 
   const acceptApplicationHandler = async () => {
@@ -90,6 +95,7 @@ const DisplayFiles = ({ mode, userData }) => {
           "Your application has been accepted, wait for notification about your interview!",
         createdAt: Date.now(),
       });
+      await saveApplication({ ...applicationData, status: "accepted" });
     } else {
       alert("You can not accept without selecting all of the files ");
     }
