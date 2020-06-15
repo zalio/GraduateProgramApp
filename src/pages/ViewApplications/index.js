@@ -221,6 +221,7 @@ const ViewApplications = ({ mode }) => {
           customButton={customButton}
           fileData={filesResult}
           customColumnTitle="Display Files"
+          type="displayfiles"
         />
       </Container>
     </div>

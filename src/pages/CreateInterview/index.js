@@ -60,7 +60,9 @@ const CreateInterview = ({ mode }) => {
             columns={columns}
             rows={rows}
             customButton={customButton}
+            fileData={[]}
             customColumnTitle="Create Interview"
+            type="interview"
           />
         </Container>
       </div>

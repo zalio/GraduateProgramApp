@@ -15,6 +15,7 @@ const CustomTable = ({
   customButton,
   customColumnTitle,
   fileData,
+  type,
 }) => {
   const useStyles = makeStyles({
     root: {
@@ -74,18 +75,20 @@ const CustomTable = ({
                       );
                     })}
                     <TableCell key={row.code + 1} padding="checkbox">
-                      {customButton(
-                        fileData[
-                          fileData.findIndex(
-                            (data) => data.applicantEmail === row.mail
+                      {type === "displayfiles"
+                        ? customButton(
+                            fileData[
+                              fileData.findIndex(
+                                (data) => data.applicantEmail === row.mail
+                              )
+                            ].announcementId,
+                            fileData[
+                              fileData.findIndex(
+                                (data) => data.applicantEmail === row.mail
+                              )
+                            ]
                           )
-                        ].announcementId,
-                        fileData[
-                          fileData.findIndex(
-                            (data) => data.applicantEmail === row.mail
-                          )
-                        ]
-                      )}
+                        : ""}
                     </TableCell>
                   </TableRow>
                 );
