@@ -118,7 +118,9 @@ const ViewApplications = ({ mode, userData }) => {
     const apps = [];
     const result = [];
     allAnnouncements.forEach((ann) => {
+      console.log(ann);
       if (
+        ann.type === "application" &&
         ann.applicationType === program &&
         ann.department.title === department.title
       ) {
@@ -139,6 +141,7 @@ const ViewApplications = ({ mode, userData }) => {
       if (apps.includes(app.announcementId)) {
         if (userData.type === "department" && app.status === "accepted")
           result.push(app);
+        else if (userData.type === "gradschool") result.push(app);
       }
     });
     const tempRows = [];
@@ -156,6 +159,7 @@ const ViewApplications = ({ mode, userData }) => {
         )
       );
     });
+    console.log(allApplications, tempRows);
     setRows(tempRows);
     setFilesResult(result);
   };

@@ -68,6 +68,10 @@ const DetermineInterview = ({ mode, userData, allUsers }) => {
     }
   }, [interviewData]);
 
+  const getDate = (date) => {
+    return moment(date).calendar();
+  };
+
   const saveHandler = async () => {
     setLoading(true);
     if (
@@ -104,7 +108,7 @@ const DetermineInterview = ({ mode, userData, allUsers }) => {
           "Your interview details: Location is " +
           interviewLocation.toString() +
           ", and the Date is " +
-          moment(date).calendar(),
+          getDate(date),
         createdAt: Date.now(),
       });
       await sendNotification({
@@ -114,7 +118,7 @@ const DetermineInterview = ({ mode, userData, allUsers }) => {
           "Your interview details: Location is " +
           interviewLocation.toString() +
           ", and the Date is " +
-          date,
+          getDate(date),
         createdAt: Date.now(),
       });
       await sendNotification({
@@ -124,7 +128,7 @@ const DetermineInterview = ({ mode, userData, allUsers }) => {
           "Your interview details: Location is " +
           interviewLocation.toString() +
           ", and the Date is " +
-          date,
+          getDate(date),
         createdAt: Date.now(),
       });
       await sendNotification({
@@ -134,7 +138,7 @@ const DetermineInterview = ({ mode, userData, allUsers }) => {
           "Your interview details: Location is " +
           interviewLocation.toString() +
           ", and the Date is " +
-          date,
+          getDate(date),
         createdAt: Date.now(),
       });
       await sendNotification({
@@ -144,7 +148,7 @@ const DetermineInterview = ({ mode, userData, allUsers }) => {
           "Your interview details: Location is " +
           interviewLocation.toString() +
           ", and the Date is " +
-          date,
+          getDate(date),
         createdAt: Date.now(),
       });
       await sendNotification({
@@ -154,7 +158,7 @@ const DetermineInterview = ({ mode, userData, allUsers }) => {
           "Your interview details: Location is " +
           interviewLocation.toString() +
           ", and the Date is " +
-          date,
+          getDate(date),
         createdAt: Date.now(),
       });
       setLoading(false);
