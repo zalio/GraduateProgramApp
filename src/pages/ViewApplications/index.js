@@ -76,6 +76,8 @@ const ViewApplications = ({ mode }) => {
   const [allApplications, setAllApplications] = useState([]);
   const [allAnnouncements, setAllAnnouncements] = useState([]);
 
+  const [selectedButton, setSelectedButton] = useState(0);
+
   const getAllApps = async () => {
     const getting = await getApplications();
     await getAllAnnouncements(setAllAnnouncements);
@@ -114,10 +116,12 @@ const ViewApplications = ({ mode }) => {
         ann.department.title === department.title
       ) {
         if (type === "past") {
+          setSelectedButton(1);
           if (ann.deadline < Date.now()) {
             apps.push(ann.applicationId);
           }
         } else if (type === "current") {
+          setSelectedButton(2);
           if (ann.deadline > Date.now()) {
             apps.push(ann.applicationId);
           }
@@ -199,16 +203,31 @@ const ViewApplications = ({ mode }) => {
           </RadioGroup>
         </div>
         <div id="button-group-container">
-          <ButtonGroup disableElevation variant="contained" color="primary">
+          <ButtonGroup
+            className="view-app-button-container"
+            disableElevation
+            variant="contained"
+            color="primary"
+          >
             <Button
               onClick={() => viewApplicationsHandler("past")}
               disabled={department === null}
+              className={
+                selectedButton === 1
+                  ? "view-app-button selected " + mode
+                  : "view-app-button" + mode
+              }
             >
               Past Applicatons
             </Button>
             <Button
               onClick={() => viewApplicationsHandler("current")}
               disabled={department === null}
+              className={
+                selectedButton === 2
+                  ? "view-app-button selected " + mode
+                  : "view-app-button" + mode
+              }
             >
               Current Applications
             </Button>
