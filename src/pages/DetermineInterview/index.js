@@ -43,7 +43,6 @@ const DetermineInterview = ({ mode, userData, allUsers }) => {
 
   useEffect(() => {
     if (allUsers !== null && allUsers.length !== 0 && interviewData !== null) {
-      console.log(allUsers);
       setUsers(
         allUsers.filter(
           (gu) =>
@@ -92,11 +91,11 @@ const DetermineInterview = ({ mode, userData, allUsers }) => {
       alert(
         "Successfully saved! Information is sent to applicant and all of the interviewers!"
       );
-      await saveUser({ ...interviewer1, isCoordinator: "true" });
-      await saveUser({ ...interviewer2, isCoordinator: "true" });
-      await saveUser({ ...interviewer3, isCoordinator: "true" });
-      await saveUser({ ...interviewer4, isCoordinator: "true" });
-      await saveUser({ ...interviewer5, isCoordinator: "true" });
+      await saveUser({ ...interviewer1, isInterviewer: "true" });
+      await saveUser({ ...interviewer2, isInterviewer: "true" });
+      await saveUser({ ...interviewer3, isInterviewer: "true" });
+      await saveUser({ ...interviewer4, isInterviewer: "true" });
+      await saveUser({ ...interviewer5, isInterviewer: "true" });
       await sendNotification({
         receiverId: interviewData.applicantId,
         content:
