@@ -27,7 +27,7 @@ const DisplayFiles = ({ mode, userData }) => {
 
   const [applicationData, setApplicationData] = useState(null);
   const [department, setDepartment] = useState(null);
-  const [program, setProgram] = useState("graduate");
+  const [program, setProgram] = useState("Master");
   const [loading, setLoading] = useState(false);
 
   const [acceptTranscript, setAcceptTranscript] = useState(false);
@@ -68,6 +68,16 @@ const DisplayFiles = ({ mode, userData }) => {
 
   useEffect(() => {
     console.log(applicationData);
+    if (applicationData !== null && applicationData.status === "accepted") {
+      setAcceptTranscript(true);
+      setAcceptMasterTranscript(true);
+      setAcceptALES(true);
+      setAcceptEnglish(true);
+      setAcceptPermissionLetter(true);
+      setAcceptPassport(true);
+      setAcceptReference(true);
+      setAcceptPurpose(true);
+    }
   }, [applicationData]);
 
   const rejectApplicationHandler = async () => {
@@ -76,11 +86,16 @@ const DisplayFiles = ({ mode, userData }) => {
     );
     await sendNotification({
       receiverId: receiverUserData.uid,
+      senderId: userData.uid,
       content:
         "Your application has been rejected, please check your files and reapply the application!!",
       createdAt: Date.now(),
     });
     await deleteApplication(applicationData);
+    alert(
+      "Some files have been found invalid. The applicant has been informed and this application has been deleted."
+    );
+    history.push("/");
   };
 
   const acceptApplicationHandler = async () => {
@@ -99,6 +114,7 @@ const DisplayFiles = ({ mode, userData }) => {
     ) {
       await sendNotification({
         receiverId: receiverUserData.uid,
+        senderId: userData.uid,
         content:
           "Your application has been accepted, wait for notification about your interview!",
         createdAt: Date.now(),
@@ -114,8 +130,13 @@ const DisplayFiles = ({ mode, userData }) => {
         location: "Still, not selected",
         date: "Still, not selected",
       });
+      alert(
+        "All files have been confirmed. The documents are sent to the corresponding department of this application."
+      );
     } else {
-      alert("You can not accept without selecting all of the files ");
+      alert(
+        "You cannot send documents to corresponding department without verifying all of the documents."
+      );
     }
   };
 
@@ -155,6 +176,9 @@ const DisplayFiles = ({ mode, userData }) => {
                 setValue={setAcceptTranscript}
                 dataSrc={applicationData.transcript}
                 userType={userData.type}
+                disabled={
+                  applicationData && applicationData.status !== "accepted"
+                }
               />
             ) : (
               ""
@@ -168,6 +192,9 @@ const DisplayFiles = ({ mode, userData }) => {
                 setValue={setAcceptMasterTranscript}
                 dataSrc={applicationData.masterTranscript}
                 userType={userData.type}
+                disabled={
+                  applicationData && applicationData.status !== "accepted"
+                }
               />
             ) : (
               ""
@@ -181,6 +208,9 @@ const DisplayFiles = ({ mode, userData }) => {
                 setValue={setAcceptALES}
                 dataSrc={applicationData.alesResult}
                 userType={userData.type}
+                disabled={
+                  applicationData && applicationData.status !== "accepted"
+                }
               />
             ) : (
               ""
@@ -194,6 +224,9 @@ const DisplayFiles = ({ mode, userData }) => {
                 setValue={setAcceptEnglish}
                 dataSrc={applicationData.englishExamResult}
                 userType={userData.type}
+                disabled={
+                  applicationData && applicationData.status !== "accepted"
+                }
               />
             ) : (
               ""
@@ -207,6 +240,9 @@ const DisplayFiles = ({ mode, userData }) => {
                 setValue={setAcceptReference}
                 dataSrc={applicationData.reference}
                 userType={userData.type}
+                disabled={
+                  applicationData && applicationData.status !== "accepted"
+                }
               />
             ) : (
               ""
@@ -220,6 +256,9 @@ const DisplayFiles = ({ mode, userData }) => {
                 setValue={setAcceptPurpose}
                 dataSrc={applicationData.purpose}
                 userType={userData.type}
+                disabled={
+                  applicationData && applicationData.status !== "accepted"
+                }
               />
             ) : (
               ""
@@ -233,6 +272,9 @@ const DisplayFiles = ({ mode, userData }) => {
                 setValue={setAcceptPermissionLetter}
                 dataSrc={applicationData.permissionLetter}
                 userType={userData.type}
+                disabled={
+                  applicationData && applicationData.status !== "accepted"
+                }
               />
             ) : (
               ""
@@ -246,13 +288,18 @@ const DisplayFiles = ({ mode, userData }) => {
                 setValue={setAcceptPassport}
                 dataSrc={applicationData.passport}
                 userType={userData.type}
+                disabled={
+                  applicationData && applicationData.status !== "accepted"
+                }
               />
             ) : (
               ""
             )}
           </Grid>
         </Grid>
-        {userData.type === "gradschool" ? (
+        {userData.type === "gradschool" &&
+        applicationData !== null &&
+        applicationData.status !== "accepted" ? (
           <Grid container spacing={2}>
             <Grid item xs={6}>
               <div className="display-files-button-container">
@@ -270,7 +317,7 @@ const DisplayFiles = ({ mode, userData }) => {
                   className={"display-files-button " + mode}
                   onClick={() => acceptApplicationHandler()}
                 >
-                  Accept Applicant
+                  Send Documents
                 </Button>
               </div>
             </Grid>

@@ -71,7 +71,7 @@ const ViewApplications = ({ mode, userData }) => {
   const [filesResult, setFilesResult] = useState([]);
 
   const [department, setDepartment] = useState(null);
-  const [program, setProgram] = useState("graduate");
+  const [program, setProgram] = useState("Master");
 
   const [allApplications, setAllApplications] = useState([]);
   const [allAnnouncements, setAllAnnouncements] = useState([]);
@@ -129,10 +129,7 @@ const ViewApplications = ({ mode, userData }) => {
           }
         } else if (type === "current") {
           setSelectedButton(2);
-          if (
-            ann.deadline > Date.now() &&
-            (userData.type === "department" ? ann.status === "accepted" : true)
-          ) {
+          if (ann.deadline > Date.now()) {
             apps.push(ann.applicationId);
           }
         }
@@ -140,23 +137,25 @@ const ViewApplications = ({ mode, userData }) => {
     });
     allApplications.forEach((app) => {
       if (apps.includes(app.announcementId)) {
-        result.push(app);
+        if (userData.type === "department" && app.status === "accepted")
+          result.push(app);
       }
     });
     const tempRows = [];
     result.forEach((app) => {
       tempRows.push(
         createData(
-          app.applicantName,
+          app.applicantName + " " + app.applicantSurname,
           app.applicantEmail,
           moment(app.createdAt).calendar(),
-          app.status,
+          app.status === "accepted"
+            ? "Files Verified"
+            : "Pending Verification of Files",
           app.department,
           app.applicationType
         )
       );
     });
-    console.log(tempRows, allAnnouncements);
     setRows(tempRows);
     setFilesResult(result);
   };
@@ -199,17 +198,17 @@ const ViewApplications = ({ mode, userData }) => {
             id={"name-surname-container"}
           >
             <FormControlLabel
-              value="graduate"
+              value="Master"
               control={<Radio />}
               label="Master"
-              checked={program === "graduate"}
+              checked={program === "Master"}
               onChange={(e) => setProgram(e.target.value)}
             />
             <FormControlLabel
-              value="postgraduate"
+              value="PhD"
               control={<Radio />}
               label="PhD"
-              checked={program === "postgraduate"}
+              checked={program === "PhD"}
               onChange={(e) => setProgram(e.target.value)}
             />
           </RadioGroup>

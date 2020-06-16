@@ -41,7 +41,7 @@ const MakeAnnouncement = ({ mode, allUsers }) => {
   const [announceFile, setAnnounceFile] = useState(null);
   const [text, setText] = useState("");
   const [type, setType] = useState("application");
-  const [applicationType, setApplicationType] = useState("graduate");
+  const [applicationType, setApplicationType] = useState("Master");
   const [department, setDepartment] = useState(null);
   const [coordinator, setCoordinator] = useState(null);
   const [deadline, setDeadline] = useState(null);
@@ -80,7 +80,7 @@ const MakeAnnouncement = ({ mode, allUsers }) => {
     } finally {
       setText("");
       setType("application");
-      setApplicationType("graduate");
+      setApplicationType("Master");
       setDepartment(null);
       setLoading(false);
     }
@@ -131,17 +131,17 @@ const MakeAnnouncement = ({ mode, allUsers }) => {
             id={"name-surname-container"}
           >
             <FormControlLabel
-              value="graduate"
+              value="Master"
               control={<Radio />}
               label="Master"
-              checked={applicationType === "graduate"}
+              checked={applicationType === "Master"}
               onChange={(e) => setApplicationType(e.target.value)}
             />
             <FormControlLabel
-              value="postgraduate"
+              value="PhD"
               control={<Radio />}
               label="PhD"
-              checked={applicationType === "postgraduate"}
+              checked={applicationType === "PhD"}
               onChange={(e) => setApplicationType(e.target.value)}
             />
           </RadioGroup>

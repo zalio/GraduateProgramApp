@@ -9,7 +9,7 @@ import { sendNotification } from "../../services/firebase/notification";
 import { getUserWithEmail } from "../../services/firebase/user";
 import { CircularProgress } from "@material-ui/core";
 
-const SendNotification = ({ mode }) => {
+const SendNotification = ({ mode, userData }) => {
   const [notificationFile, setNotificationFile] = useState(null);
   const [receiver, setReceiver] = useState("");
   const [text, setText] = useState("");
@@ -40,6 +40,7 @@ const SendNotification = ({ mode }) => {
     try {
       await sendNotification({
         receiverId,
+        senderId: userData.uid,
         content: text,
         file: notificationFile,
         createdAt: Date.now(),
@@ -104,10 +105,12 @@ const SendNotification = ({ mode }) => {
   );
 };
 
-const mapStateToProps = ({ applicationReducer }) => {
+const mapStateToProps = ({ applicationReducer, authReducer }) => {
   const { mode } = applicationReducer;
+  const { userData } = authReducer;
   return {
     mode,
+    userData,
   };
 };
 

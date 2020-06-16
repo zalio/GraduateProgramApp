@@ -65,6 +65,7 @@ const SendResult = ({ mode, userData, allUsers }) => {
     ) {
       await sendNotification({
         receiverId: user.uid,
+        senderId: userData.uid,
         content:
           "The interviewing score of the applicant " +
           interviewer.email +
