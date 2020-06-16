@@ -25,7 +25,7 @@ export const sendNotification = async (notification) => {
   await database.ref(userNotificationsPath).push(dataToSaveDb);
 };
 
-export const sendNotificationToAllUser = async (notification) => {
+export const sendNotificationToUsers = async (notification, users) => {
   const { file } = notification;
   const dataToSaveDb = { ...notification };
 
@@ -37,10 +37,9 @@ export const sendNotificationToAllUser = async (notification) => {
     dataToSaveDb["file"] = downloadUrl;
   }
 
-  const allUser = await getAllUser();
-
-  allUser.forEach(async (user) => {
+  users.forEach(async (user) => {
     const { uid } = user;
+    notification = { ...notification, receiverId: uid };
     const userNotificationsPath = `${USERS_PATH}/${uid}/${notificationsPath}`;
     await database.ref(userNotificationsPath).push(dataToSaveDb);
   });

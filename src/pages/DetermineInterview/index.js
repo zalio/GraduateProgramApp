@@ -18,7 +18,10 @@ import DateFnsUtils from "@date-io/date-fns";
 import Grid from "@material-ui/core/Grid";
 import { saveInterview } from "../../services/firebase/interviews";
 import { getAllUser, saveUser } from "../../services/firebase/user";
-import { sendNotification } from "../../services/firebase/notification";
+import {
+  sendNotification,
+  sendNotificationToUsers,
+} from "../../services/firebase/notification";
 
 const DetermineInterview = ({ mode, userData, allUsers }) => {
   const location = useLocation();

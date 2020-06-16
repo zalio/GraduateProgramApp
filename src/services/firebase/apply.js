@@ -15,6 +15,7 @@ export const apply = async (applyData) => {
       createdAt,
     } = applyData;
     const fileDataKeys = Object.keys(fileData);
+    console.log(fileDataKeys);
     const dataToSaveDb = {
       announcementId,
       applicantId,
@@ -26,9 +27,10 @@ export const apply = async (applyData) => {
       const applyDataKey = fileDataKeys[index];
       const fileDataValue = fileData[applyDataKey];
       if (fileDataValue) {
-        const path = `${announcementId}_${applyDataKey}`;
+        const path = `${announcementId}_${applyDataKey}_${applicantId}`;
         await storage.ref(path).put(fileDataValue);
         const downloadUrl = await storage.ref(path).getDownloadURL();
+        console.log(downloadUrl);
 
         dataToSaveDb[applyDataKey] = downloadUrl;
       }
