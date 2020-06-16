@@ -13,6 +13,7 @@ const GradSchoolMainPage = ({
   announcementsIsLoading,
   notificationsIsLoading,
 }) => {
+  console.log(notifications);
   return (
     <>
       <div id="dashboard" className={mode}>

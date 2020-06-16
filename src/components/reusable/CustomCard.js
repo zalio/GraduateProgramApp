@@ -12,24 +12,26 @@ import "./CustomCard.scss";
 import Divider from "@material-ui/core/Divider";
 import dayjs from "../../utils/dayjs";
 import FileDisplayer from "./FileDisplayer";
-import { getUser } from "../../services/firebase/user";
 
-const CustomCard = ({ mode, type, data, userData }) => {
+const CustomCard = ({ mode, type, data, userData, allUsers }) => {
   const history = useHistory();
   const [buttonIconDown, setButtonIconDown] = useState(true);
   const [contentWidthClass, setContentWidthClass] = useState("small");
 
   const [user, setUser] = useState(null);
-  const getSender = async (uid) => {
-    const getting = await getUser(uid);
-    const { name, surname } = getting;
-    setUser(name + " " + surname);
-  };
+  console.log(data);
   useEffect(() => {
     console.log(data.senderId);
-    getSender(data.senderId);
-  }, []);
-  useEffect(() => console.log(user, type), [user]);
+    console.log(allUsers);
+    if (allUsers && allUsers.length !== 0) {
+      allUsers.forEach((u) => {
+        if (u.uid === data.senderId) {
+          setUser(u.name + " " + u.surname);
+          console.log(u, data.senderId);
+        }
+      });
+    }
+  }, [allUsers]);
 
   const buttonRender = (idToGo) => {
     return (
@@ -58,7 +60,17 @@ const CustomCard = ({ mode, type, data, userData }) => {
                 <span>
                   <b>From:</b>
                 </span>
-                <span>{user !== null ? user : ""}</span>
+                <span>
+                  {allUsers
+                    ? allUsers[
+                        allUsers.findIndex((u) => u.uid === data.senderId)
+                      ].name +
+                      " " +
+                      allUsers[
+                        allUsers.findIndex((u) => u.uid === data.senderId)
+                      ].surname
+                    : ""}
+                </span>
               </>
             ) : (
               ""
@@ -125,12 +137,14 @@ const CustomCard = ({ mode, type, data, userData }) => {
   );
 };
 
-const mapStateToProps = ({ applicationReducer, authReducer }) => {
+const mapStateToProps = ({ applicationReducer, authReducer, usersReducer }) => {
   const { mode } = applicationReducer;
   const { userData } = authReducer;
+  const { allUsers } = usersReducer;
   return {
     mode,
     userData,
+    allUsers,
   };
 };
 

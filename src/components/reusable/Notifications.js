@@ -6,6 +6,7 @@ import "./notifications.scss";
 import { Button } from "@material-ui/core";
 
 const Notifications = ({ mode, title, type, data, route }) => {
+  console.log(data);
   const history = useHistory();
   return (
     <>

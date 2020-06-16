@@ -17,7 +17,6 @@ const FileDisplayer = ({
     if (userType === "gradschool" && customControl)
       return customControl(value, setValue);
   };
-
   return (
     <div className={`file-displayer-container ${mode}`}>
       <div className={`file-displayer-sub-container ${mode}`}>
@@ -31,7 +30,7 @@ const FileDisplayer = ({
           </Link>
         </div>
       </div>
-      {disabled && disabled !== true ? getCustomControl() : ""}
+      {disabled !== true ? getCustomControl() : ""}
     </div>
   );
 };

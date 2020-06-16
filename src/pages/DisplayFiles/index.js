@@ -133,6 +133,7 @@ const DisplayFiles = ({ mode, userData }) => {
       alert(
         "All files have been confirmed. The documents are sent to the corresponding department of this application."
       );
+      history.push("/view-applications");
     } else {
       alert(
         "You cannot send documents to corresponding department without verifying all of the documents."
@@ -177,7 +178,7 @@ const DisplayFiles = ({ mode, userData }) => {
                 dataSrc={applicationData.transcript}
                 userType={userData.type}
                 disabled={
-                  applicationData && applicationData.status !== "accepted"
+                  applicationData && applicationData.status === "accepted"
                 }
               />
             ) : (
@@ -193,7 +194,7 @@ const DisplayFiles = ({ mode, userData }) => {
                 dataSrc={applicationData.masterTranscript}
                 userType={userData.type}
                 disabled={
-                  applicationData && applicationData.status !== "accepted"
+                  applicationData && applicationData.status === "accepted"
                 }
               />
             ) : (
@@ -209,7 +210,7 @@ const DisplayFiles = ({ mode, userData }) => {
                 dataSrc={applicationData.alesResult}
                 userType={userData.type}
                 disabled={
-                  applicationData && applicationData.status !== "accepted"
+                  applicationData && applicationData.status === "accepted"
                 }
               />
             ) : (
@@ -225,7 +226,7 @@ const DisplayFiles = ({ mode, userData }) => {
                 dataSrc={applicationData.englishExamResult}
                 userType={userData.type}
                 disabled={
-                  applicationData && applicationData.status !== "accepted"
+                  applicationData && applicationData.status === "accepted"
                 }
               />
             ) : (
@@ -241,7 +242,7 @@ const DisplayFiles = ({ mode, userData }) => {
                 dataSrc={applicationData.reference}
                 userType={userData.type}
                 disabled={
-                  applicationData && applicationData.status !== "accepted"
+                  applicationData && applicationData.status === "accepted"
                 }
               />
             ) : (
@@ -257,7 +258,7 @@ const DisplayFiles = ({ mode, userData }) => {
                 dataSrc={applicationData.purpose}
                 userType={userData.type}
                 disabled={
-                  applicationData && applicationData.status !== "accepted"
+                  applicationData && applicationData.status === "accepted"
                 }
               />
             ) : (
@@ -273,7 +274,7 @@ const DisplayFiles = ({ mode, userData }) => {
                 dataSrc={applicationData.permissionLetter}
                 userType={userData.type}
                 disabled={
-                  applicationData && applicationData.status !== "accepted"
+                  applicationData && applicationData.status === "accepted"
                 }
               />
             ) : (
@@ -289,7 +290,7 @@ const DisplayFiles = ({ mode, userData }) => {
                 dataSrc={applicationData.passport}
                 userType={userData.type}
                 disabled={
-                  applicationData && applicationData.status !== "accepted"
+                  applicationData && applicationData.status === "accepted"
                 }
               />
             ) : (
