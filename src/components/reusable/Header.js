@@ -130,7 +130,8 @@ const Header = ({ themeButton, clearUserData, loading, mode, userData }) => {
                   className={
                     mode +
                     ` ${
-                      location.pathname === "/create-interview"
+                      location.pathname === "/create-interview" ||
+                      location.pathname === "/determine-interview"
                         ? "active-page"
                         : ""
                     }`

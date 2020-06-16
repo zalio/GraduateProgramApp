@@ -64,7 +64,7 @@ function createData(name, mail, date, status, department, program) {
   return { name, mail, date, status, department, program };
 }
 
-const ViewApplications = ({ mode }) => {
+const ViewApplications = ({ mode, userData }) => {
   const history = useHistory();
 
   const [rows, setRows] = useState([]);
@@ -90,6 +90,13 @@ const ViewApplications = ({ mode }) => {
 
   useEffect(() => {
     getAllApps();
+    if (userData.type === "department") {
+      setDepartment(
+        departments[
+          departments.findIndex((d) => d.title === userData.department)
+        ]
+      );
+    }
   }, []);
 
   const customButton = (idToGo, appData) => {
@@ -122,7 +129,10 @@ const ViewApplications = ({ mode }) => {
           }
         } else if (type === "current") {
           setSelectedButton(2);
-          if (ann.deadline > Date.now()) {
+          if (
+            ann.deadline > Date.now() &&
+            (userData.type === "department" ? ann.status === "accepted" : true)
+          ) {
             apps.push(ann.applicationId);
           }
         }
@@ -146,6 +156,7 @@ const ViewApplications = ({ mode }) => {
         )
       );
     });
+    console.log(tempRows, allAnnouncements);
     setRows(tempRows);
     setFilesResult(result);
   };
@@ -168,6 +179,7 @@ const ViewApplications = ({ mode }) => {
             style={{ width: 1100 }}
             openOnFocus
             blurOnSelect
+            disabled={userData.type === "department"}
             onChange={(e, v) => {
               setDepartment(v);
             }}
@@ -246,10 +258,12 @@ const ViewApplications = ({ mode }) => {
   );
 };
 
-const mapStateToProps = ({ applicationReducer }) => {
+const mapStateToProps = ({ applicationReducer, authReducer }) => {
   const { mode } = applicationReducer;
+  const { userData } = authReducer;
   return {
     mode,
+    userData,
   };
 };
 
