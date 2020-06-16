@@ -57,7 +57,6 @@ const DetermineInterview = ({ mode, userData, allUsers }) => {
       interviewData !== null &&
       interviewData.interviewerOne !== "Not selected yet"
     ) {
-      console.log(interviewData);
       setInterviewer1(interviewData.interviewerOne);
       setInterviewer2(interviewData.interviewerTwo);
       setInterviewer3(interviewData.interviewerThree);

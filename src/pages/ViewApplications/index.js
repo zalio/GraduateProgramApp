@@ -84,9 +84,7 @@ const ViewApplications = ({ mode, userData }) => {
     setAllApplications(getting);
   };
 
-  useEffect(() => {
-    console.log(allAnnouncements, allApplications);
-  }, [allAnnouncements, allApplications]);
+  useEffect(() => {}, [allAnnouncements, allApplications]);
 
   useEffect(() => {
     setRows([]);
@@ -122,7 +120,6 @@ const ViewApplications = ({ mode, userData }) => {
     const apps = [];
     const result = [];
     allAnnouncements.forEach((ann) => {
-      console.log(ann);
       if (
         ann.type === "application" &&
         ann.applicationType === program &&
@@ -163,7 +160,6 @@ const ViewApplications = ({ mode, userData }) => {
         )
       );
     });
-    console.log(allApplications, tempRows);
     setRows(tempRows);
     setFilesResult(result);
   };

@@ -39,7 +39,6 @@ const CustomTable = ({
     setPage(0);
   };
 
-  console.log(fileData, rows);
   return (
     <Paper className={classes.root}>
       <TableContainer className={classes.container}>

@@ -7,10 +7,7 @@ import DepartmentMainPage from "../DepartmentMainPage";
 
 import "./dashboard.scss";
 import { getAllAnnouncements } from "../../services/firebase/announcement";
-import {
-  getUserNotifications,
-  sendNotificationToAllUser,
-} from "../../services/firebase/notification";
+import { getUserNotifications } from "../../services/firebase/notification";
 
 import {
   announcementsRequest,
@@ -18,7 +15,6 @@ import {
   notificationsRequest,
   notificationsResponse,
 } from "../../store/actions/application";
-import { getAllUser } from "../../services/firebase/user";
 import { getApplications } from "../../services/firebase/applications";
 
 const Dashboard = ({
@@ -29,36 +25,6 @@ const Dashboard = ({
   notificationsResponse,
 }) => {
   useEffect(() => {
-    // // const newUserData = { ...userData, name: "Ridvan" };
-    // const newUserData = { ...userData, department: "Computer Engineer" };
-    // //  use await when you use real place
-    // saveUser(newUserData);
-    // makeAnnouncement({
-    //   content: "Announcement Content",
-    //   department: "MBG",
-    //   createdAt: Date.now(),
-    //   expiryDate: Date.now(),
-    //   ownerUid: userData.uid,
-    // });
-    // getAllAnnouncementss();
-    // getSpesificDepartmentAnnouncementss();
-    // example request of apply
-    // apply({
-    //   applicantId: 1,
-    //   applicantPhoto: "photonun path i",
-    //   transcript: "pathi",
-    //   masterTranscript: "pathi",
-    //   alesResult: "pathi",
-    //   englishExamResult: "pathi",
-    //   reference: "pathi",
-    //   purpose: "pathi",
-    // });
-    // getAllUser();
-    // sendNotificationToAllUser({
-    //   content: "text",
-    //   createdAt: Date.now(),
-    // });
-
     getApplications();
   }, []);
   const [announcements, setAnnouncements] = useState(null);

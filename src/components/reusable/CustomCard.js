@@ -18,21 +18,6 @@ const CustomCard = ({ mode, type, data, userData, allUsers }) => {
   const [buttonIconDown, setButtonIconDown] = useState(true);
   const [contentWidthClass, setContentWidthClass] = useState("small");
 
-  const [user, setUser] = useState(null);
-  console.log(data);
-  useEffect(() => {
-    console.log(data.senderId);
-    console.log(allUsers);
-    if (allUsers && allUsers.length !== 0) {
-      allUsers.forEach((u) => {
-        if (u.uid === data.senderId) {
-          setUser(u.name + " " + u.surname);
-          console.log(u, data.senderId);
-        }
-      });
-    }
-  }, [allUsers]);
-
   const buttonRender = (idToGo) => {
     return (
       <Button

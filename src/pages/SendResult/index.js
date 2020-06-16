@@ -37,7 +37,6 @@ const SendResult = ({ mode, userData, allUsers }) => {
       )
         temp.push({ email: i.applicantEmail });
     });
-    console.log(temp);
     setInterviewers(temp);
   };
 

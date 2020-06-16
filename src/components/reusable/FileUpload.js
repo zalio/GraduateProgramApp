@@ -13,46 +13,6 @@ const FileUpload = ({ mode, type, changeField, placeholder, disabled }) => {
     changeField(event.target.files[0]);
   };
 
-  // On file upload (click the upload button)
-  const onFileUpload = () => {
-    // Create an object of formData
-    const formData = new FormData();
-
-    // Update the formData object
-    formData.append("myFile", state.selectedFile, state.selectedFile.name);
-
-    // Details of the uploaded file
-    console.log(state.selectedFile);
-
-    // Request made to the backend api
-    // Send formData object
-    console.log(formData);
-  };
-
-  // File content to be displayed after
-  // file upload is complete
-  const fileData = () => {
-    if (state.selectedFile) {
-      return (
-        <div>
-          <h2>File Details:</h2>
-          <p>File Name: {state.selectedFile.name}</p>
-          <p>File Type: {state.selectedFile.type}</p>
-          <p>
-            Last Modified: {state.selectedFile.lastModifiedDate.toDateString()}
-          </p>
-        </div>
-      );
-    } else {
-      return (
-        <div>
-          <br />
-          <h4>Choose before Pressing the Upload button</h4>
-        </div>
-      );
-    }
-  };
-
   return (
     <div id="file-uploader">
       <div id="file-upload-container" className={mode}>

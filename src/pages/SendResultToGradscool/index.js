@@ -35,7 +35,6 @@ const SendResultToGradschool = ({ mode, allUsers, userData }) => {
 
   useEffect(() => {
     if (allUsers !== null && allUsers.length !== 0) {
-      console.log(allUsers);
       setUsers(allUsers.filter((gu) => gu && gu.type === "gradschool"));
     }
   }, []);

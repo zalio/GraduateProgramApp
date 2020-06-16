@@ -67,7 +67,6 @@ const DisplayFiles = ({ mode, userData }) => {
   }, []);
 
   useEffect(() => {
-    console.log(applicationData);
     if (applicationData !== null && applicationData.status === "accepted") {
       setAcceptTranscript(true);
       setAcceptMasterTranscript(true);

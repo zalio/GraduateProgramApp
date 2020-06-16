@@ -61,7 +61,6 @@ const CreateInterview = ({ mode }) => {
 
   useEffect(() => {
     get();
-    console.log(interviews);
   }, []);
 
   const getInterviewName = (data) => {
@@ -73,7 +72,6 @@ const CreateInterview = ({ mode }) => {
   };
 
   useEffect(() => {
-    console.log(interviews);
     const temp = [];
     interviews.forEach((i) => {
       temp.push(
@@ -95,7 +93,6 @@ const CreateInterview = ({ mode }) => {
   }, [interviews]);
 
   const customButton = (idToGo, appData) => {
-    console.log(idToGo, appData);
     return (
       <Button
         onClick={() =>
