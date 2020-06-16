@@ -68,5 +68,11 @@
 
 .MuiContainer-root.light, .MuiContainer-maxWidthLg.light {
   background-color: rgba(0,0,0, 0.1);
-  min-height: 100vh;
+  min-height: 110vh;
+}
+
+@media only screen and (min-height: 901px) {
+  .MuiContainer-root.light, .MuiContainer-maxWidthLg.light {
+    min-height: 150vh;
+  }
 }

@@ -65,12 +65,16 @@ const MakeAnnouncement = ({ mode, allUsers }) => {
       file: announceFile,
       text: text,
       type: type,
-      applicationType: applicationType,
       department: department,
       createdAt: Date.now(),
       coordinator: coordinator,
     };
-    if (type !== "result") submitData = { ...submitData, deadline: deadline };
+    if (type !== "result")
+      submitData = {
+        ...submitData,
+        deadline: deadline,
+        applicationType: applicationType,
+      };
     try {
       await makeAnnouncement(submitData);
       await saveUser({ ...coordinator, isAdmin: "true" });
@@ -104,11 +108,12 @@ const MakeAnnouncement = ({ mode, allUsers }) => {
           variant="outlined"
           onChange={(e) => setText(e.target.value)}
         />
-        <div id="file-uploader" className={mode}>
+        <div id="file-uploader" className={`radio-group-container ${mode}`}>
           <RadioGroup
             aria-label="type"
             name="gender1"
             id={"name-surname-container"}
+            className={"make-ann-type-container"}
           >
             <FormControlLabel
               value="application"
@@ -125,26 +130,31 @@ const MakeAnnouncement = ({ mode, allUsers }) => {
               onChange={(e) => setType(e.target.value)}
             />
           </RadioGroup>
-          <RadioGroup
-            aria-label="applicationType"
-            name="gender1"
-            id={"name-surname-container"}
-          >
-            <FormControlLabel
-              value="Master"
-              control={<Radio />}
-              label="Master"
-              checked={applicationType === "Master"}
-              onChange={(e) => setApplicationType(e.target.value)}
-            />
-            <FormControlLabel
-              value="PhD"
-              control={<Radio />}
-              label="PhD"
-              checked={applicationType === "PhD"}
-              onChange={(e) => setApplicationType(e.target.value)}
-            />
-          </RadioGroup>
+          {type !== "result" ? (
+            <RadioGroup
+              aria-label="applicationType"
+              name="gender1"
+              id={"name-surname-container"}
+              className={"make-ann-appType-container"}
+            >
+              <FormControlLabel
+                value="Master"
+                control={<Radio />}
+                label="Master"
+                checked={applicationType === "Master"}
+                onChange={(e) => setApplicationType(e.target.value)}
+              />
+              <FormControlLabel
+                value="PhD"
+                control={<Radio />}
+                label="PhD"
+                checked={applicationType === "PhD"}
+                onChange={(e) => setApplicationType(e.target.value)}
+              />
+            </RadioGroup>
+          ) : (
+            ""
+          )}
         </div>
         {type !== "result" ? (
           <>

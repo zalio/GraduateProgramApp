@@ -204,6 +204,7 @@ const ViewApplications = ({ mode, userData }) => {
             aria-label="type"
             name="gender1"
             id={"name-surname-container"}
+            className="view-app-radio-container"
           >
             <FormControlLabel
               value="Master"
