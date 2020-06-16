@@ -66,6 +66,10 @@ const DisplayFiles = ({ mode, userData }) => {
     else history.push("/");
   }, []);
 
+  useEffect(() => {
+    console.log(applicationData);
+  }, [applicationData]);
+
   const rejectApplicationHandler = async () => {
     const receiverUserData = await getUserWithEmail(
       applicationData.applicantEmail
@@ -120,13 +124,17 @@ const DisplayFiles = ({ mode, userData }) => {
       <Container id="make-announcement-page-container" className={mode}>
         <div>
           <h1>
-            <b>Display Application</b>
+            <b>
+              Display Documents of{" "}
+              {applicationData
+                ? `${applicationData.applicantName} ${applicationData.applicantSurname}`
+                : ""}
+            </b>
           </h1>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque
-            ea, esse? Accusantium ad amet asperiores, cupiditate distinctio est
-            ex maiores neque nihil, nisi nostrum nulla similique soluta suscipit
-            tenetur ullam?
+            {userData.type === "gradschool"
+              ? "The documents are accessed by clicking their names. Please verify the documents of the applicant by choosing between Correct and Incorrect options. If all documents are verified to be correct, please click Send Documents to the Corresponding Department button. Even if a single document is incorrect, please click Inform Applicant button. The applicant will be informed automatically."
+              : "The documents are accessed by clicking their names to be viewed."}
           </p>
         </div>
         <Grid container spacing={2}>
