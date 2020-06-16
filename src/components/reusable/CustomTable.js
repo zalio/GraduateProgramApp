@@ -88,7 +88,18 @@ const CustomTable = ({
                               )
                             ]
                           )
-                        : ""}
+                        : customButton(
+                            fileData[
+                              fileData.findIndex(
+                                (data) => data.applicantEmail === row.mail
+                              )
+                            ].id,
+                            fileData[
+                              fileData.findIndex(
+                                (data) => data.applicantEmail === row.mail
+                              )
+                            ]
+                          )}
                     </TableCell>
                   </TableRow>
                 );

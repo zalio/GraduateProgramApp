@@ -13,7 +13,13 @@ const FileDisplayer = ({
   customControl,
   value,
   setValue,
+  userType,
 }) => {
+  const getCustomControl = () => {
+    if (userType === "gradschool" && customControl)
+      return customControl(value, setValue);
+  };
+
   return (
     <div className={`file-displayer-container ${mode}`}>
       <div className={`file-displayer-sub-container ${mode}`}>
@@ -27,7 +33,7 @@ const FileDisplayer = ({
           </Link>
         </div>
       </div>
-      {customControl !== null ? customControl(value, setValue) : ""}
+      {getCustomControl()}
     </div>
   );
 };

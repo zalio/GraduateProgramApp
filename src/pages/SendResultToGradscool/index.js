@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./sendResultToGradschool.scss";
 import Container from "@material-ui/core/Container";
 import TextField from "@material-ui/core/TextField";
@@ -7,9 +7,38 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import FileUpload from "../../components/reusable/FileUpload";
 import { CircularProgress } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
+import { sendNotification } from "../../services/firebase/notification";
+import { useHistory } from "react-router-dom";
 
-const SendResultToGradschool = ({ mode }) => {
+const SendResultToGradschool = ({ mode, allUsers }) => {
   const [loading, setLoading] = useState(false);
+  const history = useHistory();
+
+  const [users, setUsers] = useState([]);
+  const [user, setUser] = useState(null);
+  const [file, setFile] = useState(null);
+  const [text, setText] = useState(null);
+
+  const sendHandler = async () => {
+    setLoading(true);
+    await sendNotification({
+      receiverId: user.uid,
+      content: text === "" ? "Combined result of the interview!" : text,
+      file: file,
+      createdAt: Date.now(),
+    });
+    setLoading(false);
+    alert("Successfully sent!");
+    history.push("/");
+  };
+
+  useEffect(() => {
+    if (allUsers !== null && allUsers.length !== 0) {
+      console.log(allUsers);
+      setUsers(allUsers.filter((gu) => gu && gu.type === "gradschool"));
+    }
+  }, []);
+
   return (
     <>
       <div id="make-announcement-page" className={mode}>
@@ -23,8 +52,10 @@ const SendResultToGradschool = ({ mode }) => {
             <Autocomplete
               id="combo-box-demo"
               className={mode}
-              options={[]}
-              getOptionLabel={(option) => option.title}
+              value={user}
+              options={users}
+              onChange={(e, v) => setUser(v)}
+              getOptionLabel={(option) => option.email}
               style={{ width: 1100 }}
               openOnFocus
               blurOnSelect
@@ -40,7 +71,7 @@ const SendResultToGradschool = ({ mode }) => {
           <div id="file-uploader">
             <FileUpload
               type="ales"
-              changeField={() => {}}
+              changeField={setFile}
               mode={mode}
               placeholder="Combined Results File (Required)"
             />
@@ -50,6 +81,8 @@ const SendResultToGradschool = ({ mode }) => {
               id="outlined-multiline-static"
               className={mode}
               label="Extra Information"
+              value={text}
+              onChange={(e) => setText(e.target.value)}
               multiline
               rows={10}
               variant="outlined"
@@ -58,7 +91,12 @@ const SendResultToGradschool = ({ mode }) => {
           {loading ? (
             <CircularProgress />
           ) : (
-            <Button id="apply-button" className={mode}>
+            <Button
+              id="apply-button"
+              className={mode}
+              disabled={user === null || file === null}
+              onClick={() => sendHandler()}
+            >
               SEND
             </Button>
           )}
@@ -67,10 +105,12 @@ const SendResultToGradschool = ({ mode }) => {
     </>
   );
 };
-const mapStateToProps = ({ applicationReducer }) => {
+const mapStateToProps = ({ applicationReducer, usersReducer }) => {
   const { mode } = applicationReducer;
+  const { allUsers } = usersReducer;
   return {
     mode,
+    allUsers,
   };
 };
 

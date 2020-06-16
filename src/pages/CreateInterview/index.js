@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import "./createInterview.scss";
+import moment from "moment";
 import { connect } from "react-redux";
 import CustomTable from "../../components/reusable/CustomTable";
 import Container from "@material-ui/core/Container";
 import { Button } from "@material-ui/core";
 import ArrowForwardIosTwoToneIcon from "@material-ui/icons/ArrowForwardIosTwoTone";
+import { getAllInterviews } from "../../services/firebase/interviews";
 
 const columns = [
   { id: "name", label: "Applicant Name", align: "center" },
@@ -20,34 +22,89 @@ const columns = [
   { id: "location", label: "Location", align: "center" },
 ];
 
-function createData(name, mail, type) {
-  return { name, mail, type };
+function createData(
+  name,
+  mail,
+  type,
+  interviewer1,
+  interviewer2,
+  interviewer3,
+  interviewer4,
+  interviewer5,
+  date,
+  location
+) {
+  return {
+    name,
+    mail,
+    type,
+    interviewer1,
+    interviewer2,
+    interviewer3,
+    interviewer4,
+    interviewer5,
+    date,
+    location,
+  };
 }
-
-const rows = [
-  createData("India", "IN", 1324171354),
-  createData("China", "CN", 1403500365, 9596961),
-  createData("Italy", "IT", 60483973, 301340),
-  createData("United States", "US", 327167434, 9833520),
-  createData("Canada", "CA", 37602103, 9984670),
-  createData("Australia", "AU", 25475400, 7692024),
-  createData("Germany", "DE", 83019200, 357578),
-  createData("Ireland", "IE", 4857000, 70273),
-  createData("Mexico", "MX", 126577691, 1972550),
-  createData("Japan", "JP", 126317000, 377973),
-  createData("France", "FR", 67022000, 640679),
-  createData("United Kingdom", "GB", 67545757, 242495),
-  createData("Russia", "RU", 146793744, 17098246),
-  createData("Nigeria", "NG", 200962417, 923768),
-  createData("Brazil", "BR", 210147125, 8515767),
-];
 
 const CreateInterview = ({ mode }) => {
   const history = useHistory();
 
-  const customButton = () => {
+  const [interviews, setInterviews] = useState([]);
+  const [rows, setRows] = useState([]);
+
+  const get = async () => {
+    const getting = await getAllInterviews();
+    setInterviews(getting);
+  };
+
+  useEffect(() => {
+    get();
+    console.log(interviews);
+  }, []);
+
+  const getInterviewName = (data) => {
+    if (data === "Still, not selected") {
+      return data;
+    } else {
+      return data.email;
+    }
+  };
+
+  useEffect(() => {
+    console.log(interviews);
+    const temp = [];
+    interviews.forEach((i) => {
+      temp.push(
+        createData(
+          i.applicantName,
+          i.applicantEmail,
+          i.applicationType + " " + i.department,
+          getInterviewName(i.interviewerOne),
+          getInterviewName(i.interviewerTwo),
+          getInterviewName(i.interviewerThree),
+          getInterviewName(i.interviewerFour),
+          getInterviewName(i.interviewerFive),
+          i.date === "Still, not selected" ? i.date : moment(i.date).calendar(),
+          i.location
+        )
+      );
+    });
+    setRows(temp);
+  }, [interviews]);
+
+  const customButton = (idToGo, appData) => {
+    console.log(idToGo, appData);
     return (
-      <Button onClick={() => history.push("/determine-interview")}>
+      <Button
+        onClick={() =>
+          history.push({
+            pathname: "determine-interview",
+            state: { id: idToGo, interview: appData },
+          })
+        }
+      >
         <ArrowForwardIosTwoToneIcon />
       </Button>
     );
@@ -60,7 +117,7 @@ const CreateInterview = ({ mode }) => {
             columns={columns}
             rows={rows}
             customButton={customButton}
-            fileData={[]}
+            fileData={interviews}
             customColumnTitle="Create Interview"
             type="interview"
           />
