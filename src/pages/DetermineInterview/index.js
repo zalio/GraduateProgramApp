@@ -55,7 +55,7 @@ const DetermineInterview = ({ mode, userData, allUsers }) => {
     }
     if (
       interviewData !== null &&
-      interviewData.interviewerOne !== "Still, not selected"
+      interviewData.interviewerOne !== "Not selected yet"
     ) {
       console.log(interviewData);
       setInterviewer1(interviewData.interviewerOne);

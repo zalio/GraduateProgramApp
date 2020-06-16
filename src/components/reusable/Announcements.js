@@ -7,19 +7,24 @@ import "./announcements.scss";
 import { Button } from "@material-ui/core";
 
 const Announcements = ({ mode, title, type, data, route }) => {
+  const check = (data) => {
+    if (!data.deadline) {
+      return true;
+    } else if (moment(data.deadline).valueOf() > moment().valueOf()) {
+      return true;
+    }
+    return false;
+  };
   const history = useHistory();
   return (
     <>
       <div>
         <p>{title}</p>
-        {data.filter((d) => moment(d.deadline).valueOf() > moment().valueOf())
-          .length !== 0 ? (
+        {data.filter((d) => check(d)).length !== 0 ? (
           <>
             <div id="announcements-part">
               {data
-                .filter(
-                  (d) => moment(d.deadline).valueOf() > moment().valueOf()
-                )
+                .filter((d) => check(d))
                 .map((d) => (
                   <CustomCard type="announcement" data={d} />
                 ))}

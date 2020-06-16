@@ -6,6 +6,14 @@ import "./announcements.scss";
 import moment from "moment";
 
 const Announcements = ({ mode, announcements }) => {
+  const check = (data) => {
+    if (!data.deadline) {
+      return true;
+    } else if (moment(data.deadline).valueOf() > moment().valueOf()) {
+      return true;
+    }
+    return false;
+  };
   return (
     <div id="cards-page">
       <Container className={mode}>
@@ -15,11 +23,9 @@ const Announcements = ({ mode, announcements }) => {
           </h1>
         </div>
         <div id="announcements-part">
-          {announcements.filter(
-            (d) => moment(d.deadline).valueOf() > moment().valueOf()
-          ).length !== 0 ? (
+          {announcements.filter((d) => check(d)).length !== 0 ? (
             announcements
-              .filter((d) => moment(d.deadline).valueOf() > moment().valueOf())
+              .filter((d) => check(d))
               .map((d) => <CustomCard type="announcement" data={d} />)
           ) : (
             <div>There is no announcement yet!</div>

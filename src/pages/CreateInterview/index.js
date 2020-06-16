@@ -65,7 +65,7 @@ const CreateInterview = ({ mode }) => {
   }, []);
 
   const getInterviewName = (data) => {
-    if (data === "Still, not selected") {
+    if (data === "Not selected yet") {
       return data;
     } else {
       return data.email;
@@ -78,15 +78,15 @@ const CreateInterview = ({ mode }) => {
     interviews.forEach((i) => {
       temp.push(
         createData(
-          i.applicantName,
+          i.applicantName + " " + i.applicantSurname,
           i.applicantEmail,
-          i.applicationType + " " + i.department,
+          i.department + " " + i.applicationType,
           getInterviewName(i.interviewerOne),
           getInterviewName(i.interviewerTwo),
           getInterviewName(i.interviewerThree),
           getInterviewName(i.interviewerFour),
           getInterviewName(i.interviewerFive),
-          i.date === "Still, not selected" ? i.date : moment(i.date).calendar(),
+          i.date === "Not selected yet" ? i.date : moment(i.date).calendar(),
           i.location
         )
       );

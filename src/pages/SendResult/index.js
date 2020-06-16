@@ -67,7 +67,7 @@ const SendResult = ({ mode, userData, allUsers }) => {
         receiverId: user.uid,
         senderId: userData.uid,
         content:
-          "The interviewing score of the applicant " +
+          "The interview score of the applicant " +
           interviewer.email +
           " is : " +
           score +

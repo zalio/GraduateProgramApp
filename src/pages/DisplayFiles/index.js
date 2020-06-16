@@ -122,13 +122,13 @@ const DisplayFiles = ({ mode, userData }) => {
       await saveApplication({ ...applicationData, status: "accepted" });
       await createInterview({
         ...applicationData,
-        interviewerOne: "Still, not selected",
-        interviewerTwo: "Still, not selected",
-        interviewerThree: "Still, not selected",
-        interviewerFour: "Still, not selected",
-        interviewerFive: "Still, not selected",
-        location: "Still, not selected",
-        date: "Still, not selected",
+        interviewerOne: "Not selected yet",
+        interviewerTwo: "Not selected yet",
+        interviewerThree: "Not selected yet",
+        interviewerFour: "Not selected yet",
+        interviewerFive: "Not selected yet",
+        location: "Not selected yet",
+        date: "Not selected yet",
       });
       alert(
         "All files have been confirmed. The documents are sent to the corresponding department of this application."

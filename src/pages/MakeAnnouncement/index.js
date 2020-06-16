@@ -61,16 +61,16 @@ const MakeAnnouncement = ({ mode, allUsers }) => {
 
   const submitHandler = async () => {
     setLoading(true);
-    const submitData = {
+    let submitData = {
       file: announceFile,
       text: text,
       type: type,
       applicationType: applicationType,
       department: department,
       createdAt: Date.now(),
-      deadline: deadline,
       coordinator: coordinator,
     };
+    if (type !== "result") submitData = { ...submitData, deadline: deadline };
     try {
       await makeAnnouncement(submitData);
       await saveUser({ ...coordinator, isAdmin: "true" });
@@ -186,7 +186,7 @@ const MakeAnnouncement = ({ mode, allUsers }) => {
                 renderInput={(params) => (
                   <TextField
                     {...params}
-                    label="Coordinator (Required)"
+                    label="Coordinator Email (Required)"
                     variant="outlined"
                   />
                 )}
@@ -202,29 +202,33 @@ const MakeAnnouncement = ({ mode, allUsers }) => {
           placeholder="Upload File (Optional)"
           mode={mode}
         />
-        <div id="announcement-deadline" className={mode}>
-          <div className={mode}>
-            <h3 className={mode}>Deadline</h3>
+        {type !== "result" ? (
+          <div id="announcement-deadline" className={mode}>
+            <div className={mode}>
+              <h3 className={mode}>Deadline</h3>
+            </div>
+            <div style={{ width: "300px" }}>
+              <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <Grid container justify="space-around">
+                  <KeyboardDatePicker
+                    margin="normal"
+                    label="Please select the deadline!"
+                    id="date-picker-dialog"
+                    className={mode}
+                    format="MM/dd/yyyy"
+                    value={deadline}
+                    onChange={(e) => setDeadline(e.getTime())}
+                    KeyboardButtonProps={{
+                      "aria-label": "change date",
+                    }}
+                  />
+                </Grid>
+              </MuiPickersUtilsProvider>
+            </div>
           </div>
-          <div style={{ width: "300px" }}>
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-              <Grid container justify="space-around">
-                <KeyboardDatePicker
-                  margin="normal"
-                  label="Please select the deadline!"
-                  id="date-picker-dialog"
-                  className={mode}
-                  format="MM/dd/yyyy"
-                  value={deadline}
-                  onChange={(e) => setDeadline(e.getTime())}
-                  KeyboardButtonProps={{
-                    "aria-label": "change date",
-                  }}
-                />
-              </Grid>
-            </MuiPickersUtilsProvider>
-          </div>
-        </div>
+        ) : (
+          ""
+        )}
         {loading ? (
           <CircularProgress />
         ) : (

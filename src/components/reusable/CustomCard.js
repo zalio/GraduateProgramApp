@@ -62,7 +62,7 @@ const CustomCard = ({ mode, type, data, userData }) => {
             ) : (
               ""
             )}
-            {type === "announcement" ? (
+            {type === "announcement" && data.deadline ? (
               <>
                 <span>
                   <b>Deadline:</b>
