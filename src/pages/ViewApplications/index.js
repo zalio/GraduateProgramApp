@@ -64,7 +64,7 @@ function createData(name, mail, date, status, department, program) {
   return { name, mail, date, status, department, program };
 }
 
-const ViewApplications = ({ mode }) => {
+const ViewApplications = ({ mode, userData }) => {
   const history = useHistory();
 
   const [rows, setRows] = useState([]);
@@ -75,6 +75,8 @@ const ViewApplications = ({ mode }) => {
 
   const [allApplications, setAllApplications] = useState([]);
   const [allAnnouncements, setAllAnnouncements] = useState([]);
+
+  const [selectedButton, setSelectedButton] = useState(0);
 
   const getAllApps = async () => {
     const getting = await getApplications();
@@ -88,6 +90,13 @@ const ViewApplications = ({ mode }) => {
 
   useEffect(() => {
     getAllApps();
+    if (userData.type === "department") {
+      setDepartment(
+        departments[
+          departments.findIndex((d) => d.title === userData.department)
+        ]
+      );
+    }
   }, []);
 
   const customButton = (idToGo, appData) => {
@@ -114,11 +123,16 @@ const ViewApplications = ({ mode }) => {
         ann.department.title === department.title
       ) {
         if (type === "past") {
+          setSelectedButton(1);
           if (ann.deadline < Date.now()) {
             apps.push(ann.applicationId);
           }
         } else if (type === "current") {
-          if (ann.deadline > Date.now()) {
+          setSelectedButton(2);
+          if (
+            ann.deadline > Date.now() &&
+            (userData.type === "department" ? ann.status === "accepted" : true)
+          ) {
             apps.push(ann.applicationId);
           }
         }
@@ -142,6 +156,7 @@ const ViewApplications = ({ mode }) => {
         )
       );
     });
+    console.log(tempRows, allAnnouncements);
     setRows(tempRows);
     setFilesResult(result);
   };
@@ -164,6 +179,7 @@ const ViewApplications = ({ mode }) => {
             style={{ width: 1100 }}
             openOnFocus
             blurOnSelect
+            disabled={userData.type === "department"}
             onChange={(e, v) => {
               setDepartment(v);
             }}
@@ -199,16 +215,31 @@ const ViewApplications = ({ mode }) => {
           </RadioGroup>
         </div>
         <div id="button-group-container">
-          <ButtonGroup disableElevation variant="contained" color="primary">
+          <ButtonGroup
+            className="view-app-button-container"
+            disableElevation
+            variant="contained"
+            color="primary"
+          >
             <Button
               onClick={() => viewApplicationsHandler("past")}
               disabled={department === null}
+              className={
+                selectedButton === 1
+                  ? "view-app-button selected " + mode
+                  : "view-app-button" + mode
+              }
             >
               Past Applicatons
             </Button>
             <Button
               onClick={() => viewApplicationsHandler("current")}
               disabled={department === null}
+              className={
+                selectedButton === 2
+                  ? "view-app-button selected " + mode
+                  : "view-app-button" + mode
+              }
             >
               Current Applications
             </Button>
@@ -227,10 +258,12 @@ const ViewApplications = ({ mode }) => {
   );
 };
 
-const mapStateToProps = ({ applicationReducer }) => {
+const mapStateToProps = ({ applicationReducer, authReducer }) => {
   const { mode } = applicationReducer;
+  const { userData } = authReducer;
   return {
     mode,
+    userData,
   };
 };
 

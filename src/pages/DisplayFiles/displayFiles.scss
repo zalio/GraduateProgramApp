@@ -15,3 +15,19 @@
     color: green;
   }
 }
+
+.display-files-button {
+  background-color: rgba(0,0,0,.2) !important;
+  height: 50px;
+  width: 300px;
+  &:hover {
+    background-color: rgba(0,0,0,.6) !important;
+    color: white;
+  }
+}
+.display-files-button.dark {
+  color: white;
+}
+.display-files-button-container {
+  margin-top: 100px;
+}

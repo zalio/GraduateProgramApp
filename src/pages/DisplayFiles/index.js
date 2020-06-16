@@ -255,9 +255,9 @@ const DisplayFiles = ({ mode, userData }) => {
         {userData.type === "gradschool" ? (
           <Grid container spacing={2}>
             <Grid item xs={6}>
-              <div>
+              <div className="display-files-button-container">
                 <Button
-                  id="diplay-files-button"
+                  className={"display-files-button " + mode}
                   onClick={() => rejectApplicationHandler()}
                 >
                   Inform Applicant
@@ -265,9 +265,9 @@ const DisplayFiles = ({ mode, userData }) => {
               </div>
             </Grid>
             <Grid item xs={6}>
-              <div>
+              <div className="display-files-button-container">
                 <Button
-                  id="apply-button"
+                  className={"display-files-button " + mode}
                   onClick={() => acceptApplicationHandler()}
                 >
                   Accept Applicant

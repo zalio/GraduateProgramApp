@@ -2,3 +2,10 @@
   display: flex;
   justify-content: space-between;
 }
+
+.selected {
+  background-color: rgba(0,0,255, 0.6) !important;
+}
+.view-app-button-container {
+  margin-bottom: 20px;
+}
