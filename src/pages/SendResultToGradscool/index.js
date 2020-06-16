@@ -10,7 +10,7 @@ import Button from "@material-ui/core/Button";
 import { sendNotification } from "../../services/firebase/notification";
 import { useHistory } from "react-router-dom";
 
-const SendResultToGradschool = ({ mode, allUsers }) => {
+const SendResultToGradschool = ({ mode, allUsers, userData }) => {
   const [loading, setLoading] = useState(false);
   const history = useHistory();
 
@@ -23,6 +23,7 @@ const SendResultToGradschool = ({ mode, allUsers }) => {
     setLoading(true);
     await sendNotification({
       receiverId: user.uid,
+      senderId: userData.uid,
       content: text === "" ? "Combined result of the interview!" : text,
       file: file,
       createdAt: Date.now(),
@@ -105,12 +106,14 @@ const SendResultToGradschool = ({ mode, allUsers }) => {
     </>
   );
 };
-const mapStateToProps = ({ applicationReducer, usersReducer }) => {
+const mapStateToProps = ({ applicationReducer, usersReducer, authReducer }) => {
   const { mode } = applicationReducer;
   const { allUsers } = usersReducer;
+  const { userData } = authReducer;
   return {
     mode,
     allUsers,
+    userData,
   };
 };
 

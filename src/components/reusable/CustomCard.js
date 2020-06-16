@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import moment from "moment";
@@ -12,11 +12,23 @@ import "./CustomCard.scss";
 import Divider from "@material-ui/core/Divider";
 import dayjs from "../../utils/dayjs";
 import FileDisplayer from "./FileDisplayer";
+import { getUser } from "../../services/firebase/user";
 
 const CustomCard = ({ mode, type, data, userData }) => {
   const history = useHistory();
   const [buttonIconDown, setButtonIconDown] = useState(true);
   const [contentWidthClass, setContentWidthClass] = useState("small");
+
+  const [user, setUser] = useState(null);
+  const getSender = async (uid) => {
+    const getting = await getUser(uid);
+    const { name, surname } = getting;
+    setUser(name + " " + surname);
+  };
+  useEffect(() => {
+    getSender(data.senderId);
+  }, []);
+  useEffect(() => console.log(user, type), [user]);
 
   const buttonRender = (idToGo) => {
     return (
@@ -40,17 +52,17 @@ const CustomCard = ({ mode, type, data, userData }) => {
       <CardContent className={mode + ` ${contentWidthClass}`}>
         <div id="card-upper-text-container" className={mode}>
           <div id="card-upper-text-sub-container" className={mode}>
-            {type === "notification" ? (
+            {type === "notifications" ? (
               <>
                 <span>
                   <b>From:</b>
                 </span>
-                <span>Rıdvan Mertoğlu</span>
+                <span>{user !== null ? user : ""}</span>
               </>
             ) : (
               ""
             )}
-            {type === "announcement" ? (
+            {type === "announcement" && data.deadline ? (
               <>
                 <span>
                   <b>Deadline:</b>
@@ -74,7 +86,11 @@ const CustomCard = ({ mode, type, data, userData }) => {
           <>
             <FileDisplayer
               mode={mode}
-              title="Reference Letters"
+              title={
+                type === "announcement"
+                  ? "Announcements File"
+                  : "Notification File"
+              }
               dataSrc={data.file}
               customControl={null}
             />

@@ -2,9 +2,6 @@ import React, { useState } from "react";
 import "./FileDisplayer.scss";
 
 import Link from "@material-ui/core/Link";
-import FormControlLabel from "@material-ui/core/FormControlLabel/FormControlLabel";
-import Radio from "@material-ui/core/Radio/Radio";
-import RadioGroup from "@material-ui/core/RadioGroup/RadioGroup";
 
 const FileDisplayer = ({
   mode,
@@ -14,6 +11,7 @@ const FileDisplayer = ({
   value,
   setValue,
   userType,
+  disabled,
 }) => {
   const getCustomControl = () => {
     if (userType === "gradschool" && customControl)
@@ -33,7 +31,7 @@ const FileDisplayer = ({
           </Link>
         </div>
       </div>
-      {getCustomControl()}
+      {disabled && disabled !== true ? getCustomControl() : ""}
     </div>
   );
 };

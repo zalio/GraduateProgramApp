@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
 import FileUpload from "../../components/reusable/FileUpload";
 import Container from "@material-ui/core/Container";
+import moment from "moment";
 import "./DetermineInterview.scss";
 import Button from "@material-ui/core/Button";
 import { apply } from "../../services/firebase/apply";
@@ -54,7 +55,7 @@ const DetermineInterview = ({ mode, userData, allUsers }) => {
     }
     if (
       interviewData !== null &&
-      interviewData.interviewerOne !== "Still, not selected"
+      interviewData.interviewerOne !== "Not selected yet"
     ) {
       console.log(interviewData);
       setInterviewer1(interviewData.interviewerOne);
@@ -98,17 +99,19 @@ const DetermineInterview = ({ mode, userData, allUsers }) => {
       await saveUser({ ...interviewer5, isInterviewer: "true" });
       await sendNotification({
         receiverId: interviewData.applicantId,
+        senderId: userData.uid,
         content:
-          "Your interview details are Location is " +
+          "Your interview details: Location is " +
           interviewLocation.toString() +
           ", and the Date is " +
-          date,
+          moment(date).calendar(),
         createdAt: Date.now(),
       });
       await sendNotification({
         receiverId: interviewer1.uid,
+        senderId: userData.uid,
         content:
-          "Your interview details are Location is " +
+          "Your interview details: Location is " +
           interviewLocation.toString() +
           ", and the Date is " +
           date,
@@ -116,8 +119,9 @@ const DetermineInterview = ({ mode, userData, allUsers }) => {
       });
       await sendNotification({
         receiverId: interviewer2.uid,
+        senderId: userData.uid,
         content:
-          "Your interview details are Location is " +
+          "Your interview details: Location is " +
           interviewLocation.toString() +
           ", and the Date is " +
           date,
@@ -125,8 +129,9 @@ const DetermineInterview = ({ mode, userData, allUsers }) => {
       });
       await sendNotification({
         receiverId: interviewer3.uid,
+        senderId: userData.uid,
         content:
-          "Your interview details are Location is " +
+          "Your interview details: Location is " +
           interviewLocation.toString() +
           ", and the Date is " +
           date,
@@ -134,8 +139,9 @@ const DetermineInterview = ({ mode, userData, allUsers }) => {
       });
       await sendNotification({
         receiverId: interviewer4.uid,
+        senderId: userData.uid,
         content:
-          "Your interview details are Location is " +
+          "Your interview details: Location is " +
           interviewLocation.toString() +
           ", and the Date is " +
           date,
@@ -143,8 +149,9 @@ const DetermineInterview = ({ mode, userData, allUsers }) => {
       });
       await sendNotification({
         receiverId: interviewer5.uid,
+        senderId: userData.uid,
         content:
-          "Your interview details are Location is " +
+          "Your interview details: Location is " +
           interviewLocation.toString() +
           ", and the Date is " +
           date,
