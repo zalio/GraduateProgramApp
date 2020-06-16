@@ -26,6 +26,7 @@ const CustomCard = ({ mode, type, data, userData }) => {
     setUser(name + " " + surname);
   };
   useEffect(() => {
+    console.log(data.senderId);
     getSender(data.senderId);
   }, []);
   useEffect(() => console.log(user, type), [user]);

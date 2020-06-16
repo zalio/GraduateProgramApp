@@ -89,6 +89,10 @@ const ViewApplications = ({ mode, userData }) => {
   }, [allAnnouncements, allApplications]);
 
   useEffect(() => {
+    setRows([]);
+  }, [department, program]);
+
+  useEffect(() => {
     getAllApps();
     if (userData.type === "department") {
       setDepartment(
