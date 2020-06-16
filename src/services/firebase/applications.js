@@ -23,7 +23,11 @@ export const getApplications = async () => {
   for (let index = 0; index < applicationsDataAsArray.length; index++) {
     const { applicantId, announcementId } = applicationsDataAsArray[index];
     const applicantData = await getUser(applicantId);
-    const { name: applicantName, email: applicantEmail } = applicantData;
+    const {
+      name: applicantName,
+      email: applicantEmail,
+      surname: applicantSurname,
+    } = applicantData;
 
     const announcementData = await getAnnouncementData(announcementId);
     const {
@@ -34,6 +38,7 @@ export const getApplications = async () => {
     result.push({
       ...applicationsDataAsArray[index],
       applicantName,
+      applicantSurname,
       applicantEmail,
       department: title,
       applicationType,
