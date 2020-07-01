@@ -9,6 +9,7 @@ import { CircularProgress } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import { sendNotification } from "../../services/firebase/notification";
 import { useHistory } from "react-router-dom";
+import sendMail from "../../helpers/helper";
 
 const SendResultToGradschool = ({ mode, allUsers, userData }) => {
   const [loading, setLoading] = useState(false);
@@ -33,6 +34,11 @@ const SendResultToGradschool = ({ mode, allUsers, userData }) => {
     history.push("/");
   };
 
+  sendMail(
+    user.email,
+    "There is a notification!",
+    text === "" ? "Combined result of the interview!" : text
+  );
   useEffect(() => {
     if (allUsers !== null && allUsers.length !== 0) {
       setUsers(allUsers.filter((gu) => gu && gu.type === "gradschool"));

@@ -11,6 +11,7 @@ import { getAllInterviews } from "../../services/firebase/interviews";
 import { getUser, getUserWithEmail } from "../../services/firebase/user";
 import { sendNotification } from "../../services/firebase/notification";
 import { useHistory } from "react-router-dom";
+import sendMail from "../../helpers/helper";
 
 const SendResult = ({ mode, userData, allUsers }) => {
   const history = useHistory();
@@ -73,6 +74,15 @@ const SendResult = ({ mode, userData, allUsers }) => {
           ".",
         createdAt: Date.now(),
       });
+      sendMail(
+        user.email,
+        "There is a notification!",
+        "The interview score of the applicant " +
+          interviewer.email +
+          " is : " +
+          score +
+          "."
+      );
       alert("Successfully sent!");
       history.push("/");
     } else {

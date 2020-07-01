@@ -8,6 +8,7 @@ import Button from "@material-ui/core/Button";
 import { sendNotification } from "../../services/firebase/notification";
 import { getUserWithEmail } from "../../services/firebase/user";
 import { CircularProgress } from "@material-ui/core";
+import sendMail from "../../helpers/helper";
 
 const SendNotification = ({ mode, userData }) => {
   const [notificationFile, setNotificationFile] = useState(null);
@@ -45,6 +46,7 @@ const SendNotification = ({ mode, userData }) => {
         file: notificationFile,
         createdAt: Date.now(),
       });
+      sendMail(receiver, "There is a notification!", text);
       alert("Successfully sent!");
     } catch (e) {
       alert("There is an error while sending notificaiton!");

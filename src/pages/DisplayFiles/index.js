@@ -20,6 +20,7 @@ import {
   createInterview,
   getAllInterviews,
 } from "../../services/firebase/interviews";
+import sendMail from "../../helpers/helper";
 
 const DisplayFiles = ({ mode, userData }) => {
   const location = useLocation();
@@ -90,6 +91,11 @@ const DisplayFiles = ({ mode, userData }) => {
         "Your application has been rejected, please check your files and reapply the application!!",
       createdAt: Date.now(),
     });
+    sendMail(
+      receiverUserData.email,
+      "There is a notification!",
+      "Your application has been rejected, please check your files and reapply the application!!"
+    );
     await deleteApplication(applicationData);
     alert(
       "Some files have been found invalid. The applicant has been informed and this application has been deleted."
@@ -118,6 +124,11 @@ const DisplayFiles = ({ mode, userData }) => {
           "Your application has been accepted, wait for notification about your interview!",
         createdAt: Date.now(),
       });
+      sendMail(
+        receiverUserData.email,
+        "There is a notification!",
+        "Your application has been accepted, wait for notification about your interview!"
+      );
       await saveApplication({ ...applicationData, status: "accepted" });
       await createInterview({
         ...applicationData,

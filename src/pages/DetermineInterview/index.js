@@ -22,6 +22,7 @@ import {
   sendNotification,
   sendNotificationToUsers,
 } from "../../services/firebase/notification";
+import sendMail from "../../helpers/helper";
 
 const DetermineInterview = ({ mode, userData, allUsers }) => {
   const location = useLocation();
@@ -113,6 +114,14 @@ const DetermineInterview = ({ mode, userData, allUsers }) => {
           getDate(date),
         createdAt: Date.now(),
       });
+      sendMail(
+        interviewData.email,
+        "There is a notification!",
+        "Your interview details: Location is " +
+          interviewLocation.toString() +
+          ", and the Date is " +
+          getDate(date)
+      );
       await sendNotification({
         receiverId: interviewer1.uid,
         senderId: userData.uid,
@@ -123,6 +132,14 @@ const DetermineInterview = ({ mode, userData, allUsers }) => {
           getDate(date),
         createdAt: Date.now(),
       });
+      sendMail(
+        interviewer1.email,
+        "There is a notification!",
+        "Your interview details: Location is " +
+          interviewLocation.toString() +
+          ", and the Date is " +
+          getDate(date)
+      );
       await sendNotification({
         receiverId: interviewer2.uid,
         senderId: userData.uid,
@@ -133,6 +150,14 @@ const DetermineInterview = ({ mode, userData, allUsers }) => {
           getDate(date),
         createdAt: Date.now(),
       });
+      sendMail(
+        interviewer2.email,
+        "There is a notification!",
+        "Your interview details: Location is " +
+          interviewLocation.toString() +
+          ", and the Date is " +
+          getDate(date)
+      );
       await sendNotification({
         receiverId: interviewer3.uid,
         senderId: userData.uid,
@@ -143,6 +168,14 @@ const DetermineInterview = ({ mode, userData, allUsers }) => {
           getDate(date),
         createdAt: Date.now(),
       });
+      sendMail(
+        interviewer3.email,
+        "There is a notification!",
+        "Your interview details: Location is " +
+          interviewLocation.toString() +
+          ", and the Date is " +
+          getDate(date)
+      );
       await sendNotification({
         receiverId: interviewer4.uid,
         senderId: userData.uid,
@@ -153,6 +186,14 @@ const DetermineInterview = ({ mode, userData, allUsers }) => {
           getDate(date),
         createdAt: Date.now(),
       });
+      sendMail(
+        interviewer4.email,
+        "There is a notification!",
+        "Your interview details: Location is " +
+          interviewLocation.toString() +
+          ", and the Date is " +
+          getDate(date)
+      );
       await sendNotification({
         receiverId: interviewer5.uid,
         senderId: userData.uid,
@@ -163,6 +204,14 @@ const DetermineInterview = ({ mode, userData, allUsers }) => {
           getDate(date),
         createdAt: Date.now(),
       });
+      sendMail(
+        interviewer5.email,
+        "There is a notification!",
+        "Your interview details: Location is " +
+          interviewLocation.toString() +
+          ", and the Date is " +
+          getDate(date)
+      );
       setLoading(false);
       history.push("/");
     } else {

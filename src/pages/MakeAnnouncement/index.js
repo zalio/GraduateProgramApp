@@ -20,6 +20,7 @@ import {
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import Grid from "@material-ui/core/Grid";
+import sendMail from "../../helpers/helper";
 
 const departments = [
   { title: "Computer Engineering", value: 1 },
@@ -59,6 +60,12 @@ const MakeAnnouncement = ({ mode, allUsers }) => {
     }
   }, [department]);
 
+  const sendAllEmail = () => {
+    allUsers.forEach((user) => {
+      sendMail(user.email, "There is an announcement!", text);
+    });
+  };
+
   const submitHandler = async () => {
     setLoading(true);
     let submitData = {
@@ -79,6 +86,7 @@ const MakeAnnouncement = ({ mode, allUsers }) => {
       await makeAnnouncement(submitData);
       await saveUser({ ...coordinator, isAdmin: "true" });
       alert("Successfully announced!");
+      sendAllEmail();
     } catch (e) {
       alert("There is an error while announcing!");
     } finally {
