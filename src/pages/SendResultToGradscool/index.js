@@ -29,16 +29,15 @@ const SendResultToGradschool = ({ mode, allUsers, userData }) => {
       file: file,
       createdAt: Date.now(),
     });
+    sendMail(
+      user.email,
+      "There is a notification!",
+      text === "" ? "Combined result of the interview!" : text
+    );
     setLoading(false);
     alert("Successfully sent!");
     history.push("/");
   };
-
-  sendMail(
-    user.email,
-    "There is a notification!",
-    text === "" ? "Combined result of the interview!" : text
-  );
   useEffect(() => {
     if (allUsers !== null && allUsers.length !== 0) {
       setUsers(allUsers.filter((gu) => gu && gu.type === "gradschool"));
